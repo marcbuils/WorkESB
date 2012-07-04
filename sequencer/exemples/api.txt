@@ -1,0 +1,81 @@
+###########
+## API C ##
+###########
+int CSIEMessenger_init( char* p_domain, char* p_name )
+int CSIEMessenger_regConsumSampling( char* p_name, void* p_value, int p_type )
+int CSIEMessenger_regProduceSampling( char* p_name, void* p_value, int p_type )
+int CSIEMessenger_regConsumQueuing( char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize = CSIEMESSENGER_MAX_QUEUEING_SIZE )
+int CSIEMessenger_regProduceQueuing( char* p_name, void* p_values, int *p_size, int p_type )
+int CSIEMessenger_share( char* p_name, Shared_Func p_function )
+int CSIEMessenger_call( char* p_name, char* p_params, CallBack_Func p_function )
+int CSIEMessenger_bind( char* p_name, Event_Func p_function )
+int CSIEMessenger_trigger( char* p_name, char* p_params )
+int CSIEMessenger_update( )
+int CSIEMessenger_unreg( )
+
+Informations:
+-------------
+p_type = TYPE_INT ou TYPE_FLOAT ou TYPE_STRING
+p_value = pointeur vers la variable de reception
+p_size = pointeur vers la variable contenant la taille du tableau
+Shared_Func p_function = pointeur vers une fonction de type "const char* (*Shared_Func)( char* p_param )"
+CallBack_Func p_function = pointeur vers une fonction de type "void (*CallBack_Func)( char* p_param )"
+Event_Func p_function = pointeur vers une fonction de type "void (*Event_Func)( char* p_param )"
+p_params = chaine de caractère au format JSon
+
+
+####################
+## API JavaScript ##
+####################
+$(document).bind("csiemessenger_update", p_function)
+$.csiemessenger.singleton().regConsumSampling = function( p_name, p_type )
+$.csiemessenger.singleton().regProduceSampling = function( p_name, p_type )
+$.csiemessenger.singleton().regConsumQueuing = function( p_name, p_type )
+$.csiemessenger.singleton().regProduceQueuing = function( p_name, p_type )
+$.csiemessenger.singleton().share = function( p_name, p_function )
+$.csiemessenger.singleton().call = function( p_name, p_params ) [.done( p_function )]
+$.csiemessenger.singleton().bind = function( p_name, p_function )
+$.csiemessenger.singleton().trigger = function( p_name, p_params )
+
+Informations:
+-------------
+p_type = "int" ou "float" ou "string"
+p_params = structure de données JavaScript
+L'évènement "csiemessenger_update" est appelé à chaque fois que les données sont rafraichies
+
+
+#############
+## API LUA ##
+#############
+csiemessenger.init = function( p_domain, p_name )
+csiemessenger.update = function( )
+csiemessenger.unreg = function( )
+csiemessenger.regConsumSampling = function( p_name, p_variable, p_type )
+csiemessenger.regProduceSampling = function( p_name, p_variable, p_type )
+csiemessenger.regConsumQueuing = function( p_name, p_variable, p_type )
+csiemessenger.regProduceQueuing = function( p_name, p_variable, p_type )
+csiemessenger.share = function( p_name, p_function )
+csiemessenger.regCall = function( p_name, p_variable )
+csiemessenger.bind = function( p_name, p_function )
+csiemessenger.trigger = function( p_name, p_params )
+
+Informations:
+-------------
+p_type = "int" ou "float" ou "string"
+p_variable = chaine de caractère contenant le nom de la variable globale de reception
+p_params = structure de données LUA
+regCall retourne une fonction de type function( p_params, p_function )
+
+
+######################
+## API AUTOMATE LUA ##
+######################
+automate.sleep = function ( p_time )
+automate.wait = function ( p_condition )
+automate.assert = function ( p_condition )
+automate.logs = function ( p_line )
+automate.call = function ( p_name, p_params )
+automate.trigger = function( p_name, p_params )
+automate.alert = function( p_text, p_title )
+automate.confirm = function( p_text, p_title )
+automate.prompt = function( p_text, p_title )

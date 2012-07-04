@@ -1,0 +1,1 @@
+%OSPL_HOME%\bin\idlpp -S -l c++ -d gen Shared_Data.idl

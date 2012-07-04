@@ -1,0 +1,25 @@
+module Shared_Data {
+   struct DDS_int {
+      long data;
+	  long _time;
+	  long _timems;
+	  boolean _valid;
+   };
+#pragma keylist DDS_int
+
+   struct DDS_float {
+      float data;
+	  long _time;
+	  long _timems;
+	  boolean _valid;
+   };
+#pragma keylist DDS_float
+
+   struct DDS_string {
+      string data;
+	  long _time;
+	  long _timems;
+	  boolean _valid;
+   };
+#pragma keylist DDS_string
+};

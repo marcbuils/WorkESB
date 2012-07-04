@@ -1,0 +1,30 @@
+{
+	"time":50,	// 50 ms	
+	"share":	{
+		"domain":		"fr.csie.benches.test",
+		"add":			"SEQUENCER_ADD",
+		"remove":		"SEQUENCER_REMOVE",
+		"reload":		"SEQUENCER_RELOAD",
+		"list":			"SEQUENCER_LIST"
+	},
+	"LOG_FILE":			"sequencer.log",
+	"LOG_LEVEL":		4,					// DEBUG		
+	
+	"lua_path":		"./plugins/lua/?.lua",
+	"lua_cpath":	"./plugins/lua/?.so",
+	
+	"list": 	{
+		"sequencers/automate_sequencer.lua":	{
+			"type":				"lua",					// required
+			"variable_status":	"AUTOMATE_STATUS",		// default: "AUTOMATE_STATUS"
+			"variable_time":	"AUTOMATE_TIME",		// default: "AUTOMATE_TIME"
+			"variable_logs":	"LOGS",					// default: "LOGS"
+			"start":			"startAutomate",		// default: "startAutomate"
+			"stop":				"stopAutomate",			// default: "stopAutomate"
+			"pause":			"pauseAutomate",		// default: "pauseAutomate"
+			"resume":			"resumeAutomate",		// default: "resumeAutomate"
+			"get":				"getAutomates",			// default: "getAutomates"
+			"event":			"AUTOMATE_EVENT"		// default: "AUTOMATE_EVENT"
+		}
+	}
+}

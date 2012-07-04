@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!--
+ * This file is part of M2Bench.
+ *
+ *  M2Bench is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  M2Bench is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Created on: 31 janv. 2012
+ *      Author: Marc Buils (CSIE)
+-->
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>CSIE Bench v3</title>
+<style>@import "themes/claro/claro.css";@import "app.css";@import "lib/dojo/dojo/resources/dojo.css";@import "lib/dojo/dojox/grid/resources/Grid.css";@import "lib/dojo/dojox/grid/resources/claroGrid.css";
+
+
+</style>
+
+
+<script type="text/javascript" src="maqetta/maqetta.js"></script>
+<script type="text/javascript" djConfig="parseOnLoad: true" src="lib/dojo/dojo/dojo.js"></script>
+<script type="text/javascript">
+dojo.require('dijit.layout.BorderContainer');
+dojo.require('dijit.layout.ContentPane');
+dojo.require('dijit.layout.AccordionContainer');
+dojo.require('dijit.Toolbar');
+dojo.require('dijit.form.Button');
+dojo.require('dijit.layout.TabContainer');
+dojo.require('dijit.form.DropDownButton');
+dojo.require('dijit.Menu');
+dojo.require('dijit.MenuItem');
+dojo.require('dijit.form.Form');
+dojo.require('dijit.MenuBar');
+dojo.require('dijit.PopupMenuBarItem');
+dojo.require('dijit.form.SimpleTextarea');
+dojo.require('dijit.form.TextBox');
+dojo.require('dojo.data.ItemFileReadStore');
+dojo.require('dojox.io.xhrScriptPlugin');
+dojo.require('dojox.grid.DataGrid');
+dojo.require('dijit.form.ToggleButton');
+</script>
+<script type="text/javascript" src="maqetta/States.js"></script>
+
+
+<script type="text/javascript" src="libs/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="libs/jquery/jquery.tmpl.min.js"></script>
+
+<script type="text/javascript" src="libs/jquery.pluginautoload/jquery.pluginautoload.js"></script>
+
+
+<!-- jQuery UI -->
+<link type="text/css" href="libs/jquery.ui/css/cupertino/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+<script src="libs/jquery.ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+
+<!--  datatable -->
+<link rel="stylesheet" href="libs/datatable/media/css/demo_table_jui.css" type="text/css"/>
+<link rel="stylesheet" href="libs/datatable/media/css/demo_table.css" type="text/css"/>
+<script src="libs/datatable/media/js/jquery.dataTables.min.js"></script>
+
+<!--  csie messenger -->
+<script src="js/jquery.csiemessenger.js"></script>
+<script src="js/jquery.automateaction.js"></script>
+<!-- jQuery loading -->
+<script onload="jQuery.extend(jQuery.loading.defaultOptions, {src: 'libs/jquery.loading/loading.gif'});" src="libs/jquery.loading/jquery.loading.js"></script>
+
+<!-- jQuery Waiting -->
+<script src="libs/jquery.waiting/jquery.waiting.min.js"></script>
+
+<!-- jQuery getCssPath -->
+<script src="js/jquery.getcsspath.js"></script>
+
+<!-- jQuery gritter (notification) -->
+<link rel="stylesheet" type="text/css" href="libs/jquery.gritter/css/jquery.gritter.css"/>
+<script src="libs/jquery.gritter/js/jquery.gritter.min.js"></script>
+
+<!-- HighCharts -->
+<script src="libs/highcharts/js/highcharts.js"></script>
+<script src="libs/highcharts/js/modules/exporting.js"></script>
+
+<!-- Terminal -->
+<link rel="stylesheet" type="text/css" href="libs/termlib/term_styles.css"/>
+<script src="libs/termlib/compacted/termlib_min.js"></script>
+
+<!-- jQuery.alerts -->
+<link rel="stylesheet" type="text/css" href="libs/jquery.alerts/jquery.alerts.css"/>
+<script src="libs/jquery.alerts/jquery.alerts.js"></script>
+	
+</head>
+<body dvFlowLayout="true" data-davinci-ws="collapse" class="claro" id="myapp" data-version="0.3.1.1">
+ <div dojoType="dijit.layout.BorderContainer" persist="false" gutters="false" style="width: 100%; height: 100%; min-width: 1em; min-height: 1em;" design="headline">
+   <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="false" selected="false" closable="false" style="height: 29px; width: 775px;" doLayout="false">
+     <span dojoType="dijit.Toolbar" isContainer="true">
+  <input data-jquery-type="automateaction" data-action="start" data-dialog="#automate_start_dialog" type="button" dojoType="dijit.form.Button" tabIndex="-1" disabled="false" intermediateChanges="false" label="Commencer" iconClass="dijitIconFunction"></input>
+  <input data-jquery-type="automateaction" data-action="pause" type="button" dojoType="dijit.form.ToggleButton" tabIndex="-1" disabled="false" intermediateChanges="false" label="Pause" iconClass="dijitIconConnector" checked="false"></input>
+  <input data-jquery-type="automateaction" data-action="stop" type="button" dojoType="dijit.form.Button" tabIndex="-1" disabled="false" intermediateChanges="false" label="Arreter" iconClass="dijitIconDelete"></input>
+</span>
+     </div>
+   <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="left" splitter="true" selected="false" closable="false" doLayout="false" style="width:189px;">
+     <span dojoType="dijit.layout.AccordionContainer" persist="false" style="width: 100%; height: 100%; min-width: 1em; min-height: 1em;">
+<div dojoType="dijit.layout.ContentPane" title="Informations" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" splitter="false" selected="true" closable="false" style="width: 149px; height: 315px;" doLayout="false">
+<span dojoType="dojo.data.ItemFileReadStore" id="ItemFileReadStore_2" jsId="ItemFileReadStore_2" data="{&quot;identifier&quot;:&quot;uniqe_id&quot;,&quot;items&quot;:[{&quot;uniqe_id&quot;:1,&quot;nom&quot;:&quot;Status&quot;,&quot;_valeur&quot;:&quot; &quot;},{&quot;uniqe_id&quot;:2,&quot;nom&quot;:&quot;Temps&quot;,&quot;_valeur&quot;:&quot; 00:00:00&quot;},{&quot;uniqe_id&quot;:3,&quot;nom&quot;:&quot;Duree&quot;,&quot;_valeur&quot;:&quot; 02:00:00&quot;}]}"></span>
+   <span data-jquery-type="infosTable" dojoType="dojox.grid.DataGrid" structure="[{&quot;width&quot;:&quot;auto&quot;,&quot;name&quot;:&quot;Nom&quot;,&quot;field&quot;:&quot;nom&quot;},{&quot;width&quot;:&quot;auto&quot;,&quot;name&quot;:&quot; Valeur&quot;,&quot;field&quot;:&quot;_valeur&quot;}]" autoWidth="false" autoHeight="false" singleClickEdit="false" columnReordering="false" selectable="false" delayScroll="false" style="margin-left: -2px; margin-top: -2px; height: 100%; width: 100%;" store="ItemFileReadStore_2" escapeHTMLInData="true"></span>
+</div>
+<div dojoType="dijit.layout.ContentPane" title="Configuration" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" splitter="false" selected="false" closable="false" style="width: 149px; height: 315px;" doLayout="false">
+<span dojoType="dojo.data.ItemFileReadStore" id="ItemFileReadStore_3" jsId="ItemFileReadStore_3" data="{&quot;identifier&quot;:&quot;uniqe_id&quot;,&quot;items&quot;:[{&quot;uniqe_id&quot;:1,&quot;nom&quot;:&quot;Profils&quot;,&quot;_valeur&quot;:&quot;<input type='button' value='configurer' data-type='profils_configuration' />&quot;},{&quot;uniqe_id&quot;:2,&quot;nom&quot;:&quot;Modules&quot;,&quot;_valeur&quot;:&quot;<input type='button' value='configurer' data-type='modules_configuration' />&quot;}]}"></span>
+   <span data-jquery-type="configurationTable" data-dialog-configuration="#dialog_profils_configuration" data-dialog-load="#dialog_profils_load" data-dialog-change="#dialog_profils_change" data-dialog-modules="#dialog_modules" dojoType="dojox.grid.DataGrid" structure="[{&quot;width&quot;:&quot;auto&quot;,&quot;name&quot;:&quot;Nom&quot;,&quot;field&quot;:&quot;nom&quot;},{&quot;width&quot;:&quot;auto&quot;,&quot;name&quot;:&quot; Valeur&quot;,&quot;field&quot;:&quot;_valeur&quot;}]" autoWidth="false" autoHeight="false" singleClickEdit="false" columnReordering="false" selectable="false" delayScroll="false" style="margin-left: -2px; margin-top: -2px; height: 100%; width: 100%;" store="ItemFileReadStore_3" escapeHTMLInData="false"></span>
+</div>
+</span>
+   </div>
+   <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="right" splitter="true" selected="false" closable="false" doLayout="false" style="width:188px;">
+    <div dojoType="dijit.layout.BorderContainer" design="sidebar" persist="false" gutters="false" style="width: 100%; height: 100%; min-width: 1em; min-height: 1em;">
+      <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" selected="false" closable="false" region="top" splitter="true" style="height: 248px; width: 176px;" doLayout="false">
+        <span dojoType="dijit.layout.AccordionContainer" persist="false" style="width: 100%; height: 100%; min-width: 1em; min-height: 1em;"><div dojoType="dijit.layout.ContentPane" title="Variables" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" selected="true" closable="false" splitter="false" style="width: 168px; height: 217px;">
+          <ul class="data data_custom" data-jquery-type="sortableVariable"></ul>
+        </div>
+        </span>
+      </div>
+      <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" selected="false" closable="false" region="center" splitter="false" style="width: 176px; height: 258px;" doLayout="false">
+        <span dojoType="dijit.layout.AccordionContainer" persist="false" style="width: 100%; height: 100%; min-width: 1em; min-height: 1em;">
+ <div dojoType="dijit.layout.ContentPane" title="Groupe 1" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" selected="true" closable="false" splitter="false" style="width: 168px; height: 173px;" doLayout="false">
+  <ul class="data data_custom" data-jquery-type="sortableVariable"></ul>
+ </div>
+        <div dojoType="dijit.layout.ContentPane" title="Groupe 2" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" selected="true" closable="false" splitter="false" style="width: 168px; height: 200px;" doLayout="false">
+  <ul class="data data_custom" data-jquery-type="sortableVariable"></ul>
+ </div>
+        <div dojoType="dijit.layout.ContentPane" title="Groupe 3" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" doLayout="true" selected="false" closable="false" splitter="false">
+  <ul class="data data_custom" data-jquery-type="sortableVariable"></ul>
+ </div>
+        </span>
+      </div>
+    </div>
+  </div>
+   <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="center" splitter="false" selected="false" closable="false" style="width: 471px; height: 373px;" doLayout="false">
+    <div dojoType="dijit.layout.BorderContainer" design="sidebar" persist="false" gutters="false" style="width: 100%; height: 100%; min-width: 1em; min-height: 1em;">
+      <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="bottom" splitter="true" selected="false" closable="false" doLayout="false" style="height: 255px; display: block; width: 388px;">
+
+<div dojoType="dijit.layout.ContentPane" title="Pane" doLayout="false" style="height: 100%; width: 100%;">
+ <div data-jquery-type="logsTable" data-variable-name="LOGS" data-variable-type="string" data-tmpl="#table_logs"></div>
+</div>
+</div>
+      <div dojoType="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="center" splitter="false" selected="false" closable="false" style="width: 442px; height: 441px;" doLayout="false"><span dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%; min-width: 1em; min-height: 1em;" controllerWidget="dijit.layout.TabController">
+
+<!-- Variable list -->
+<div dojoType="dijit.layout.ContentPane" id="panel_data" title="Donnees" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" closable="false" splitter="false" style="width: 386px; height: 234px; text-align: center;">
+   <div data-jquery-type="variableList" data-sequencer-removed="sequencer_removed" data-tmpl-list="#variables_list" data-tmpl-call="#variable_call" data-tmpl-trigger="#variable_trigger" data-tmpl-bind="#variable_bind" data-tmpl-consum-queuing-text="#variable_consum_queuing_text" data-tmpl-produce-queuing-text="#variable_produce_queuing_text" data-tmpl-consum-text="#variable_consum_text" data-tmpl-consum-bool="#variable_consum_bool" data-tmpl-produce-text="#variable_produce_text" data-tmpl-consum-bool="#variable_produce_bool" ></div>
+</div>
+
+<!-- Javascript console -->
+<div dojoType="dijit.layout.ContentPane" title="Console" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" splitter="false" selected="false" closable="false" style="width: 469px; height: 312px; text-align: center;" doLayout="false">
+	<div data-jquery-type="csiemessengerTerminal"></div>
+</div>
+
+<script id="table_logs" type="text/x-jquery-tmpl">
+ <table data-jquery-type="dataTable" data-jquery-params="[{&quot;bJQueryUI&quot;:true,&quot;aaSorting&quot;:[[0,&quot;desc&quot;]]}]">
+  <thead>
+   <th>Line</th>
+   <th>Description</th>
+  </thead>
+  <tbody>
+		{{each(_i,_v) logs}}
+			<tr><td>${_i}</td><td>${_v}</td></tr>
+		{{/each}}
+		</tbody>
+ <table>
+</table>
+</table>
+</script>
+
+<script id="automate_start_dialog" type="text/x-jquery-tmpl">
+	<div>
+		<ol data-jquery-type="selectable">
+		{{each(_i,_automate) automates}}
+			<li class="ui-widget-content" data-file="${_automate.file}">${_automate.name}</li>
+		{{/each}}
+		</ol>
+	</div>
+</script>
+
+<script id="dialog_profils_configuration" type="text/x-jquery-tmpl">
+	<div>
+		Quelle action souhaitez-vous effectuer ?
+	</div>
+</script>
+
+<script id="dialog_profils_load" type="text/x-jquery-tmpl">
+	<div>
+		<ol data-jquery-type="selectable">
+		{{each(_i,_profil) list}}
+			<li class="ui-widget-content">${_i}</li>
+		{{/each}}
+		</ol>
+	</div>
+</script>
+
+<script id="dialog_profils_change" type="text/x-jquery-tmpl">
+	<div>
+		<ol data-jquery-type="selectable">
+		{{each(_i,_profil) list}}
+			<li class="ui-widget-content">${_i}<a href="#" class="btn_action" data-type="delete"><img src="img/delete_small.png" /></a></li>
+		{{/each}}
+		</ol>
+	</div>
+</script>
+
+<script id="dialog_modules" type="text/x-jquery-tmpl">
+	<div>
+		<div data-jquery-type="modulesList" data-tmpl="#modules_sequencer" data-ping-event="sequencer_ping" data-pong-event="sequencer_pong" data-stopped-event="sequencer_stopped"></div>
+	</div>
+</script>
+<script id="modules_sequencer" type="text/x-jquery-tmpl">
+	<div data-sequencer-name="${infos.name}">
+		<h2>${infos.name}</h2>
+		<ol>
+		{{each(_module,_infos) list}}
+			<li><input data-jquery-type="module"  data-sequencer="${infos.name}" data-file="${_module}" data-sequencer-add="${infos.add}" data-sequencer-remove="${infos.remove}" data-sequencer-added="${infos.event_added}" data-sequencer-removed="${infos.event_removed}" type="checkbox" {{if _infos.enable}}checked{{/if}} /> ${_infos.name} (${_module})</li>
+		{{/each}}
+		</ol>
+	</div>
+</script>
+
+<script id="variables_list" type="text/x-jquery-tmpl">
+   <ul id="module_${id}__" class="data data_fixed" data-jquery-type="sortableVariable" data-name="${name}">
+    <li id="module_${id}__title__" class="ui-state-highlight" data-module="${name}" data-name="__TITLE__">${name}</li>
+   </ul>
+</script>
+<script id="variable_consum_text" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="data_line_disabled ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly" value="0" data-jquery-type="csiemessengerConsum" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+</script>
+<script id="variable_consum_bool" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="" data-jquery-type="csiemessengerConsumBool" data-variable-name="${variable.name}" data-variable-type="${variable.type}" type="button" dojoType="dijit.form.ToggleButton" tabIndex="-1" disabled="true" intermediateChanges="false" label="OFF" iconClass="dijitRadioIcon" checked="false"/></span></li>
+</script>
+<script id="variable_produce_text" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="0" data-jquery-type="csiemessengerProduce" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+</script>
+<script id="variable_produce_bool" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="" data-jquery-type="csiemessengerProduceBool" data-variable-name="${variable.name}" data-variable-type="${variable.type}" type="button" dojoType="dijit.form.ToggleButton" tabIndex="-1" disabled="false" intermediateChanges="false" label="OFF" iconClass="dijitRadioIcon" checked="false"/></span></li>
+</script>
+<script id="variable_consum_queuing_text" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="data_line_disabled ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly" value="0" data-jquery-type="csiemessengerConsumQueuing" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+</script>
+<script id="variable_produce_queuing_text" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="0" data-jquery-type="csiemessengerProduceQueuing" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+</script>
+<script id="variable_call" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input type="button" value="call" data-jquery-type="csiemessengerCall" data-variable-name="${variable.name}"/></span></li>
+</script>
+<script id="variable_trigger" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input type="button" value="trigger" data-jquery-type="csiemessengerTrigger" data-variable-name="${variable.name}"/></span></li>
+</script>
+<script id="variable_bind" type="text/x-jquery-tmpl">
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly"  value="" data-jquery-type="csiemessengerBind" data-variable-name="${variable.name}"/></span></li>
+</script>
+</body></html>

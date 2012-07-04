@@ -1,0 +1,55 @@
+/**
+ * This file is part of M2Bench.
+ *
+ *  M2Bench is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  M2Bench is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Created on: 31 janv. 2012
+ *      Author: Marc Buils (CSIE)
+ */
+(function($){
+	$.fn.infosTable = function(){
+		return this.each(function(){
+			var $_this = $(this);
+			var _start = null;
+
+			$(document).one( "csiemessenger_update", function(){
+				$.csiemessenger.singleton().regConsumSampling( "AUTOMATE_STATUS", "string" );
+				$.csiemessenger.singleton().regConsumSampling( "AUTOMATE_TIME", "int" );
+
+				$(document).bind( "csiemessenger_update", function(){
+					var _status = $.csiemessenger.consumer.AUTOMATE_STATUS;
+					
+					// status
+					$_this
+						.find('td:contains("Status")')
+						.next()
+						.text( _status );
+						
+					// time
+					var _time = $.csiemessenger.consumer.AUTOMATE_TIME;
+					var _hours = parseInt( _time / 3600 );
+					var _mins = parseInt( (_time / 60) )  % 3600;
+					var _secs = _time % 60;
+						
+					$_this
+						.find('td:contains("Temps")')
+						.next()
+						.text( (_hours<10?'0':'')+_hours+':'+(_mins<10?'0':'')+_mins+':'+(_secs<10?'0':'')+_secs );
+				});
+			});
+		});
+	};
+})(jQuery);
+
+

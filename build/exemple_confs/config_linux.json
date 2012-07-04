@@ -1,0 +1,198 @@
+{
+	"time":			50,	// 50 ms	
+	"name":			"PC_LINUX",
+	"share":	{
+		"domain":		"fr.csie.benches.test",				// required
+		"add":			"SEQUENCER_ADD_LINUX",				// required
+		"remove":		"SEQUENCER_REMOVE_LINUX",			// required
+		"reload":		"SEQUENCER_RELOAD_LINUX",			// required
+		"list":			"SEQUENCER_LIST_LINUX",				// required
+		"event_added":	"sequencer_added",					// default: "sequencer_added"
+		"event_removed":"sequencer_removed",				// default: "sequencer_removed"
+		"event_ping":	"sequencer_ping",					// default: "sequencer_ping"
+		"event_pong":	"sequencer_pong",					// default: "sequencer_pong"
+		"event_stopped":"sequencer_stopped"					// default: "sequencer_stopped"
+	},
+	"LOG_FILE":			"sequencer.log",					// default: "sequencer.log"
+	"LOG_LEVEL":		4,									// default: 3 -- 1=ERROR - 2=WARNING - 3=INFO - 4=DEBUG		
+	
+	"lua_path":		"./plugins/lua/?.lua",					// required
+	"lua_cpath":	"./plugins/lua/?.so",					// required
+	
+	"list": 	{
+		"sequencers/hotcold.lua":	{
+			"enable":				false,
+			"name":					"HOT_COLD",
+			"type":					"lua",					// required
+			"variable_hotcold":		"HOT_COLD",				// required
+			"variable_temperature":	"TEMPERATURE",			// required
+			"event":				"HOT_COLD_CHANGE"
+		},
+		"sequencers/temperature.lua":	{
+			"enable":				true,
+			"name":					"SIMU TEMPERATURE",
+			"type":					"lua",					// required
+			"variable_temperature":	"TEMPERATURE",			// required
+			"variable_time":		"TIME"					// required
+		},
+		"sequencers/time.lua":	{
+			"enable":				false,
+			"name":					"TIME",
+			"type":					"lua",					// required
+			"variable_time":		"TIME"					// required
+		},
+		"sequencers/nxt_driver.so":	{
+			"enable":				false,
+			"name":					"DRIVER NXT",
+			"type":					"dll",					// required
+			"variable_add":			"NXT_ADD",				// default: "NXT_ADD"
+			"list":	[										// required
+				{
+					"type":				"sensor",
+					"port":				"IN_1",
+					"variable":			"NXT_PRESS"
+				},
+				{
+					"type":				"motor",
+					"port":				"OUT_A",
+					"variable_speed": 	"NXT_MOTOR_SPEED",
+					"variable_rotation":"NXT_MOTOR_ROTATION"
+				}
+			]	
+		},
+		"sequencers/copy.lua":	{
+			"enable":				false,
+			"name":					"COPY",
+			"type":					"lua",					// required
+			"add":					"COPY_ADD",				// required
+			"remove":				"COPY_REMOVE",			// required
+			"list":	[										// required
+				{
+					"variable_in_name":		"NXT_MOTOR_ROTATION",
+					"variable_in_type":		"int",
+					"variable_out_name":	"TEMPERATURE",
+					"variable_out_type":	"float",
+					"type":					"sampling"
+				}
+			]	
+		},
+		"sequencers/messenger_gateway_websockets.so":	{
+			"name":			"PASSERELLE WEB",
+			"type":			"dll",							// required
+			"PORT":			8080,							// default: 80
+			"LOG_FILE":		"gateway.log",					// default: "gateway.log"
+			"PATH":			"ihm",							// default: "www"
+			"CONTENT_TYPES":{								// required
+				"html":		"text/html",
+				"htm":		"text/html",
+				"shtml":	"text/html",
+				"css":		"text/css",
+				"xml":		"text/xml",
+				"gif":		"image/gif",
+				"jpeg":		"image/jpeg",
+				"jpg":		"image/jpeg",
+				"js":		"application/x-javascript",
+				"atom":		"application/atom+xml",
+				"rss":		"application/rss+xmlmsvimml",
+				"mml":		"text/mathml",
+				"txt":		"text/plain",
+				"jad":		"text/vnd.sun.j2me.app-descriptor",
+				"wml":		"text/vnd.wap.wml",
+				"htc":		"text/x-component",
+				"png":		"image/png",
+				"tif":		"image/tiff",
+				"tiff":		"image/tiff",
+				"wbmp":		"image/vnd.wap.wbmp",
+				"ico":		"image/x-icon",
+				"jng":		"image/x-jng",
+				"bmp":		"image/x-ms-bmp",
+				"svg":		"image/svg+xml",
+				"jar":		"application/java-archive",
+				"war":		"application/java-archive",
+				"ear":		"application/java-archive",
+				"hqx":		"application/mac-binhex40",
+				"doc":		"application/msword",
+				"pdf":		"application/pdf",
+				"ps":		"application/postscript",
+				"eps":		"application/postscript",
+				"ai":		"application/postscript",
+				"rtf":		"application/rtf",
+				"xls":		"application/vnd.ms-excel",
+				"ppt":		"application/vnd.ms-powerpoint",
+				"wmlc":		"application/vnd.wap.wmlc",
+				"xhtml":	"application/vnd.wap.xhtml+xml",
+				"kml":		"application/vnd.google-earth.kml+xml",
+				"kmz":		"application/vnd.google-earth.kmz",
+				"7z":		"application/x-7z-compressed",
+				"cco":		"application/x-cocoa",
+				"jardiff":	"application/x-java-archive-diff",
+				"jnlp":		"application/x-java-jnlp-file",
+				"run":		"application/x-makeself",
+				"pl":		"application/x-perl",
+				"pm":		"application/x-perl",
+				"prc":		"application/x-pilot",
+				"pdb":		"application/x-pilot",
+				"rar":		"application/x-rar-compressed",
+				"rpm":		"application/x-redhat-package-manager",
+				"sea":		"application/x-sea",
+				"swf":		"application/x-shockwave-flash",
+				"sit":		"application/x-stuffit",
+				"tcl":		"application/x-tcl",
+				"tk":		"application/x-tcl",
+				"der":		"application/x-x509-ca-cert",
+				"pem":		"application/x-x509-ca-cert",
+				"crt":		"application/x-x509-ca-cert",
+				"xpi":		"application/x-xpinstall",
+				"zip":		"application/zip",
+				"bin":		"application/octet-stream",
+				"exe":		"application/octet-stream",
+				"dll":		"application/octet-stream",
+				"deb":		"application/octet-stream",
+				"dmg":		"application/octet-stream",
+				"eot":		"application/octet-stream",
+				"iso":		"application/octet-stream",
+				"img":		"application/octet-stream",
+				"msi":		"application/octet-stream",
+				"msp":		"application/octet-stream",
+				"msm":		"application/octet-stream",
+				"mid":		"audio/midi",
+				"midi":		"audio/midi",
+				"kar":		"audio/midi",
+				"mp3":		"audio/mpeg",
+				"ra":		"audio/x-realaudio",
+				"3gp":		"video/3gpp",
+				"3gpp":		"video/3gpp",
+				"mpeg":		"video/mpeg",
+				"mpg":		"video/mpeg",
+				"mov":		"video/quicktime",
+				"flv":		"video/x-flv",
+				"mng":		"video/x-mng",
+				"asx":		"video/x-ms-asf",
+				"asf":		"video/x-ms-asf",
+				"wmv":		"video/x-ms-wmv",
+				"avi":		"video/x-msvideo"
+			}
+		},
+		"sequencers/automate_sequencer.lua":	{
+			"enable":			false,
+			"name":				"SEQUENCEUR D'AUTOMATE",
+			"type":				"lua",					// required
+			"variable_status":	"AUTOMATE_STATUS",		// default: "AUTOMATE_STATUS"
+			"variable_time":	"AUTOMATE_TIME",		// default: "AUTOMATE_TIME"
+			"variable_logs":	"LOGS",					// default: "LOGS"
+			"variable_dialog":	"AUTOMATE_DIALOG",		// default: "AUTOMATE_DIALOG"
+			"start":			"startAutomate",		// default: "startAutomate"
+			"stop":				"stopAutomate",			// default: "stopAutomate"
+			"pause":			"pauseAutomate",		// default: "pauseAutomate"
+			"resume":			"resumeAutomate",		// default: "resumeAutomate"
+			"get":				"getAutomates",			// default: "getAutomates"
+			"event":			"AUTOMATE_EVENT",		// default: "AUTOMATE_EVENT"
+			"event_dialog_return":	"AUTOMATE_DIALOG_RETURN"	// default: "AUTOMATE_DIALOG_RETURN"
+		},
+		"sequencers/test.lua": {
+			"enable":		false,
+			"name":			"TEST",
+			"type":			"lua"						// required
+		}
+	}
+}

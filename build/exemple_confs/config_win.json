@@ -20,45 +20,11 @@
 	"lua_cpath":	"./plugins/lua/?.dll",					// required
 	
 	"list": 	{
-		"sequencers/hotcold.lua":	{
-			"enable":				true,
-			"name":					"HOT_COLD",
-			"type":					"lua",					// required
-			"variable_hotcold":		"HOT_COLD",				// required
-			"variable_temperature":	"TEMPERATURE",			// required
-			"event":				"HOT_COLD_CHANGE"
-		},
-		"sequencers/temperature.lua":	{
-			"enable":				true,
-			"name":					"SIMU TEMPERATURE",
-			"type":					"lua",					// required
-			"variable_temperature":	"TEMPERATURE",			// required
-			"variable_time":		"TIME"					// required
-		},
 		"sequencers/time.lua":	{
 			"enable":				false,
 			"name":					"TIME",
 			"type":					"lua",					// required
 			"variable_time":		"TIME"					// required
-		},
-		"sequencers/nxt_driver.dll":	{
-			"enable":				false,
-			"name":					"DRIVER NXT",
-			"type":					"dll",					// required
-			"variable_add":			"NXT_ADD",				// default: "NXT_ADD"
-			"list":	[										// required
-				{
-					"type":				"sensor",
-					"port":				"IN_1",
-					"variable":			"NXT_PRESS"
-				},
-				{
-					"type":				"motor",
-					"port":				"OUT_A",
-					"variable_speed": 	"NXT_MOTOR_SPEED",
-					"variable_rotation":"NXT_MOTOR_ROTATION"
-				}
-			]	
 		},
 		"sequencers/copy.lua":	{
 			"enable":				false,
@@ -68,7 +34,7 @@
 			"remove":				"COPY_REMOVE",			// required
 			"list":	[										// required
 				{
-					"variable_in_name":		"NXT_MOTOR_ROTATION",
+					"variable_in_name":		"TIME",
 					"variable_in_type":		"int",
 					"variable_out_name":	"TEMPERATURE",
 					"variable_out_type":	"float",
@@ -188,11 +154,6 @@
 			"get":				"getAutomates",			// default: "getAutomates"
 			"event":			"AUTOMATE_EVENT",		// default: "AUTOMATE_EVENT"
 			"event_dialog_return":	"AUTOMATE_DIALOG_RETURN"	// default: "AUTOMATE_DIALOG_RETURN"
-		},
-		"sequencers/test.lua": {
-			"enable":		false,
-			"name":			"TEST",
-			"type":			"lua"						// required
 		}
 	}
 }

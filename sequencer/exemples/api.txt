@@ -1,17 +1,17 @@
 ###########
 ## API C ##
 ###########
-int CSIEMessenger_init( char* p_domain, char* p_name )
-int CSIEMessenger_regConsumSampling( char* p_name, void* p_value, int p_type )
-int CSIEMessenger_regProduceSampling( char* p_name, void* p_value, int p_type )
-int CSIEMessenger_regConsumQueuing( char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize = CSIEMESSENGER_MAX_QUEUEING_SIZE )
-int CSIEMessenger_regProduceQueuing( char* p_name, void* p_values, int *p_size, int p_type )
-int CSIEMessenger_share( char* p_name, Shared_Func p_function )
-int CSIEMessenger_call( char* p_name, char* p_params, CallBack_Func p_function )
-int CSIEMessenger_bind( char* p_name, Event_Func p_function )
-int CSIEMessenger_trigger( char* p_name, char* p_params )
-int CSIEMessenger_update( )
-int CSIEMessenger_unreg( )
+int WESBMessenger_init( char* p_domain, char* p_name )
+int WESBMessenger_regConsumSampling( char* p_name, void* p_value, int p_type )
+int WESBMessenger_regProduceSampling( char* p_name, void* p_value, int p_type )
+int WESBMessenger_regConsumQueuing( char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize = WESBMESSENGER_MAX_QUEUEING_SIZE )
+int WESBMessenger_regProduceQueuing( char* p_name, void* p_values, int *p_size, int p_type )
+int WESBMessenger_share( char* p_name, Shared_Func p_function )
+int WESBMessenger_call( char* p_name, char* p_params, CallBack_Func p_function )
+int WESBMessenger_bind( char* p_name, Event_Func p_function )
+int WESBMessenger_trigger( char* p_name, char* p_params )
+int WESBMessenger_update( )
+int WESBMessenger_unreg( )
 
 Informations:
 -------------
@@ -27,37 +27,37 @@ p_params = chaine de caractère au format JSon
 ####################
 ## API JavaScript ##
 ####################
-$(document).bind("csiemessenger_update", p_function)
-$.csiemessenger.singleton().regConsumSampling = function( p_name, p_type )
-$.csiemessenger.singleton().regProduceSampling = function( p_name, p_type )
-$.csiemessenger.singleton().regConsumQueuing = function( p_name, p_type )
-$.csiemessenger.singleton().regProduceQueuing = function( p_name, p_type )
-$.csiemessenger.singleton().share = function( p_name, p_function )
-$.csiemessenger.singleton().call = function( p_name, p_params ) [.done( p_function )]
-$.csiemessenger.singleton().bind = function( p_name, p_function )
-$.csiemessenger.singleton().trigger = function( p_name, p_params )
+$(document).bind("wesbmessenger_update", p_function)
+$.wesbmessenger.singleton().regConsumSampling = function( p_name, p_type )
+$.wesbmessenger.singleton().regProduceSampling = function( p_name, p_type )
+$.wesbmessenger.singleton().regConsumQueuing = function( p_name, p_type )
+$.wesbmessenger.singleton().regProduceQueuing = function( p_name, p_type )
+$.wesbmessenger.singleton().share = function( p_name, p_function )
+$.wesbmessenger.singleton().call = function( p_name, p_params ) [.done( p_function )]
+$.wesbmessenger.singleton().bind = function( p_name, p_function )
+$.wesbmessenger.singleton().trigger = function( p_name, p_params )
 
 Informations:
 -------------
 p_type = "int" ou "float" ou "string"
 p_params = structure de données JavaScript
-L'évènement "csiemessenger_update" est appelé à chaque fois que les données sont rafraichies
+L'évènement "wesbmessenger_update" est appelé à chaque fois que les données sont rafraichies
 
 
 #############
 ## API LUA ##
 #############
-csiemessenger.init = function( p_domain, p_name )
-csiemessenger.update = function( )
-csiemessenger.unreg = function( )
-csiemessenger.regConsumSampling = function( p_name, p_variable, p_type )
-csiemessenger.regProduceSampling = function( p_name, p_variable, p_type )
-csiemessenger.regConsumQueuing = function( p_name, p_variable, p_type )
-csiemessenger.regProduceQueuing = function( p_name, p_variable, p_type )
-csiemessenger.share = function( p_name, p_function )
-csiemessenger.regCall = function( p_name, p_variable )
-csiemessenger.bind = function( p_name, p_function )
-csiemessenger.trigger = function( p_name, p_params )
+wesbmessenger.init = function( p_domain, p_name )
+wesbmessenger.update = function( )
+wesbmessenger.unreg = function( )
+wesbmessenger.regConsumSampling = function( p_name, p_variable, p_type )
+wesbmessenger.regProduceSampling = function( p_name, p_variable, p_type )
+wesbmessenger.regConsumQueuing = function( p_name, p_variable, p_type )
+wesbmessenger.regProduceQueuing = function( p_name, p_variable, p_type )
+wesbmessenger.share = function( p_name, p_function )
+wesbmessenger.regCall = function( p_name, p_variable )
+wesbmessenger.bind = function( p_name, p_function )
+wesbmessenger.trigger = function( p_name, p_params )
 
 Informations:
 -------------

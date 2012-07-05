@@ -15,31 +15,31 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
-$.fn.csiemessengerProduceBool = function(){
+$.fn.wesbmessengerProduceBool = function(){
 	return this.each(function(){
 		var $_this = $(this);
 		var _name = $_this.attr('data-variable-name');
 		var _type = $_this.attr('data-variable-type');
 		
 		// setting
-		$.csiemessenger.singleton().regProduceQueuing( _name, _type );
+		$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
 		$_this.bind('click', function(){
 			if ( dijit.byNode( $_this.parent().parent().get(0) ).get('disabled') ){
 				return false;
 			}
 		
-			$.csiemessenger.producer[_name][0] = ( dijit.byNode( $_this.parent().parent().get(0) ).get('checked') ? 0 : 1);
+			$.wesbmessenger.producer[_name][0] = ( dijit.byNode( $_this.parent().parent().get(0) ).get('checked') ? 0 : 1);
 			dijit.byNode( $_this.parent().parent().get(0) ).set('disabled', true);
 		});
 
 		// getting
-		$.csiemessenger.singleton().regConsumSampling( _name, _type );
-		$(document).bind( "csiemessenger_update", function(){
+		$.wesbmessenger.singleton().regConsumSampling( _name, _type );
+		$(document).bind( "wesbmessenger_update", function(){
 			try{
-				var _val = $.csiemessenger.consumer[_name];
+				var _val = $.wesbmessenger.consumer[_name];
 
 				dijit.byNode( $_this.parent().parent().get(0) ).set('disabled', false);
 				if ( _val == 0) {

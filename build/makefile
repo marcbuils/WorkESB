@@ -1,6 +1,6 @@
-##################################################
-## COMPILATION COMPLETTE DU BANC MODULAIRE CSIE ##
-##################################################
+##############################
+## WORKESB FULL COMPILATION ##
+##############################
 
 help:
 	@echo ''
@@ -55,10 +55,10 @@ ifeq (${LUA_LIB},)
 else
 	@echo 'SIMD_INSTALL_DIR=${SIMD_INSTALL_DIR}'
 endif
-ifeq (${CSIEMESSENGER_ROOT},) 
-	$(error 'CSIEMESSENGER_ROOT not defined')
+ifeq (${WESBMESSENGER_ROOT},) 
+	$(error 'WESBMESSENGER_ROOT not defined')
 else
-	@echo 'CSIEMESSENGER_ROOT=${CSIEMESSENGER_ROOT}'
+	@echo 'WESBMESSENGER_ROOT=${WESBMESSENGER_ROOT}'
 endif
 	@echo ''
 
@@ -66,10 +66,10 @@ release: init
 	@echo ''
 	@echo '## GENERATION DU KIT DE PRODUCTION'
 	@echo ''
-	@echo '#### GENERATION DE CSIEMESSENGER'
+	@echo '#### GENERATION DE WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
 else
-	-cd "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Release" && make
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Release" && make
 endif
 	@echo ''
 	@echo '#### GENERATION DE MESSENGER POUR LUA'
@@ -93,11 +93,11 @@ endif
 debug: init
 	@echo 'GENERATION DU KIT DE DEBUG'
 	@echo ''
-	@echo '#### GENERATION DE CSIEMESSENGER'
+	@echo '#### GENERATION DE WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
-#	-msbuild "../CSIEMessenger/CSIEMessenger/CSIEMessenger.sln" /p:Configuration=Debug
+#	-msbuild "../WESBMessenger/WESBMessenger/WESBMessenger.sln" /p:Configuration=Debug
 else
-	-cd "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Debug" && make
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Debug" && make
 endif
 	@echo ''
 	@echo '#### GENERATION DE MESSENGER POUR LUA'
@@ -122,11 +122,11 @@ endif
 clean_debug: init
 	@echo ''
 	@echo '## NETTOYAGE DU MODE DEBUG'
-	@echo '#### NETTOYAGE DE CSIEMESSENGER'
+	@echo '#### NETTOYAGE DE WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
-#	-msbuild "../CSIEMessenger/CSIEMessenger/CSIEMessenger.sln" /t:Clean /p:Configuration=Debug
+#	-msbuild "../WESBMessenger/WESBMessenger/WESBMessenger.sln" /t:Clean /p:Configuration=Debug
 else
-	-cd "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Debug" && make clean
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Debug" && make clean
 endif
 	@echo ''
 	@echo '#### NETTOYAGE DE MESSENGER POUR LUA'
@@ -152,11 +152,11 @@ endif
 clean_release: init
 	@echo ''
 	@echo '## NETTOYAGE DU MODE RELEASE'
-	@echo '#### NETTOYAGE DE CSIEMESSENGER'
+	@echo '#### NETTOYAGE DE WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
-#	-msbuild "../CSIEMessenger/CSIEMessenger/CSIEMessenger.sln" /t:Clean /p:Configuration=Release
+#	-msbuild "../WESBMessenger/WESBMessenger/WESBMessenger.sln" /t:Clean /p:Configuration=Release
 else
-	-cd "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Release" && make clean
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Release" && make clean
 endif
 	@echo ''
 	@echo '#### NETTOYAGE DE MESSENGER POUR LUA'
@@ -240,11 +240,11 @@ else
 	-cp -f "${LUA_LIB}/"liblua5.1.so* "sequencer/"
 endif
 	@echo ''
-	@echo '## AJOUT DU CSIEMESSENENGER'
+	@echo '## AJOUT DU WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../CSIEMessenger/CSIEMessenger/Release/"CSIEMessenger.dll "sequencer/"
+	-cp -f "../WESBMessenger/WESBMessenger/Release/"WESBMessenger.dll "sequencer/"
 else
-	-cp -f "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Release/"libCSIEMessenger.so "sequencer/"
+	-cp -f "../WESBMessenger/WESBMessenger/WESBMessenger/Release/"libWESBMessenger.so "sequencer/"
 endif
 	@echo ''
 	@echo '## AJOUT DU MESSENENGER GATEWAY WEBSOCKETS'
@@ -256,9 +256,9 @@ endif
 	@echo ''
 	@echo '## AJOUT DU MESSENENGER POUR LUA'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../messenger/Release/"csiemessenger_c.dll "sequencer/plugins/lua/"
+	-cp -f "../messenger/Release/"wesbmessenger_c.dll "sequencer/plugins/lua/"
 else
-	-cp -f "../messenger/Release/"csiemessenger_c.so "sequencer/plugins/lua/"
+	-cp -f "../messenger/Release/"wesbmessenger_c.so "sequencer/plugins/lua/"
 endif
 ifeq "$(WINDOWS)" "YES"
 else
@@ -330,11 +330,11 @@ else
 	-cp -f "${LUA_LIB}/"liblua5.1.so* "sequencer_debug/"
 endif
 	@echo ''
-	@echo '## AJOUT DU CSIEMESSENENGER'
+	@echo '## AJOUT DU WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../CSIEMessenger/CSIEMessenger/Debug/"CSIEMessenger.dll "sequencer_debug/"
+	-cp -f "../WESBMessenger/WESBMessenger/Debug/"WESBMessenger.dll "sequencer_debug/"
 else
-	-cp -f "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Debug/"libCSIEMessenger.so "sequencer_debug/"
+	-cp -f "../WESBMessenger/WESBMessenger/WESBMessenger/Debug/"libWESBMessenger.so "sequencer_debug/"
 endif
 	@echo ''
 	@echo '## AJOUT DU MESSENENGER GATEWAY WEBSOCKETS'
@@ -346,9 +346,9 @@ endif
 	@echo ''
 	@echo '## AJOUT DU MESSENENGER POUR LUA'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../messenger/Debug/"csiemessenger_c.dll "sequencer_debug/plugins/lua/"
+	-cp -f "../messenger/Debug/"wesbmessenger_c.dll "sequencer_debug/plugins/lua/"
 else
-	-cp -f "../messenger/Debug/"csiemessenger_c.so "sequencer_debug/plugins/lua/"
+	-cp -f "../messenger/Debug/"wesbmessenger_c.so "sequencer_debug/plugins/lua/"
 endif
 ifeq "$(WINDOWS)" "YES"
 else
@@ -417,18 +417,18 @@ else
 	-cp -f "${LUA_LIB}/"liblua5.1.so* "sequencer/"
 endif
 	@echo ''
-	@echo '## AJOUT DU CSIEMESSENENGER'
+	@echo '## AJOUT DU WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../CSIEMessenger/CSIEMessenger/Release/"CSIEMessenger.dll "sequencer/"
+	-cp -f "../WESBMessenger/WESBMessenger/Release/"WESBMessenger.dll "sequencer/"
 else
-	-cp -f "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Release/"libCSIEMessenger.so "sequencer/"
+	-cp -f "../WESBMessenger/WESBMessenger/WESBMessenger/Release/"libWESBMessenger.so "sequencer/"
 endif
 	@echo ''
 	@echo '## AJOUT DU MESSENENGER POUR LUA'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../messenger/Release/"csiemessenger_c.dll "sequencer/plugins/lua/"
+	-cp -f "../messenger/Release/"wesbmessenger_c.dll "sequencer/plugins/lua/"
 else
-	-cp -f "../messenger/Release/"csiemessenger_c.so "sequencer/plugins/lua/"
+	-cp -f "../messenger/Release/"wesbmessenger_c.so "sequencer/plugins/lua/"
 endif
 	@echo 'REPERTOIRE "sequencer" GENERE'
 	
@@ -488,17 +488,17 @@ else
 	-cp -f "${LUA_LIB}/"liblua5.1.so* "sequencer_debug/"
 endif
 	@echo ''
-	@echo '## AJOUT DU CSIEMESSENENGER'
+	@echo '## AJOUT DU WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../CSIEMessenger/CSIEMessenger/Debug/"CSIEMessenger.dll "sequencer_debug/"
+	-cp -f "../WESBMessenger/WESBMessenger/Debug/"WESBMessenger.dll "sequencer_debug/"
 else
-	-cp -f "../CSIEMessenger/CSIEMessenger/CSIEMessenger/Debug/"libCSIEMessenger.so "sequencer_debug/"
+	-cp -f "../WESBMessenger/WESBMessenger/WESBMessenger/Debug/"libWESBMessenger.so "sequencer_debug/"
 endif
 	@echo ''
 	@echo '## AJOUT DU MESSENENGER POUR LUA'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "../messenger/Debug/"csiemessenger_c.dll "sequencer_debug/plugins/lua/"
+	-cp -f "../messenger/Debug/"wesbmessenger_c.dll "sequencer_debug/plugins/lua/"
 else
-	-cp -f "../messenger/Debug/"csiemessenger_c.so "sequencer_debug/plugins/lua/"
+	-cp -f "../messenger/Debug/"wesbmessenger_c.so "sequencer_debug/plugins/lua/"
 endif
 	@echo 'REPERTOIRE "sequencer_debug" GENERE'

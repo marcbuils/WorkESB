@@ -14,7 +14,7 @@
 --  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
 --
 --  Created on: 18 avr. 2011
---      Author: Marc Buils (CSIE)
+--      Author: Marc Buils (MATIS - http://www.matis-group.com)
 --
 
 uuid = require("uuid");
@@ -29,7 +29,7 @@ automate = {
 		
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			csiemessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		
 		table.insert(LOGS, "INFO: START SLEEP " .. p_time);
@@ -53,7 +53,7 @@ automate = {
 	wait = function ( p_condition )
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			csiemessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		
 		table.insert(LOGS, "INFO: START WAIT " .. p_condition);
@@ -89,7 +89,7 @@ automate = {
 		local _return = nil;
 
 		if ( __AUTOMATE_CALL_LIST__[p_name] == nil ) then
-			csiemessenger.regCall( p_name, '__AUTOMATE_CALL_LIST__["'..p_name..'"]' );
+			wesbmessenger.regCall( p_name, '__AUTOMATE_CALL_LIST__["'..p_name..'"]' );
 		end
 
 		__AUTOMATE_CALL_LIST__[p_name](p_params, function( p_return )
@@ -104,7 +104,7 @@ automate = {
 	end,
 	
 	trigger = function( p_name, p_params )
-		csiemessenger.trigger( p_name, p_params );
+		wesbmessenger.trigger( p_name, p_params );
 		coroutine.yield( g_automate );
 	end,
 	
@@ -112,7 +112,7 @@ automate = {
 		-- Send trigger
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			csiemessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		__AUTOMATE_DIALOG__ = json.encode({
 			type = "alert",
@@ -124,7 +124,7 @@ automate = {
 		-- Receive return
 		if ( __AUTOMATE_EVENT_DIALOG_RETURN__ == nil ) then
 			__AUTOMATE_EVENT_DIALOG_RETURN__ = {};
-			csiemessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
+			wesbmessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
 		end
 		
 		local _end = false;
@@ -148,7 +148,7 @@ automate = {
 		-- Send trigger
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			csiemessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		__AUTOMATE_DIALOG__ = json.encode({
 			type = "confirm",
@@ -160,7 +160,7 @@ automate = {
 		-- Receive return
 		if ( __AUTOMATE_EVENT_DIALOG_RETURN__ == nil ) then
 			__AUTOMATE_EVENT_DIALOG_RETURN__ = {};
-			csiemessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
+			wesbmessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
 		end
 		
 		local _end = false;
@@ -187,7 +187,7 @@ automate = {
 		-- Send trigger
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			csiemessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		__AUTOMATE_DIALOG__ = json.encode({
 			type = "prompt",
@@ -199,7 +199,7 @@ automate = {
 		-- Receive return
 		if ( __AUTOMATE_EVENT_DIALOG_RETURN__ == nil ) then
 			__AUTOMATE_EVENT_DIALOG_RETURN__ = {};
-			csiemessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
+			wesbmessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
 		end
 		
 		local _end = false;

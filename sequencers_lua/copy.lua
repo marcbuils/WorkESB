@@ -14,10 +14,10 @@
 --  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
 --
 --  Created on: 18 avr. 2011
---      Author: Marc Buils (CSIE)
+--      Author: Marc Buils (MATIS - http://www.matis-group.com)
 --
 
-local csiemessenger = require('csiemessenger');
+local wesbmessenger = require('wesbmessenger');
 
 _variables = {};
 _add = function( p_params )
@@ -55,20 +55,20 @@ _add = function( p_params )
 	else
 		_variables[p_params.variable_out_name] = {};
 		if ( p_params.type == "sampling" ) then
-			csiemessenger.regConsumSampling( 
+			wesbmessenger.regConsumSampling( 
 				p_params.variable_in_name, 
 				"_variables." .. p_params.variable_out_name .. "._in", 
 				p_params.variable_in_type );
-			csiemessenger.regProduceSampling( 
+			wesbmessenger.regProduceSampling( 
 				p_params.variable_out_name, 
 				"_variables." .. p_params.variable_out_name .. "._out", 
 				p_params.variable_out_type );
 		else
-			csiemessenger.regConsumQueuing( 
+			wesbmessenger.regConsumQueuing( 
 				p_params.variable_in_name, 
 				"_variables." .. p_params.variable_out_name .. "._in", 
 				p_params.variable_in_type );
-			csiemessenger.regConsumQueuing( 
+			wesbmessenger.regConsumQueuing( 
 				p_params.variable_out_name, 
 				"_variables." .. p_params.variable_out_name .. "._out", 
 				p_params.variable_out_type );
@@ -92,9 +92,9 @@ _remove = function( p_params )
 	return _return;
 end
 onstart = function( p_infos )
-	csiemessenger.init( p_infos.domain, p_infos.name );
-	csiemessenger.share( p_infos.add, _add );
-	csiemessenger.share( p_infos.remove, _remove );
+	wesbmessenger.init( p_infos.domain, p_infos.name );
+	wesbmessenger.share( p_infos.add, _add );
+	wesbmessenger.share( p_infos.remove, _remove );
 
 	for _i, _v in pairs( p_infos.list ) do
 		_add( _v );
@@ -102,12 +102,12 @@ onstart = function( p_infos )
 end
 
 onupdate = function()
-	csiemessenger.update();
+	wesbmessenger.update();
 	for _i, _v in pairs( _variables ) do
 		_variables[_i]._out = _variables[_i]._in;
 	end
 end
 
 onstop = function()
-	csiemessenger.unreg();
+	wesbmessenger.unreg();
 end

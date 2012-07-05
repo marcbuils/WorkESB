@@ -2,7 +2,7 @@
 	"name":		"DEMO",										// required	
 	"time":		50,											// required	
 	"share":	{
-		"domain":		"fr.csie.benches",					// required
+		"domain":		"com.workesb",					// required
 		"add":			"SEQUENCER_ADD",					// required
 		"remove":		"SEQUENCER_REMOVE",					// required
 		"reload":		"SEQUENCER_RELOAD",					// required

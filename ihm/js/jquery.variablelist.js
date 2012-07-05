@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
 	var _getIdByName = function(p_name){
@@ -48,10 +48,10 @@
 			var _trigger = $($_this.attr('data-tmpl-trigger'));
 			var _eventlist = {};
 			
-			$(document).one('csiemessenger_update', function(){
-				$.csiemessenger.singleton().bind('csiemessenger_pong', function(p_module){
+			$(document).one('wesbmessenger_update', function(){
+				$.wesbmessenger.singleton().bind('wesbmessenger_pong', function(p_module){
 					if ( p_module.name == "IHM" || p_module.name == "SEQUENCEUR D'AUTOMATE"
-						|| p_module.variable.name == "csiemessenger_pong" ){
+						|| p_module.variable.name == "wesbmessenger_pong" ){
 						return;
 					}
 					
@@ -82,10 +82,10 @@
 								.appendTo( _block );
 						} else if ( p_module.variable.com == "producer" && p_module.variable.queuing ) {
 //							if ( p_module.variable.name != "LOGS" ){ 
-//								$.csiemessenger.singleton().regConsumQueuing(p_module.variable.name, p_module.variable.type);
-//								$(document).bind('csiemessenger_update', function(){
-//									if ($.csiemessenger.consumer[ p_module.variable.name ] != undefined){
-//										$.each( $.csiemessenger.consumer[ p_module.variable.name ], function( _i, _p ){
+//								$.wesbmessenger.singleton().regConsumQueuing(p_module.variable.name, p_module.variable.type);
+//								$(document).bind('wesbmessenger_update', function(){
+//									if ($.wesbmessenger.consumer[ p_module.variable.name ] != undefined){
+//										$.each( $.wesbmessenger.consumer[ p_module.variable.name ], function( _i, _p ){
 //											log( 'QUEUING "'+p_module.variable.name+'": '+_p );
 //										});
 //									}
@@ -99,7 +99,7 @@
 							if ( _eventlist[p_module.variable.name] == undefined ){
 								_eventlist[p_module.variable.name] = true;
 								
-								$.csiemessenger.singleton().bind( p_module.variable.name, function(p){
+								$.wesbmessenger.singleton().bind( p_module.variable.name, function(p){
 									log( 'bind "'+p_module.variable.name+'": '+JSON.stringify(p) );
 								});
 							}
@@ -111,12 +111,12 @@
 						.pluginautoload();
 				});
 				
-				$.csiemessenger.singleton().bind(_removed, function(p_module){
+				$.wesbmessenger.singleton().bind(_removed, function(p_module){
 					$('ul[data-jquery-type="sortableVariable"] li[data-module="'+p_module.name+'"]').remove();
 					$_this.find('ul[data-jquery-type="sortableVariable"][data-name="' + p_module.name + '"]').remove();
 				});
 
-				$.csiemessenger.singleton().trigger('csiemessenger_ping');
+				$.wesbmessenger.singleton().trigger('wesbmessenger_ping');
 			});
 		});
 	};

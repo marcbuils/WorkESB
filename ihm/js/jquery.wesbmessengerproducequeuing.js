@@ -15,22 +15,22 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
-$.fn.csiemessengerProduceQueuing = function(){
+$.fn.wesbmessengerProduceQueuing = function(){
 	return this.each(function(){
 		var $_this = $(this);
 		var _name = $_this.attr('data-variable-name');
 		var _type = $_this.attr('data-variable-type');
 		
-		$(document).one( "csiemessenger_update", function(){
+		$(document).one( "wesbmessenger_update", function(){
 			// setting
-			$.csiemessenger.singleton().regProduceQueuing( _name, _type );
+			$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
 			$_this.bind('change', function(){
 				var _val = $_this.val();
 			
-				$.csiemessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
+				$.wesbmessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
 				$_this.val('');
 			});
 		});

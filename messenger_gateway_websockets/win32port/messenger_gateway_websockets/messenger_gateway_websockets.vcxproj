@@ -18,7 +18,7 @@
     <ClCompile Include="..\..\messenger_gateway_websockets\src\messenger_gateway.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\messenger_gateway_websockets\include\CSIEMessenger.h" />
+    <ClInclude Include="..\..\messenger_gateway_websockets\include\WESBMessenger.h" />
     <ClInclude Include="..\..\messenger_gateway_websockets\include\Log.h" />
     <ClInclude Include="..\..\messenger_gateway_websockets\libs\jsoncpp\include\json.h" />
   </ItemGroup>
@@ -63,12 +63,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;MESSENGER_GATEWAY_WEBSOCKETS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\win32helpers;..\..\messenger_gateway_websockets\include;$(JSONCPP_ROOT)\include;$(CSIEMESSENGER_ROOT)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\win32helpers;..\..\messenger_gateway_websockets\include;$(JSONCPP_ROOT)\include;$(WESBMESSENGER_ROOT)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CSIEMESSENGER_ROOT)\..\Debug\CSIEMessenger.lib;..\Debug\libwebsocketswin32.lib;..\zlib\DebugV10\ZLib.lib;ws2_32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(WESBMESSENGER_ROOT)\..\Debug\WESBMessenger.lib;..\Debug\libwebsocketswin32.lib;..\zlib\DebugV10\ZLib.lib;ws2_32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,14 +80,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;MESSENGER_GATEWAY_WEBSOCKETS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\win32helpers;..\..\messenger_gateway_websockets\include;$(JSONCPP_ROOT)\include;$(CSIEMESSENGER_ROOT)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\win32helpers;..\..\messenger_gateway_websockets\include;$(JSONCPP_ROOT)\include;$(WESBMESSENGER_ROOT)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(CSIEMESSENGER_ROOT)\..\Release\CSIEMessenger.lib;..\Release\libwebsocketswin32.lib;..\zlib\Release\ZLib.lib;ws2_32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(WESBMESSENGER_ROOT)\..\Release\WESBMessenger.lib;..\Release\libwebsocketswin32.lib;..\zlib\Release\ZLib.lib;ws2_32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>

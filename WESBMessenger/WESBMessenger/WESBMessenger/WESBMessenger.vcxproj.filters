@@ -18,7 +18,7 @@
     <None Include="Shared_Data.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CSIEMessenger.cpp">
+    <ClCompile Include="WESBMessenger.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="gen\Shared_Data.cpp">

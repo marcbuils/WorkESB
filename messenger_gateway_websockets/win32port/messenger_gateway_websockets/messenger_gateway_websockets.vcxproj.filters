@@ -32,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\messenger_gateway_websockets\include\CSIEMessenger.h">
+    <ClInclude Include="..\..\messenger_gateway_websockets\include\WESBMessenger.h">
       <Filter>Fichiers de ressources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\messenger_gateway_websockets\include\Log.h">

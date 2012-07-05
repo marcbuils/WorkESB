@@ -44,7 +44,7 @@ all: sequencer
 sequencer: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L"${LUA_LIB}" -L"${SIMD_LIB}" -L"${JSONCPP_LIB}" -L"${CSIEMESSENGER_ROOT}/Release" -L"${OSPL_HOME}/lib" -L"/home/marc/tools/boost/boost_1_49_0/stage/lib" -lddsutil -ldcpsgapi -lddsuser -lSimD -lddsos -lddsosnet -lddsserialization -lddsconfparser -lddsdatabase -lddskernel -ldcpssacpp -lddsconf -lcommonserv -lcmxml -lboost_thread -lboost_signals -lboost_program_options -lboost_system -o"sequencer" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"${LUA_LIB}" -L"${SIMD_LIB}" -L"${JSONCPP_LIB}" -L"${WESBMESSENGER_ROOT}/Release" -L"${OSPL_HOME}/lib" -L"/home/marc/tools/boost/boost_1_49_0/stage/lib" -lddsutil -ldcpsgapi -lddsuser -lSimD -lddsos -lddsosnet -lddsserialization -lddsconfparser -lddsdatabase -lddskernel -ldcpssacpp -lddsconf -lcommonserv -lcmxml -lboost_thread -lboost_signals -lboost_program_options -lboost_system -o"sequencer" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -14,22 +14,22 @@
 --  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
 --
 --  Created on: 18 avr. 2011
---      Author: Marc Buils (CSIE)
+--      Author: Marc Buils (MATIS - http://www.matis-group.com)
 --
 
-local csiemessenger = require('csiemessenger');
+local wesbmessenger = require('wesbmessenger');
 
 onstart = function( p_infos )
-	csiemessenger.init( p_infos.domain, p_infos.name );
-	csiemessenger.regProduceSampling( p_infos.variable_time, "TIME", "int" );
+	wesbmessenger.init( p_infos.domain, p_infos.name );
+	wesbmessenger.regProduceSampling( p_infos.variable_time, "TIME", "int" );
 	TIME = os.time();
 end
 
 onupdate = function()
 	TIME = os.time();
-	csiemessenger.update();
+	wesbmessenger.update();
 end
 
 onstop = function()
-	csiemessenger.unreg();
+	wesbmessenger.unreg();
 end

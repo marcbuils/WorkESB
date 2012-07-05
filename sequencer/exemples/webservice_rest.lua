@@ -1,4 +1,4 @@
-require('csiemessenger');
+require('wesbmessenger');
 
 local SERVER_HOST = "http://localhost/www/report/";
 						
@@ -58,9 +58,9 @@ local wspost = function( p_table, p_type, p_params, p_data )
 end
 
 onstart = function( p_infos )
-	csiemessenger.init( p_infos.domain, p_infos.name );
+	wesbmessenger.init( p_infos.domain, p_infos.name );
 	
-	csiemessenger.share( _ifndef( p_infos.reportCreate, "REPORT_CREATE" ), function( p_params )
+	wesbmessenger.share( _ifndef( p_infos.reportCreate, "REPORT_CREATE" ), function( p_params )
 		local _report = -1;
 		local _testset = -1;
 		
@@ -78,7 +78,7 @@ onstart = function( p_infos )
 		return _report.Test_ID;
 	end );
 	
-	csiemessenger.share( _ifndef( p_infos.reportSave, "REPORT_SAVE" ), function( p_params )
+	wesbmessenger.share( _ifndef( p_infos.reportSave, "REPORT_SAVE" ), function( p_params )
 		local _result = -1;
 		
         _result = wsget('result', 'filter', "/.%5BResult_Test="..p_params.report.."%5D%5BResult_Action="..p_params.id.."%5D" );
@@ -91,9 +91,9 @@ onstart = function( p_infos )
 end
 
 onupdate = function()
-	csiemessenger.update();
+	wesbmessenger.update();
 end
 
 onstop = function()
-	csiemessenger.unreg();
+	wesbmessenger.unreg();
 end

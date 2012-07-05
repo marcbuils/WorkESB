@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 25 fevr. 2011
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 
 // -- STD C++ Include
@@ -91,9 +91,9 @@ typedef enum
 }type_com;
 
 // functions declaration
-extern "C" DLL_API int CSIEMessenger_trigger_full( int p_id, char* p_name, char* p_params );
+extern "C" DLL_API int WESBMessenger_trigger_full( int p_id, char* p_name, char* p_params );
 
-namespace csiemessenger
+namespace wesbmessenger
 {
 struct data_struct {
 	union {
@@ -273,7 +273,7 @@ void event_ping_var( int p_id, int p_pos )
 			_infos["variable"].removeMember("queuing");
 		}
 
-		CSIEMessenger_trigger_full(_id, "csiemessenger_pong", (char*)_writer.write(_infos).c_str());
+		WESBMessenger_trigger_full(_id, "wesbmessenger_pong", (char*)_writer.write(_infos).c_str());
 }
 // ping event trigger
 void event_ping_trigger( int p_id, string p_name )
@@ -286,7 +286,7 @@ void event_ping_trigger( int p_id, string p_name )
 	_infos["variable"]["name"] = p_name;
 	_infos["variable"]["com"] = "trigger";
 
-	CSIEMessenger_trigger_full(_id, "csiemessenger_pong", (char*)_writer.write(_infos).c_str());
+	WESBMessenger_trigger_full(_id, "wesbmessenger_pong", (char*)_writer.write(_infos).c_str());
 }
 void event_ping(char* p_params)
 {
@@ -311,20 +311,20 @@ void event_ping(char* p_params)
 	}
 }
 
-} // namespace csiemessenger
+} // namespace wesbmessenger
 
 REGISTER_TOPIC_TRAITS(Shared_Data::DDS_int)
 REGISTER_TOPIC_TRAITS(Shared_Data::DDS_float)
 REGISTER_TOPIC_TRAITS(Shared_Data::DDS_string)
 
-using namespace csiemessenger;
+using namespace wesbmessenger;
 
 extern "C"
 {
 
-DLL_API int CSIEMessenger_init_full( char* p_domain, char* p_name )
+DLL_API int WESBMessenger_init_full( char* p_domain, char* p_name )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_init_full: " + (string)p_domain + (string)" - " + p_name );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_init_full: " + (string)p_domain + (string)" - " + p_name );
 
 	static bool _isInit = false;
 	if ( !_isInit )
@@ -346,7 +346,7 @@ DLL_API int CSIEMessenger_init_full( char* p_domain, char* p_name )
 	data_struct _sc;
 	_sc.value.fef = event_ping;
 	_sc.tqos = new dds::TopicQos();
-	_sc.topic.qs = new dds::Topic<Shared_Data::DDS_string>( (string)EXTENSION_EVENT + "csiemessenger_ping", *(_sc.tqos) );
+	_sc.topic.qs = new dds::Topic<Shared_Data::DDS_string>( (string)EXTENSION_EVENT + "wesbmessenger_ping", *(_sc.tqos) );
 	_sc.dqos.reader = new dds::DataReaderQos( *(_sc.tqos) );
 	_sc.dqos.reader->set_keep_last( MAX_QUEUE_SIZE );
 	_sc.dqos.reader->set_reliable();
@@ -358,9 +358,9 @@ DLL_API int CSIEMessenger_init_full( char* p_domain, char* p_name )
 }
 
 
-DLL_API int CSIEMessenger_regConsumSampling_full( int p_id, char* p_name, void* p_value, int p_type )
+DLL_API int WESBMessenger_regConsumSampling_full( int p_id, char* p_name, void* p_value, int p_type )
 {
-	Log::get()->add( Log::LEVEL_INFO,  (string)"CSIEMessenger_regConsumSampling_full: " + p_name );
+	Log::get()->add( Log::LEVEL_INFO,  (string)"WESBMessenger_regConsumSampling_full: " + p_name );
 	int _return = -1;
 
 	switch ( p_type )
@@ -450,9 +450,9 @@ DLL_API int CSIEMessenger_regConsumSampling_full( int p_id, char* p_name, void* 
 	return _return;
 }
 
-DLL_API int CSIEMessenger_regProduceSampling_full( int p_id, char* p_name, void* p_value, int p_type )
+DLL_API int WESBMessenger_regProduceSampling_full( int p_id, char* p_name, void* p_value, int p_type )
 {
-	Log::get()->add( Log::LEVEL_INFO,  (string)"CSIEMessenger_regProduceSampling_full: " + p_name );
+	Log::get()->add( Log::LEVEL_INFO,  (string)"WESBMessenger_regProduceSampling_full: " + p_name );
 
 	int _return = -1;
 
@@ -539,9 +539,9 @@ DLL_API int CSIEMessenger_regProduceSampling_full( int p_id, char* p_name, void*
 }
 
 
-DLL_API int CSIEMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type, int p_maxsize )
+DLL_API int WESBMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type, int p_maxsize )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_regConsumQueuing_full" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_regConsumQueuing_full" );
 
 	int _return = -1;
 
@@ -640,9 +640,9 @@ DLL_API int CSIEMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p
 }
 
 
-DLL_API int CSIEMessenger_regProduceQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type )
+DLL_API int WESBMessenger_regProduceQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_regProduceQueuing_full" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_regProduceQueuing_full" );
 
 	int _return = -1;
 
@@ -731,9 +731,9 @@ DLL_API int CSIEMessenger_regProduceQueuing_full( int p_id, char* p_name, void* 
 	return _return;
 }
 
-DLL_API int CSIEMessenger_unreg_full( int p_id )
+DLL_API int WESBMessenger_unreg_full( int p_id )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: " + instances()[p_id].name );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: " + instances()[p_id].name );
 
 	int _i=0;
 /*	Json::FastWriter _writer;
@@ -757,12 +757,12 @@ DLL_API int CSIEMessenger_unreg_full( int p_id )
 				_infos["variable"]["name"] = ( instances()[p_id].datas[_i].typeData == TYPE_SAMPLING ? instances()[p_id].datas[_i].topic.s->get_name() : instances()[p_id].datas[_i].topic.qs->get_name() );
 				break;
 		}
-		CSIEMessenger_trigger_full(p_id, "csiemessenger_unreg", (char*)_writer.write(_infos).c_str());
+		WESBMessenger_trigger_full(p_id, "wesbmessenger_unreg", (char*)_writer.write(_infos).c_str());
 	}
 */
 
 	// free memory
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: Free memory" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: Free memory" );
 	for ( _i = instances()[p_id].datas.size()-1; _i >= 0; _i-- )
 	{
 		if ( instances()[p_id].datas[_i].com == CONSUMER )
@@ -816,7 +816,7 @@ DLL_API int CSIEMessenger_unreg_full( int p_id )
 		}
 	}
 
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: Free DDS vars" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: Free DDS vars" );
 	for (_i=instances()[p_id].datas.size()-1; _i>=0; _i--)
 	{
 		switch (instances()[p_id].datas[_i].com)
@@ -963,7 +963,7 @@ DLL_API int CSIEMessenger_unreg_full( int p_id )
 	}
 
 	// Remove triggers
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: Free triggers" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: Free triggers" );
 	if ( triggers().find(p_id) != triggers().end() )
 	{
 		map<string,data_struct>::iterator _it;
@@ -978,7 +978,7 @@ DLL_API int CSIEMessenger_unreg_full( int p_id )
 	}
 
 	// remove calls
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: Free calls" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: Free calls" );
 	if ( calls().find(p_id) != calls().end() )
 	{
 		map<string,data_struct>::iterator _it;
@@ -992,23 +992,23 @@ DLL_API int CSIEMessenger_unreg_full( int p_id )
 		calls().erase(p_id);
 	}
 
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: Free responses" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: Free responses" );
 	if ( responses().find(p_id) != responses().end() )
 	{
 		responses().erase(p_id);
 	}
 
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: Free DDS tools" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: Free DDS tools" );
 	instances().erase(p_id);
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_unreg_full: End" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_unreg_full: End" );
 
 	return 0;
 }
 
-DLL_API int CSIEMessenger_share_full( int p_id, char* p_name, Shared_Func p_function )
+DLL_API int WESBMessenger_share_full( int p_id, char* p_name, Shared_Func p_function )
 {
 	int _return = -1;
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_share_full" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_share_full" );
 
 	// Produce queuing string
 	data_struct *_sp = new data_struct;
@@ -1039,9 +1039,9 @@ DLL_API int CSIEMessenger_share_full( int p_id, char* p_name, Shared_Func p_func
 	return _return;
 }
 
-DLL_API int CSIEMessenger_call_full( int p_id, char* p_name, char* p_params, CallBack_Func p_function )
+DLL_API int WESBMessenger_call_full( int p_id, char* p_name, char* p_params, CallBack_Func p_function )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_call_full" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_call_full" );
 
 	int _return = -1;
 	data_struct _sp;
@@ -1105,10 +1105,10 @@ DLL_API int CSIEMessenger_call_full( int p_id, char* p_name, char* p_params, Cal
 	return _return;
 }
 
-DLL_API int CSIEMessenger_bind_full( int p_id, char* p_name, Event_Func p_function )
+DLL_API int WESBMessenger_bind_full( int p_id, char* p_name, Event_Func p_function )
 {
 	int _return = -1;
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_bind_full" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_bind_full" );
 
 	// Consum queuing string
 	data_struct _sc;
@@ -1130,9 +1130,9 @@ DLL_API int CSIEMessenger_bind_full( int p_id, char* p_name, Event_Func p_functi
 	return _return;
 }
 
-DLL_API int CSIEMessenger_trigger_full( int p_id, char* p_name, char* p_params )
+DLL_API int WESBMessenger_trigger_full( int p_id, char* p_name, char* p_params )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_trigger_full: " + (string)p_name + " " + p_params );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_trigger_full: " + (string)p_name + " " + p_params );
 	data_struct _sp;
 	boost::posix_time::ptime _curtime = boost::posix_time::microsec_clock::universal_time();
 	long	_time	= (_curtime - (boost::posix_time::ptime)boost::gregorian::date(1970,1,1)).total_seconds(),
@@ -1174,9 +1174,9 @@ DLL_API int CSIEMessenger_trigger_full( int p_id, char* p_name, char* p_params )
 	return 0;
 }
 
-DLL_API int CSIEMessenger_update_full( int p_id )
+DLL_API int WESBMessenger_update_full( int p_id )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "CSIEMessenger_update_full: " + instances()[p_id].name );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_update_full: " + instances()[p_id].name );
 
 	int _i;
 	boost::posix_time::ptime _curtime = boost::posix_time::microsec_clock::universal_time();

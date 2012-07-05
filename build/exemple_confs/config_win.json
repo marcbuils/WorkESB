@@ -2,7 +2,7 @@
 	"time":			50,	// 50 ms	
 	"name":			"PC_WIN",
 	"share":	{
-		"domain":		"fr.csie.benches.test",				// required
+		"domain":		"com.workesb.test",				// required
 		"add":			"SEQUENCER_ADD",					// required
 		"remove":		"SEQUENCER_REMOVE",					// required
 		"reload":		"SEQUENCER_RELOAD",					// required

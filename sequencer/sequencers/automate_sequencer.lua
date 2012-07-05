@@ -14,10 +14,10 @@
 --  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
 --
 --  Created on: 18 avr. 2011
---      Author: Marc Buils (CSIE)
+--      Author: Marc Buils (MATIS - http://www.matis-group.com)
 --
 
-local csiemessenger = require('csiemessenger');
+local wesbmessenger = require('wesbmessenger');
 local lfs = require('lfs');
 	
 -- GLOBAL VARS
@@ -49,7 +49,7 @@ local _startAutomate = function( p_params )
 		_time = 0;
 		_lastTime = os.time();
 		table.insert(LOGS, "INFO: AUTOMATE START");
-		csiemessenger.trigger(_automateEvent, _status);
+		wesbmessenger.trigger(_automateEvent, _status);
 
 		g_automate = coroutine.create( _file );
 	end
@@ -69,7 +69,7 @@ local _stopAutomate = function( p_params )
 
 	_status = "stopped";
 	table.insert(LOGS, "INFO: AUTOMATE STOP");
-	csiemessenger.trigger(_automateEvent, _status);
+	wesbmessenger.trigger(_automateEvent, _status);
 	
 	return true;
 end
@@ -82,7 +82,7 @@ local _pauseAutomate = function( p_params )
 	
 	_status = "paused";
 	table.insert(LOGS, "INFO: AUTOMATE PAUSED");
-	csiemessenger.trigger(_automateEvent, _status);
+	wesbmessenger.trigger(_automateEvent, _status);
 	
 	return true;
 end
@@ -96,7 +96,7 @@ local _resumeAutomate = function( p_params )
 	_status = "started";
 	_lastTime = os.time();
 	table.insert(LOGS, "INFO: AUTOMATE RESUME");
-	csiemessenger.trigger(_automateEvent, _status);
+	wesbmessenger.trigger(_automateEvent, _status);
 	
 	return true;
 end
@@ -124,16 +124,16 @@ end
 onstart = function( p_infos )
 	g_config = p_infos;
 	
-	csiemessenger.init( g_config.domain, g_config.name );
-	csiemessenger.regProduceSampling( _ifndef( g_config.variable_status, "AUTOMATE_STATUS" ), "_status", "string" );
-	csiemessenger.regProduceSampling( _ifndef( g_config.variable_time, "AUTOMATE_TIME" ), "_time", "int" );
+	wesbmessenger.init( g_config.domain, g_config.name );
+	wesbmessenger.regProduceSampling( _ifndef( g_config.variable_status, "AUTOMATE_STATUS" ), "_status", "string" );
+	wesbmessenger.regProduceSampling( _ifndef( g_config.variable_time, "AUTOMATE_TIME" ), "_time", "int" );
 	
 	-- reg functions
-	csiemessenger.share( _ifndef( g_config.start, "startAutomate" ), _startAutomate );
-	csiemessenger.share( _ifndef( g_config.stop, "stopAutomate" ), _stopAutomate );
-	csiemessenger.share( _ifndef( g_config.pause, "pauseAutomate" ), _pauseAutomate );
-	csiemessenger.share( _ifndef( g_config.resume, "resumeAutomate" ), _resumeAutomate );
-	csiemessenger.share( _ifndef( g_config.get, "getAutomates" ), _getAutomates );
+	wesbmessenger.share( _ifndef( g_config.start, "startAutomate" ), _startAutomate );
+	wesbmessenger.share( _ifndef( g_config.stop, "stopAutomate" ), _stopAutomate );
+	wesbmessenger.share( _ifndef( g_config.pause, "pauseAutomate" ), _pauseAutomate );
+	wesbmessenger.share( _ifndef( g_config.resume, "resumeAutomate" ), _resumeAutomate );
+	wesbmessenger.share( _ifndef( g_config.get, "getAutomates" ), _getAutomates );
 	_automateEvent = _ifndef( g_config.event, "AUTOMATE_EVENT" );
 	
 	-- Set status
@@ -141,37 +141,37 @@ onstart = function( p_infos )
 
 	-- Logs
 	LOGS = {};
-	csiemessenger.regProduceQueuing( _ifndef( g_config.variable_logs, "LOGS" ), 'LOGS', 'string');
+	wesbmessenger.regProduceQueuing( _ifndef( g_config.variable_logs, "LOGS" ), 'LOGS', 'string');
 
 	-- add functions of automate
 	loadfile( 'plugins/lua/automate.lua' )();
 	
-	-- add csiemessenger variables
+	-- add wesbmessenger variables
 	local _consumers = {};
 	local _producers = {};
 
-	csiemessenger.trigger("csiemessenger_ping");
-	csiemessenger.bind("csiemessenger_pong", function(p_module)
+	wesbmessenger.trigger("wesbmessenger_ping");
+	wesbmessenger.bind("wesbmessenger_pong", function(p_module)
 		if ( p_module.name ~= "IHM" and p_module.name ~= g_config.name ) then
 			if ( p_module.variable.com == "consumer" and p_module.variable.queuing == false ) then
 				if (_producers[p_module.variable.name] == nil) then
 					_producers[p_module.variable.name] = true;
-					csiemessenger.regProduceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type );
+					wesbmessenger.regProduceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type );
 				end
 			elseif ( p_module.variable.com == "producer" and p_module.variable.queuing == false ) then
 				if (_consumers[p_module.variable.name] == nil) then
 					_consumers[p_module.variable.name] = true;
-					csiemessenger.regConsumSampling( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type );
+					wesbmessenger.regConsumSampling( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type );
 				end
 			elseif ( p_module.variable.com == "consumer" and p_module.variable.queuing == true ) then
 				if (_producers[p_module.variable.name] == nil) then
 					_producers[p_module.variable.name] = true;
-					csiemessenger.regProduceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type ); 
+					wesbmessenger.regProduceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type ); 
 				end
 			elseif ( p_module.variable.com == "producer" and p_module.variable.queuing == true ) then
 				if (_consumers[p_module.variable.name] == nil) then
 					_consumers[p_module.variable.name] = true;
-					csiemessenger.regConsumQueuing( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type ); 
+					wesbmessenger.regConsumQueuing( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type ); 
 				end
 			end
 		end
@@ -192,7 +192,7 @@ onupdate = function()
 		end
 	end
 
-	csiemessenger.update();
+	wesbmessenger.update();
 	
 	if ( _status == "started" ) then
 		if ( g_automate ~= nil ) then
@@ -216,6 +216,6 @@ onstop = function()
 		_stopAutomate();
 	end
 	
-	csiemessenger.unreg();
+	wesbmessenger.unreg();
 end
 

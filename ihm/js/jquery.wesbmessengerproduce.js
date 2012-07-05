@@ -15,29 +15,29 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
-$.fn.csiemessengerProduce = function(){
+$.fn.wesbmessengerProduce = function(){
 	return this.each(function(){
 		var $_this = $(this);
 		var _name = $_this.attr('data-variable-name');
 		var _type = $_this.attr('data-variable-type');
 		
-		$(document).one( "csiemessenger_update", function(){
+		$(document).one( "wesbmessenger_update", function(){
 			// setting
-			$.csiemessenger.singleton().regProduceQueuing( _name, _type );
+			$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
 			$_this.bind('change', function(){
 				var _val = $_this.val();
 			
-				$.csiemessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
+				$.wesbmessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
 				$_this.attr('disabled', true);			
 			});
 			
 			// getting
-			$.csiemessenger.singleton().regConsumSampling( _name, _type );
-			$(document).bind( "csiemessenger_update", function(){
-				var _val = $.csiemessenger.consumer[_name];
+			$.wesbmessenger.singleton().regConsumSampling( _name, _type );
+			$(document).bind( "wesbmessenger_update", function(){
+				var _val = $.wesbmessenger.consumer[_name];
 				if ( $.isArray( _val ) ) _val = _val[ _val.length-1 ];
 				_val = ( _type == 'float' ? _val.toFixed(2) : _val );
 			

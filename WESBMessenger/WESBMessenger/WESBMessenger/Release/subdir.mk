@@ -4,15 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../CSIEMessenger.cpp \
+../WESBMessenger.cpp \
 ../Log.cpp 
 
 OBJS += \
-./CSIEMessenger.o \
+./WESBMessenger.o \
 ./Log.o 
 
 CPP_DEPS += \
-./CSIEMessenger.d \
+./WESBMessenger.d \
 ./Log.d 
 
 

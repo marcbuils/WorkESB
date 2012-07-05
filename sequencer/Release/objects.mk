@@ -4,4 +4,4 @@
 
 USER_OBJS :=
 
-LIBS := -ljson -lSimD -llua -ldl -lCSIEMessenger
+LIBS := -ljson -lSimD -llua -ldl -lWESBMessenger

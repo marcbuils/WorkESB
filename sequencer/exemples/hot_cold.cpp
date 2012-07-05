@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include <json/json.h>
-#include <CSIEMessenger.h>
+#include <WESBMessenger.h>
 
 #ifdef _WIN32
 #define DLLAPI  __declspec(dllexport)
@@ -28,11 +28,11 @@ int DLLAPI onstart( char* p_configuration )
 		return 1;
 	}
 
-	CSIEMessenger_init( (char*)_config["domain"].asString().c_str(), (char*)_config["name"].asString().c_str() );
+	WESBMessenger_init( (char*)_config["domain"].asString().c_str(), (char*)_config["name"].asString().c_str() );
 
 	hotCold=0;
-	CSIEMessenger_regProduceSampling( (char*)_config["variable_hotcold"].asString().c_str(), (void*)&hotCold, TYPE_INT );
-	CSIEMessenger_regConsumSampling( (char*)_config["variable_temperature"].asString().c_str(), (void*)&temperature, TYPE_FLOAT );
+	WESBMessenger_regProduceSampling( (char*)_config["variable_hotcold"].asString().c_str(), (void*)&hotCold, TYPE_INT );
+	WESBMessenger_regConsumSampling( (char*)_config["variable_temperature"].asString().c_str(), (void*)&temperature, TYPE_FLOAT );
 
 	event = _config["event"].asString();
 	
@@ -47,7 +47,7 @@ int DLLAPI onstart( char* p_configuration )
 int DLLAPI onupdate( )
 {
 	int _hotCold = hotCold;
-	CSIEMessenger_update();
+	WESBMessenger_update();
 	
 	if (temperature > 0) {
 		hotCold = 1;
@@ -56,7 +56,7 @@ int DLLAPI onupdate( )
 	}
 	
 	if (_hotCold != hotCold) { 
-		CSIEMessenger_trigger( event, "" );
+		WESBMessenger_trigger( event, "" );
 	}
 	
 	return 0;
@@ -67,7 +67,7 @@ int DLLAPI onupdate( )
  */
 int DLLAPI onstop( )
 {
-	CSIEMessenger_unreg();
+	WESBMessenger_unreg();
 	return 0;
 }
 

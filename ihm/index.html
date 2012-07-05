@@ -16,12 +16,12 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
 -->
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>CSIE Bench v3</title>
+<title>WorkESB Manager</title>
 <style>@import "themes/claro/claro.css";@import "app.css";@import "lib/dojo/dojo/resources/dojo.css";@import "lib/dojo/dojox/grid/resources/Grid.css";@import "lib/dojo/dojox/grid/resources/claroGrid.css";
 
 
@@ -68,8 +68,8 @@ dojo.require('dijit.form.ToggleButton');
 <link rel="stylesheet" href="libs/datatable/media/css/demo_table.css" type="text/css"/>
 <script src="libs/datatable/media/js/jquery.dataTables.min.js"></script>
 
-<!--  csie messenger -->
-<script src="js/jquery.csiemessenger.js"></script>
+<!--  workesb messenger -->
+<script src="js/jquery.wesbmessenger.js"></script>
 <script src="js/jquery.automateaction.js"></script>
 <!-- jQuery loading -->
 <script onload="jQuery.extend(jQuery.loading.defaultOptions, {src: 'libs/jquery.loading/loading.gif'});" src="libs/jquery.loading/jquery.loading.js"></script>
@@ -158,7 +158,7 @@ dojo.require('dijit.form.ToggleButton');
 
 <!-- Javascript console -->
 <div dojoType="dijit.layout.ContentPane" title="Console" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" splitter="false" selected="false" closable="false" style="width: 469px; height: 312px; text-align: center;" doLayout="false">
-	<div data-jquery-type="csiemessengerTerminal"></div>
+	<div data-jquery-type="wesbmessengerTerminal"></div>
 </div>
 
 <script id="table_logs" type="text/x-jquery-tmpl">
@@ -235,30 +235,30 @@ dojo.require('dijit.form.ToggleButton');
    </ul>
 </script>
 <script id="variable_consum_text" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="data_line_disabled ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly" value="0" data-jquery-type="csiemessengerConsum" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="data_line_disabled ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly" value="0" data-jquery-type="wesbmessengerConsum" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
 </script>
 <script id="variable_consum_bool" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="" data-jquery-type="csiemessengerConsumBool" data-variable-name="${variable.name}" data-variable-type="${variable.type}" type="button" dojoType="dijit.form.ToggleButton" tabIndex="-1" disabled="true" intermediateChanges="false" label="OFF" iconClass="dijitRadioIcon" checked="false"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="" data-jquery-type="wesbmessengerConsumBool" data-variable-name="${variable.name}" data-variable-type="${variable.type}" type="button" dojoType="dijit.form.ToggleButton" tabIndex="-1" disabled="true" intermediateChanges="false" label="OFF" iconClass="dijitRadioIcon" checked="false"/></span></li>
 </script>
 <script id="variable_produce_text" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="0" data-jquery-type="csiemessengerProduce" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="0" data-jquery-type="wesbmessengerProduce" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
 </script>
 <script id="variable_produce_bool" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="" data-jquery-type="csiemessengerProduceBool" data-variable-name="${variable.name}" data-variable-type="${variable.type}" type="button" dojoType="dijit.form.ToggleButton" tabIndex="-1" disabled="false" intermediateChanges="false" label="OFF" iconClass="dijitRadioIcon" checked="false"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="" data-jquery-type="wesbmessengerProduceBool" data-variable-name="${variable.name}" data-variable-type="${variable.type}" type="button" dojoType="dijit.form.ToggleButton" tabIndex="-1" disabled="false" intermediateChanges="false" label="OFF" iconClass="dijitRadioIcon" checked="false"/></span></li>
 </script>
 <script id="variable_consum_queuing_text" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="data_line_disabled ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly" value="0" data-jquery-type="csiemessengerConsumQueuing" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="data_line_disabled ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly" value="0" data-jquery-type="wesbmessengerConsumQueuing" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
 </script>
 <script id="variable_produce_queuing_text" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="0" data-jquery-type="csiemessengerProduceQueuing" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" value="0" data-jquery-type="wesbmessengerProduceQueuing" data-variable-name="${variable.name}" data-variable-type="${variable.type}"/></span></li>
 </script>
 <script id="variable_call" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input type="button" value="call" data-jquery-type="csiemessengerCall" data-variable-name="${variable.name}"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input type="button" value="call" data-jquery-type="wesbmessengerCall" data-variable-name="${variable.name}"/></span></li>
 </script>
 <script id="variable_trigger" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input type="button" value="trigger" data-jquery-type="csiemessengerTrigger" data-variable-name="${variable.name}"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input type="button" value="trigger" data-jquery-type="wesbmessengerTrigger" data-variable-name="${variable.name}"/></span></li>
 </script>
 <script id="variable_bind" type="text/x-jquery-tmpl">
-    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly"  value="" data-jquery-type="csiemessengerBind" data-variable-name="${variable.name}"/></span></li>
+    <li id="module_variable_${id}_${variable.id}__" class="ui-state-default" data-module="${name}" data-name="${variable.name}"><span class="data_line_name">${variable.name}</span><span class="data_line_input"><input autocomplete="off" readonly="readonly"  value="" data-jquery-type="wesbmessengerBind" data-variable-name="${variable.name}"/></span></li>
 </script>
 </body></html>

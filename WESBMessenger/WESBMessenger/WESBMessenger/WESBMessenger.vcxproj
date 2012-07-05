@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B621A0E0-6079-426A-B602-373D9BB57D4D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CSIEMessenger</RootNamespace>
+    <RootNamespace>WESBMessenger</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -55,7 +55,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CSIEMESSENGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;WESBMESSENGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
@@ -75,7 +75,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CSIEMESSENGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;WESBMESSENGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
       <CompileAsManaged>
@@ -100,7 +100,7 @@
     <ClCompile Include="$(JSONCPP_ROOT)\src\lib_json\json_reader.cpp" />
     <ClCompile Include="$(JSONCPP_ROOT)\src\lib_json\json_value.cpp" />
     <ClCompile Include="$(JSONCPP_ROOT)\src\lib_json\json_writer.cpp" />
-    <ClCompile Include="CSIEMessenger.cpp" />
+    <ClCompile Include="WESBMessenger.cpp" />
     <ClCompile Include="gen\Shared_Data.cpp" />
     <ClCompile Include="gen\Shared_DataDcps.cpp" />
     <ClCompile Include="gen\Shared_DataDcps_impl.cpp" />

@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
 /*
@@ -27,23 +27,23 @@ UUID._hexAligner=UUID._getIntAligner(16);
 /**
  * Constructeur
  */
-$.csiemessenger = function() {
+$.wesbmessenger = function() {
 	this.initialized = false;
-	this.m_id = this.init( "fr.csie.benches.test", "IHM" );
+	this.m_id = this.init( "com.workesb.test", "IHM" );
 };
 
 /*
  * Static vars
  */
-$.csiemessenger.EXTENSION_PARAMETER = "PARAMETER__";
-$.csiemessenger.EXTENSION_RETURN_VAL = "RETURNVAL__";
-$.csiemessenger.EXTENSION_EVENT = "EVENT__";
-$.csiemessenger.producer = {};
-$.csiemessenger.consumer = {};
-$.csiemessenger.consumercid = {};
-$.csiemessenger.producercid = {};
-$.csiemessenger.s_instance = null;
-$.csiemessenger.types = {
+$.wesbmessenger.EXTENSION_PARAMETER = "PARAMETER__";
+$.wesbmessenger.EXTENSION_RETURN_VAL = "RETURNVAL__";
+$.wesbmessenger.EXTENSION_EVENT = "EVENT__";
+$.wesbmessenger.producer = {};
+$.wesbmessenger.consumer = {};
+$.wesbmessenger.consumercid = {};
+$.wesbmessenger.producercid = {};
+$.wesbmessenger.s_instance = null;
+$.wesbmessenger.types = {
 	"int":		0,
 	"float":	1,
 	"string":	2
@@ -52,17 +52,17 @@ $.csiemessenger.types = {
 /**
  * Singleton
  */
-$.csiemessenger.singleton = function(){
-	if ( $.csiemessenger.s_instance == null ) {
-		$.csiemessenger.s_instance = new $.csiemessenger();
+$.wesbmessenger.singleton = function(){
+	if ( $.wesbmessenger.s_instance == null ) {
+		$.wesbmessenger.s_instance = new $.wesbmessenger();
 	}
-	return $.csiemessenger.s_instance;
+	return $.wesbmessenger.s_instance;
 };
 
 /**
  * call function
  */
-$.csiemessenger.prototype.callfunction = function( p_name, p_params, p_options ){
+$.wesbmessenger.prototype.callfunction = function( p_name, p_params, p_options ){
 	if (!this.initialized) return -1;
 
     var _options = p_options;
@@ -78,9 +78,9 @@ $.csiemessenger.prototype.callfunction = function( p_name, p_params, p_options )
 };
 
 /**
- * CSIEMessenger init
+ * WESBMessenger init
  */
-$.csiemessenger.prototype.init = function( p_domain, p_name ) {
+$.wesbmessenger.prototype.init = function( p_domain, p_name ) {
 	var _timer;
 
     if ('MozWebSocket' in window) {
@@ -89,12 +89,12 @@ $.csiemessenger.prototype.init = function( p_domain, p_name ) {
 	
 	_timer = function(){
 		//console.log("update producers");
-		$.csiemessenger.singleton().update_producers();
+		$.wesbmessenger.singleton().update_producers();
 	};
-	this.ws = new window.WebSocket( 'ws://' + document.URL.substr(7).split('/')[0], 'csiemessenger' );
+	this.ws = new window.WebSocket( 'ws://' + document.URL.substr(7).split('/')[0], 'wesbmessenger' );
 	this.ws.onopen = function(){
-		$.csiemessenger.singleton().initialized = true;
-		$.csiemessenger.singleton().ws.send(JSON.stringify({
+		$.wesbmessenger.singleton().initialized = true;
+		$.wesbmessenger.singleton().ws.send(JSON.stringify({
 			"function": "init",
 			"domain": p_domain,
 			"name": p_name
@@ -104,167 +104,167 @@ $.csiemessenger.prototype.init = function( p_domain, p_name ) {
 	};
 	this.ws.onmessage = function(p_data){
 		//console.log("update consumers: %s", p_data.data);
-		$.csiemessenger.singleton().update_consumers(JSON.parse(p_data.data));
-		$(document).trigger("csiemessenger_update");
+		$.wesbmessenger.singleton().update_consumers(JSON.parse(p_data.data));
+		$(document).trigger("wesbmessenger_update");
 		
 		setTimeout( _timer, 250 );
 	};
 	this.ws.onclose = function(){
-		console.error("CSIEMessenger connexion closed");
+		console.error("WESBMessenger connexion closed");
 	};
 	
 	return -1;
 };
 
 /**
- * CSIEMessenger regConsumSampling
+ * WESBMessenger regConsumSampling
  */
-$.csiemessenger.prototype.regConsumSampling = function( p_name, p_type ) {
-	if ( $.csiemessenger.consumercid[ p_name ] != undefined )
+$.wesbmessenger.prototype.regConsumSampling = function( p_name, p_type ) {
+	if ( $.wesbmessenger.consumercid[ p_name ] != undefined )
 	{
-		return $.csiemessenger.consumercid[ p_name ];
+		return $.wesbmessenger.consumercid[ p_name ];
 	}
 	
-	var _type = $.csiemessenger.types[p_type];
+	var _type = $.wesbmessenger.types[p_type];
 	var _cid;
 	_cid = this.callfunction( "regConsumSampling", { name: p_name, type: _type })["return"];
-	$.csiemessenger.consumercid[ p_name ] = _cid;
+	$.wesbmessenger.consumercid[ p_name ] = _cid;
 	
 	return _cid;
 };
 
 /**
- * CSIEMessenger regProduceSampling
+ * WESBMessenger regProduceSampling
  */
-$.csiemessenger.prototype.regProduceSampling = function( p_name, p_type ) {
+$.wesbmessenger.prototype.regProduceSampling = function( p_name, p_type ) {
 	return this.regProduceQueuing( p_name, p_type );
 	
 /*	NO PRODUCE SAMPLING - TOO DANGEROUS
-	if ( $.inArray( p_name, $.csiemessenger.producercid ) != -1 )
+	if ( $.inArray( p_name, $.wesbmessenger.producercid ) != -1 )
 	{
-		return $.csiemessenger.producercid[ p_name ];
+		return $.wesbmessenger.producercid[ p_name ];
 	}
 	
-	var _type = $.csiemessenger.types[p_type];
+	var _type = $.wesbmessenger.types[p_type];
 	
 	if ( p_type == "string" ) {
-		$.csiemessenger.producer[ p_name ] = "";
+		$.wesbmessenger.producer[ p_name ] = "";
 	}
 	else
 	{
-		$.csiemessenger.producer[ p_name ] = 0;
+		$.wesbmessenger.producer[ p_name ] = 0;
 	}
 	
 	var _cid;
 	_cid = this.callfunction( "regProduceSampling", { name: p_name, type: _type } )["return"];
-	$.csiemessenger.producercid[ p_name ] = _cid;
-//	$.csiemessenger.singleton().update_producers();
+	$.wesbmessenger.producercid[ p_name ] = _cid;
+//	$.wesbmessenger.singleton().update_producers();
 	
 	return _cid;
 */
 };
 
 /**
- * CSIEMessenger regConsumQueuing
+ * WESBMessenger regConsumQueuing
  */
-$.csiemessenger.prototype.regConsumQueuing = function( p_name, p_type ) {
-	if ( $.csiemessenger.consumercid[ p_name ] != undefined )
+$.wesbmessenger.prototype.regConsumQueuing = function( p_name, p_type ) {
+	if ( $.wesbmessenger.consumercid[ p_name ] != undefined )
 	{
-		return $.csiemessenger.consumercid[ p_name ];
+		return $.wesbmessenger.consumercid[ p_name ];
 	}	
 	
-	var _type = $.csiemessenger.types[p_type];
+	var _type = $.wesbmessenger.types[p_type];
 	var _cid;
 	_cid = this.callfunction( "regConsumQueuing", { name: p_name, type: _type } )["return"];
-	$.csiemessenger.consumercid[ p_name ] = _cid;
+	$.wesbmessenger.consumercid[ p_name ] = _cid;
 	
 	return _cid;
 };
 
 /**
- * CSIEMessenger regProduceSampling
+ * WESBMessenger regProduceSampling
  */
-$.csiemessenger.prototype.regProduceQueuing = function( p_name, p_type ) {
-	if ( $.csiemessenger.producercid[ p_name ] != undefined )
+$.wesbmessenger.prototype.regProduceQueuing = function( p_name, p_type ) {
+	if ( $.wesbmessenger.producercid[ p_name ] != undefined )
 	{
-		return $.csiemessenger.producercid[ p_name ];
+		return $.wesbmessenger.producercid[ p_name ];
 	}
 	
-	var _type = $.csiemessenger.types[p_type];
-	$.csiemessenger.producer[ p_name ] = [];
+	var _type = $.wesbmessenger.types[p_type];
+	$.wesbmessenger.producer[ p_name ] = [];
 
 	var _cid = this.callfunction( "regProduceQueuing", { name: p_name, type: _type } )["return"];
-	$.csiemessenger.producercid[ p_name ] = _cid;
-//	$.csiemessenger.singleton().update_producers();
+	$.wesbmessenger.producercid[ p_name ] = _cid;
+//	$.wesbmessenger.singleton().update_producers();
 	
 	return _cid;
 };
 
 /**
- * CSIEMessenger bind
+ * WESBMessenger bind
  */
-$.csiemessenger.prototype.bind = function( p_name, p_callback ) {
-	var _name = $.csiemessenger.EXTENSION_EVENT + p_name;
+$.wesbmessenger.prototype.bind = function( p_name, p_callback ) {
+	var _name = $.wesbmessenger.EXTENSION_EVENT + p_name;
 	this.regConsumQueuing( _name, "string" );
 	
-	$(document).bind( "csiemessenger_update", function( ){
+	$(document).bind( "wesbmessenger_update", function( ){
 		var _params;
 		var _i;
 		
-		if ( $.csiemessenger.consumer[ _name ] == undefined ) return;
-		for ( _i=0; _i < $.csiemessenger.consumer[ _name ].length; _i++ ){
-			_params = JSON.parse( $.csiemessenger.consumer[ _name ][ _i ] );
+		if ( $.wesbmessenger.consumer[ _name ] == undefined ) return;
+		for ( _i=0; _i < $.wesbmessenger.consumer[ _name ].length; _i++ ){
+			_params = JSON.parse( $.wesbmessenger.consumer[ _name ][ _i ] );
 			p_callback( _params._parameter );
 		}
 	} );
 };
 
 /**
- * CSIEMessenger trigger
+ * WESBMessenger trigger
  */
-$.csiemessenger.prototype.trigger = function( p_name, p_params ) {
-	var _name = $.csiemessenger.EXTENSION_EVENT + p_name;
+$.wesbmessenger.prototype.trigger = function( p_name, p_params ) {
+	var _name = $.wesbmessenger.EXTENSION_EVENT + p_name;
 	this.regProduceQueuing( _name, "string" );
 
-	$.csiemessenger.producer[ _name ].push(JSON.stringify( { _parameter: p_params } ));
+	$.wesbmessenger.producer[ _name ].push(JSON.stringify( { _parameter: p_params } ));
 };
 
 /**
- * CSIEMessenger share
+ * WESBMessenger share
  */
-$.csiemessenger.prototype.share = function( p_name, p_callback ) {
-	var _name = $.csiemessenger.EXTENSION_PARAMETER + p_name;
-	var _nameResponse = $.csiemessenger.EXTENSION_RETURN_VAL + p_name;
+$.wesbmessenger.prototype.share = function( p_name, p_callback ) {
+	var _name = $.wesbmessenger.EXTENSION_PARAMETER + p_name;
+	var _nameResponse = $.wesbmessenger.EXTENSION_RETURN_VAL + p_name;
 	this.regProduceQueuing( _nameResponse, "string" );
 	this.regConsumQueuing( _name, "string" );
 	
-	$(document).bind( "csiemessenger_update", function( ){
+	$(document).bind( "wesbmessenger_update", function( ){
 		var _params;
 		var _i;
 		
-		if ( $.csiemessenger.consumer[ _name ] == undefined ) return;
-		for ( _i=0; _i < $.csiemessenger.consumer[ _name ].length; _i++ ){
+		if ( $.wesbmessenger.consumer[ _name ] == undefined ) return;
+		for ( _i=0; _i < $.wesbmessenger.consumer[ _name ].length; _i++ ){
 			var _return;
 			var _pos;
 
-			_params = JSON.parse( $.csiemessenger.consumer[ _name ][ _i ] );
+			_params = JSON.parse( $.wesbmessenger.consumer[ _name ][ _i ] );
 			_return = {
 				_uuid: 		_params._uuid,
 				_response:	p_callback( _params._parameter )
 			};
 
-			$.csiemessenger.producer[ _nameResponse ].push( JSON.stringify( _return ) );
+			$.wesbmessenger.producer[ _nameResponse ].push( JSON.stringify( _return ) );
 		}
 	} );
 };
 
 /**
- * CSIEMessenger call
+ * WESBMessenger call
  */
 var currentVid = 0;
-$.csiemessenger.prototype.call = function( p_name, p_params ) {
-	var _name = $.csiemessenger.EXTENSION_PARAMETER + p_name;
-	var _nameResponse = $.csiemessenger.EXTENSION_RETURN_VAL + p_name;
+$.wesbmessenger.prototype.call = function( p_name, p_params ) {
+	var _name = $.wesbmessenger.EXTENSION_PARAMETER + p_name;
+	var _nameResponse = $.wesbmessenger.EXTENSION_RETURN_VAL + p_name;
 	this.regProduceQueuing( _name, "string" );
 	this.regConsumQueuing( _nameResponse, "string" );
 	
@@ -276,13 +276,13 @@ $.csiemessenger.prototype.call = function( p_name, p_params ) {
 		_parameter: p_params,
 		_uuid: _uuid
 	};
-	$.csiemessenger.producer[ _name ].push( JSON.stringify( _params ) );
+	$.wesbmessenger.producer[ _name ].push( JSON.stringify( _params ) );
 	
-	$(document).bind( "csiemessenger_update", function(p_event) {
+	$(document).bind( "wesbmessenger_update", function(p_event) {
 		try{
-			if ( $.csiemessenger.consumer[ _nameResponse ] == undefined ) return;
+			if ( $.wesbmessenger.consumer[ _nameResponse ] == undefined ) return;
 			
-			$.each( $.csiemessenger.consumer[ _nameResponse ], function( p_key, p_value ) {
+			$.each( $.wesbmessenger.consumer[ _nameResponse ], function( p_key, p_value ) {
 				var _response = JSON.parse( p_value );
 				
 				if ( _response._uuid == _uuid ) {
@@ -299,35 +299,35 @@ $.csiemessenger.prototype.call = function( p_name, p_params ) {
 };
 
 /**
- * CSIEMessenger update consumers
+ * WESBMessenger update consumers
  */
-$.csiemessenger.prototype.update_consumers = function( p_data ){
-	$.csiemessenger.consumer = p_data.consumer;
+$.wesbmessenger.prototype.update_consumers = function( p_data ){
+	$.wesbmessenger.consumer = p_data.consumer;
 };
 
 /**
- * CSIEMessenger update producers
+ * WESBMessenger update producers
  */
-$.csiemessenger.prototype.update_producers = function( ){
+$.wesbmessenger.prototype.update_producers = function( ){
 	// CONVERT SAMPLING TO QUEUING
-	$.each( $.csiemessenger.producer, function (p_key, p_value){
+	$.each( $.wesbmessenger.producer, function (p_key, p_value){
 		if ( !$.isArray( p_value ) ) {
-			$.csiemessenger.producer[ p_key ] = [p_value];
+			$.wesbmessenger.producer[ p_key ] = [p_value];
 		}
 	});
 	
-	$.csiemessenger.singleton().ws.send(JSON.stringify({
+	$.wesbmessenger.singleton().ws.send(JSON.stringify({
 		"function": "update",
 		"data": { 
-			producer: 	$.csiemessenger.producer
+			producer: 	$.wesbmessenger.producer
 		}
 	}) + "\n");
-	$.each( $.csiemessenger.producer, function( p_key, p_value ){
+	$.each( $.wesbmessenger.producer, function( p_key, p_value ){
 		if ( $.isArray( p_value ) ) {
-			$.csiemessenger.producer[ p_key ] = [];
+			$.wesbmessenger.producer[ p_key ] = [];
 		}
 	} );
 };
 
-$.csiemessenger.singleton();
+$.wesbmessenger.singleton();
 })(jQuery);

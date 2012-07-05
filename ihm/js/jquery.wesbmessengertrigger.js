@@ -15,16 +15,16 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
-$.fn.csiemessengerTrigger = function(){
+$.fn.wesbmessengerTrigger = function(){
 	return this.each(function(){
 		var $_this = $(this);
 		var _name = $_this.attr('data-variable-name');
 		
 		$_this.bind( "click", function(){
-			$.csiemessenger.singleton().trigger( _name, {} );
+			$.wesbmessenger.singleton().trigger( _name, {} );
 		});
 	});
 };

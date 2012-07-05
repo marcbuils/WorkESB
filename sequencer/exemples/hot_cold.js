@@ -1,21 +1,21 @@
 ;(function($){
-	$(document).one("csiemessenger_update", function(){
-		$.csiemessenger.singleton().regProduceSampling( "HOT_COLD", "int" );
-		$.csiemessenger.singleton().regConsumSampling( "TEMPERATURE", "float" );
+	$(document).one("wesbmessenger_update", function(){
+		$.wesbmessenger.singleton().regProduceSampling( "HOT_COLD", "int" );
+		$.wesbmessenger.singleton().regConsumSampling( "TEMPERATURE", "float" );
 
 		var hotCold = 0;
-		$(document).bind("csiemessenger_update", function(){
+		$(document).bind("wesbmessenger_update", function(){
 			var _hotCold;
 			
-			if ($.csiemessenger.consumers.TEMPERATURE > 0) {
+			if ($.wesbmessenger.consumers.TEMPERATURE > 0) {
 				_hotCold = 1;
 			} else {
 				_hotCold = 0;
 			}
-			$.csiemessenger.producers.HOT_COLD = _hotCold;
+			$.wesbmessenger.producers.HOT_COLD = _hotCold;
 			
 			if (_hotCold != hotCold) {
-				$.csiemessenger.singleton().trigger( "HOT_COLD_CHANGE" );
+				$.wesbmessenger.singleton().trigger( "HOT_COLD_CHANGE" );
 			}
 		});
 	});

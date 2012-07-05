@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 (function($){
 $.fn.logsTable = function(){
@@ -26,15 +26,15 @@ $.fn.logsTable = function(){
 		var $_tmpl = $($_this.attr('data-tmpl'));
 		var _logs = [];
 		
-		$(document).one( "csiemessenger_update", function(){
-			$.csiemessenger.singleton().regConsumQueuing( _name, _type );
+		$(document).one( "wesbmessenger_update", function(){
+			$.wesbmessenger.singleton().regConsumQueuing( _name, _type );
 			$_this.bind('refresh', function(){
 				$_tmpl.tmpl( {logs: _logs} ).appendTo($_this.empty())
 				$_this.pluginautoload();
 				return false;
 			}).trigger('refresh');
-			$(document).bind( "csiemessenger_update", function(){
-				var _vals = $.csiemessenger.consumer[_name];
+			$(document).bind( "wesbmessenger_update", function(){
+				var _vals = $.wesbmessenger.consumer[_name];
 				
 				if (_vals.length > 0) {
 					_logs = $.merge( _logs, _vals );

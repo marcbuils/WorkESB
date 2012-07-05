@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 25 fevr. 2011
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 
 #ifndef LOG_H_
@@ -27,7 +27,7 @@ using namespace std;
 #include <boost/shared_ptr.hpp>
 
 
-namespace csiemessenger
+namespace wesbmessenger
 {
 class Log {
 protected:
@@ -46,6 +46,6 @@ public:
 	static const int LEVEL_ERROR;
 };
 
-} // namespace csiemessenger
+} // namespace wesbmessenger
 
 #endif /* LOG_H_ */

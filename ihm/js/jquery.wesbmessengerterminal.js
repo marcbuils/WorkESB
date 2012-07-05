@@ -15,18 +15,18 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
 var _id = 1;
 
-$.fn.csiemessengerTerminal = function(){
+$.fn.wesbmessengerTerminal = function(){
 	return this.each(function(){
 		var $_this = $(this);
 		var _term;
 		
 		if ( $_this.attr('id') == undefined ){
-			$_this.attr('id', 'csiemessengerterminal_' + _id );
+			$_this.attr('id', 'wesbmessengerterminal_' + _id );
 			_id = _id+1;
 		}
 
@@ -57,7 +57,7 @@ $.fn.csiemessengerTerminal = function(){
 			rows: 18,
 			ps: ">",
 			greeting: [
-				"*** CSIEMessenger Shell ***",
+				"*** WESBMessenger Shell ***",
 				"Write \"help()\" for more informations"
 			]
 		});
@@ -91,23 +91,23 @@ $.fn.csiemessengerTerminal = function(){
 				$(this).parent().children('textarea').val( '' );
 			} );
 			
-			// CSIEMessenger functions
-			regConsumSampling = function( p_name, p_type ){ return $.csiemessenger.singleton().regConsumSampling( p_name, p_type ); };
-			regProduceSampling = function( p_name, p_type ){ return $.csiemessenger.singleton().regProduceSampling( p_name, p_type ); };
-			regConsumQueuing = function( p_name, p_type ){ return $.csiemessenger.singleton().regConsumQueuing( p_name, p_type ); };
-			regProduceQueuing = function( p_name, p_type ){ return $.csiemessenger.singleton().regProduceQueuing( p_name, p_type ); };
-			bind = function( p_name, p_callback ){ return $.csiemessenger.singleton().bind( p_name, p_callback ); };
-			trigger = function( p_name, p_params ){ return $.csiemessenger.singleton().trigger( p_name, p_params ); };
-			share = function( p_name, p_callback ){ return $.csiemessenger.singleton().share( p_name, p_callback ); };
-			call = function( p_name, p_params ){ return $.csiemessenger.singleton().call( p_name, p_params ); };
+			// WESBMessenger functions
+			regConsumSampling = function( p_name, p_type ){ return $.wesbmessenger.singleton().regConsumSampling( p_name, p_type ); };
+			regProduceSampling = function( p_name, p_type ){ return $.wesbmessenger.singleton().regProduceSampling( p_name, p_type ); };
+			regConsumQueuing = function( p_name, p_type ){ return $.wesbmessenger.singleton().regConsumQueuing( p_name, p_type ); };
+			regProduceQueuing = function( p_name, p_type ){ return $.wesbmessenger.singleton().regProduceQueuing( p_name, p_type ); };
+			bind = function( p_name, p_callback ){ return $.wesbmessenger.singleton().bind( p_name, p_callback ); };
+			trigger = function( p_name, p_params ){ return $.wesbmessenger.singleton().trigger( p_name, p_params ); };
+			share = function( p_name, p_callback ){ return $.wesbmessenger.singleton().share( p_name, p_callback ); };
+			call = function( p_name, p_params ){ return $.wesbmessenger.singleton().call( p_name, p_params ); };
 			echo = function(p_value){_term.write(p_value); _term.newLine(); return '';};
 			clear = function() { _term.clear(); return ''; };
 			c = {};
-			$(document).bind('csiemessenger_update', function(){c = $.csiemessenger.consumer;});
-			p = $.csiemessenger.producer;
+			$(document).bind('wesbmessenger_update', function(){c = $.wesbmessenger.consumer;});
+			p = $.wesbmessenger.producer;
 			help = function(){
 				_term.write([
-					"Write a Javascript or a following CSIEMessenger command:",
+					"Write a Javascript or a following WESBMessenger command:",
 					"- regConsumSampling( name, type )",
 					"- regProduceSampling( name, type )",
 					"- regConsumQueuing( name, type )",

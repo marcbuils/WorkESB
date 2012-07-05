@@ -15,13 +15,13 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 25 fevr. 2011
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 
 #include "Log.h"
 #include <time.h>
 
-namespace csiemessenger
+namespace wesbmessenger
 {
 
 // Log Levels
@@ -43,7 +43,7 @@ Log* Log::get() {
 	if ( s_instance.m_file == 0 )
 	{
 		string _file;
-		_file = "CSIEMessenger.log";
+		_file = "WESBMessenger.log";
 
 		s_instance.m_file = fopen( _file.c_str(), "w" );
 		s_instance.m_level = Log::LEVEL_INFO;
@@ -76,4 +76,4 @@ int Log::add( int p_type, string p_message )
 	return 0;
 }
 
-} // namespace csiemessenger
+} // namespace wesbmessenger

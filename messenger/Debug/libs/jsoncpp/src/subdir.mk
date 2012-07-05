@@ -23,7 +23,7 @@ CPP_DEPS += \
 libs/jsoncpp/src/%.o: ../libs/jsoncpp/src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -I"${LUA_ROOT}/include" -I"../libs/jsoncpp/include" -I"${CSIEMESSENGER_ROOT}/include" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"${LUA_ROOT}/include" -I"../libs/jsoncpp/include" -I"${WESBMESSENGER_ROOT}/include" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

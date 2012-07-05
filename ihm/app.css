@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 html,body {
 	height: 100%;
@@ -90,7 +90,7 @@ span.data_line_input > input {
 	padding-left: 10px;
 }
 
-[data-jquery-type="csiemessengerConsum"], [data-jquery-type="csiemessengerProduce"] {
+[data-jquery-type="wesbmessengerConsum"], [data-jquery-type="wesbmessengerProduce"] {
 	text-align: center;	
 }
 
@@ -127,13 +127,13 @@ span.data_line_input > input {
     transform: scale(1.1,1.1);
 }
 
-[data-jquery-type="csiemessengerTerminal"] > table {
+[data-jquery-type="wesbmessengerTerminal"] > table {
 	float: left;
 }
-[data-jquery-type="csiemessengerTerminal"] > div {
+[data-jquery-type="wesbmessengerTerminal"] > div {
 	float: right;
 }
-[data-jquery-type="csiemessengerTerminal"] > div > textarea {
+[data-jquery-type="wesbmessengerTerminal"] > div > textarea {
 	display: block;
 }
 

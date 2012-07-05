@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
 	$.fn.modulesList = function(){
@@ -27,11 +27,11 @@
 			var _stoppedEvent = $_this.attr('data-stopped-event');
 			
 			$_this.empty();
-			$(document).one( "csiemessenger_update", function( ){
-				$.csiemessenger.singleton().bind(_pongEvent, function(p_infos){
+			$(document).one( "wesbmessenger_update", function( ){
+				$.wesbmessenger.singleton().bind(_pongEvent, function(p_infos){
 					if ( $_this.find('[data-sequencer-name="'+p_infos.name+'"]').size() == 0 ){
 						var _loading = $('<div style="text-align: center;"></div>').loading().appendTo($_this);
-						$.csiemessenger.singleton()
+						$.wesbmessenger.singleton()
 							.call(p_infos.list)
 							.done(function(p_modules){
 								if ( $_this.find('[data-sequencer-name="'+p_infos.name+'"]').size() == 0 ){
@@ -49,10 +49,10 @@
 							});
 					}
 				});
-				$.csiemessenger.singleton().trigger(_pingEvent);
+				$.wesbmessenger.singleton().trigger(_pingEvent);
 				
 				// stop sequencer detection
-				$.csiemessenger.singleton().bind(_stoppedEvent, function(p_name){
+				$.wesbmessenger.singleton().bind(_stoppedEvent, function(p_name){
 					$_this
 						.find('[data-sequencer-name="'+p_name+'"]')
 						.fadeOut(400, function(){

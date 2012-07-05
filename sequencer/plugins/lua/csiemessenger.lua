@@ -14,7 +14,7 @@
 --  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
 --
 --  Created on: 18 avr. 2011
---      Author: Marc Buils (CSIE)
+--      Author: Marc Buils (MATIS - http://www.matis-group.com)
 --
 
 -- ifdef function
@@ -28,8 +28,8 @@ _ifndef = function( p_var, p_else )
 	return _return;
 end
 
-csiemessenger_c = require( "csiemessenger_c" );
-local csiemessenger_c = csiemessenger_c;
+wesbmessenger_c = require( "wesbmessenger_c" );
+local wesbmessenger_c = wesbmessenger_c;
 
 json = require("json");
 local json = json;
@@ -44,32 +44,32 @@ local pairs = pairs;
 local loadstring = loadstring;
 local io = io;
 
-csiemessenger_shareFunctions = {};
-local csiemessenger_shareFunctions = csiemessenger_shareFunctions;
-csiemessenger_callFunctions = {};
-local csiemessenger_callFunctions = csiemessenger_callFunctions;
-csiemessenger_events = {};
-local csiemessenger_events = csiemessenger_events;
+wesbmessenger_shareFunctions = {};
+local wesbmessenger_shareFunctions = wesbmessenger_shareFunctions;
+wesbmessenger_callFunctions = {};
+local wesbmessenger_callFunctions = wesbmessenger_callFunctions;
+wesbmessenger_events = {};
+local wesbmessenger_events = wesbmessenger_events;
 
-module( "csiemessenger" );
+module( "wesbmessenger" );
 
 local EXTENSION_PARAMETER = "PARAMETER__";
 local EXTENSION_RETURN_VAL = "RETURNVAL__";
 local EXTENSION_EVENT = "EVENT__";
 
--- csiemessenger instance
+-- wesbmessenger instance
 local id = -1;
 
 init = function( p_domain, p_name )
-	id = csiemessenger_c.init( p_domain, p_name );
+	id = wesbmessenger_c.init( p_domain, p_name );
 	return id;
 end
 
 update = function()
-	local _return =  csiemessenger_c.update( id );
+	local _return =  wesbmessenger_c.update( id );
 
 	-- exec shared functions
-	for _i, _s in ipairs( csiemessenger_shareFunctions ) do
+	for _i, _s in ipairs( wesbmessenger_shareFunctions ) do
 		_s.response = {};
         
         for _j, _w in ipairs( _s.waiting ) do
@@ -89,7 +89,7 @@ update = function()
 	end
 	
 	-- receive parameter
-	for _i, _c in ipairs( csiemessenger_callFunctions ) do
+	for _i, _c in ipairs( wesbmessenger_callFunctions ) do
 		_c.parameter = {};
 		for _j, _r in ipairs( _c.response ) do
 			local _params = json.decode( _r );
@@ -106,32 +106,32 @@ update = function()
 end
 
 unreg = function( )
-	return csiemessenger_c.unreg( id );
+	return wesbmessenger_c.unreg( id );
 end
 
 regConsumSampling = function( p_name, p_variable, p_type )
-	return csiemessenger_c.regConsumSampling( id, p_name, p_variable, p_type );
+	return wesbmessenger_c.regConsumSampling( id, p_name, p_variable, p_type );
 end
 
 regProduceSampling = function( p_name, p_variable, p_type )
-	return csiemessenger_c.regProduceSampling( id, p_name, p_variable, p_type );
+	return wesbmessenger_c.regProduceSampling( id, p_name, p_variable, p_type );
 end
 
 regConsumQueuing = function( p_name, p_variable, p_type )
-	return csiemessenger_c.regConsumQueuing( id, p_name, p_variable, p_type );
+	return wesbmessenger_c.regConsumQueuing( id, p_name, p_variable, p_type );
 end
 
 regProduceQueuing = function( p_name, p_variable, p_type )
-	return csiemessenger_c.regProduceQueuing( id, p_name, p_variable, p_type );
+	return wesbmessenger_c.regProduceQueuing( id, p_name, p_variable, p_type );
 end
 
 share = function( p_name, p_function )
-	local _pos = 1 + #csiemessenger_shareFunctions;
+	local _pos = 1 + #wesbmessenger_shareFunctions;
 
-	regConsumQueuing( EXTENSION_PARAMETER .. p_name, "csiemessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
-	regProduceQueuing( EXTENSION_RETURN_VAL .. p_name, "csiemessenger_shareFunctions[" .. _pos .. "].response", "string" );
+	regConsumQueuing( EXTENSION_PARAMETER .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
+	regProduceQueuing( EXTENSION_RETURN_VAL .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].response", "string" );
 
-	csiemessenger_shareFunctions[ _pos ] = {
+	wesbmessenger_shareFunctions[ _pos ] = {
 		waiting = {},
 		response = {},
 		event = 0,
@@ -144,19 +144,19 @@ end
 regCall = function( p_name, p_variable )
 	local _pos;
 	
-	_pos = 1 + #csiemessenger_callFunctions;
+	_pos = 1 + #wesbmessenger_callFunctions;
    
-	regConsumQueuing( EXTENSION_RETURN_VAL .. p_name, "csiemessenger_callFunctions[" .. _pos .. "].response", "string" );
-	regProduceQueuing( EXTENSION_PARAMETER .. p_name, "csiemessenger_callFunctions[" .. _pos .. "].parameter", "string" );
+	regConsumQueuing( EXTENSION_RETURN_VAL .. p_name, "wesbmessenger_callFunctions[" .. _pos .. "].response", "string" );
+	regProduceQueuing( EXTENSION_PARAMETER .. p_name, "wesbmessenger_callFunctions[" .. _pos .. "].parameter", "string" );
 	
-	csiemessenger_callFunctions[ _pos ] = {
+	wesbmessenger_callFunctions[ _pos ] = {
 		event = 0,
 		parameter = {},
 		response = {},
 		callback = {}
 	};
 
-	loadstring(p_variable .. "=function(p_params, p_callback) return csiemessenger.callFunction(" .. _pos .. ", p_params, p_callback); end")();
+	loadstring(p_variable .. "=function(p_params, p_callback) return wesbmessenger.callFunction(" .. _pos .. ", p_params, p_callback); end")();
     return true;
 end
 
@@ -171,21 +171,21 @@ callFunction = function( p_idFunction, p_params, p_callback )
 	};
 	
 	-- Save callback
-	csiemessenger_callFunctions[ p_idFunction ].callback[ _uuid ] = p_callback;
+	wesbmessenger_callFunctions[ p_idFunction ].callback[ _uuid ] = p_callback;
 	
 	-- Call function
 	_params._uuid = _uuid;
-	_r = 1 + #csiemessenger_callFunctions[ p_idFunction ].parameter;
-	csiemessenger_callFunctions[ p_idFunction ].parameter[ _r ] = json.encode( _params );
+	_r = 1 + #wesbmessenger_callFunctions[ p_idFunction ].parameter;
+	wesbmessenger_callFunctions[ p_idFunction ].parameter[ _r ] = json.encode( _params );
 	
 	return true;
 end
 
 bind = function( p_name, p_function )
-	local _pos = 1 + #csiemessenger_shareFunctions;
+	local _pos = 1 + #wesbmessenger_shareFunctions;
     
-	regConsumQueuing( EXTENSION_EVENT .. p_name, "csiemessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
-	csiemessenger_shareFunctions[ _pos ] = {
+	regConsumQueuing( EXTENSION_EVENT .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
+	wesbmessenger_shareFunctions[ _pos ] = {
 		waiting = {},
 		response = {},
 		event = 1,
@@ -201,12 +201,12 @@ trigger = function( p_name, p_params )
 		_parameter = p_params
 	};
 	
-	if ( csiemessenger_events[ p_name ] == nil ) then
-		csiemessenger_events[ p_name ] = {};
-		regProduceQueuing( EXTENSION_EVENT .. p_name, "csiemessenger_events[\"" .. p_name .. "\"]", "string" );
+	if ( wesbmessenger_events[ p_name ] == nil ) then
+		wesbmessenger_events[ p_name ] = {};
+		regProduceQueuing( EXTENSION_EVENT .. p_name, "wesbmessenger_events[\"" .. p_name .. "\"]", "string" );
     end
 	
-	table.insert(csiemessenger_events[ p_name ], json.encode( _params ));
+	table.insert(wesbmessenger_events[ p_name ], json.encode( _params ));
 
 	return true;
 end

@@ -1,5 +1,5 @@
 rem make init
-msbuild "../CSIEMessenger/CSIEMessenger/CSIEMessenger.sln" /p:Configuration=Release
+msbuild "../WESBMessenger/WESBMessenger/WESBMessenger.sln" /p:Configuration=Release
 msbuild "../messenger_gateway_websockets/win32port/win32port.sln" /p:Configuration=Release
 msbuild "../messenger/messenger.sln" /p:Configuration=Release
 msbuild "../sequencer/sequencer.sln" /p:Configuration=Release
@@ -41,8 +41,8 @@ echo '## AJOUT DE LUA'
 copy "%LUA_LIB%\lua5.1.dll" "sequencer\"
 
 echo ''
-echo '## AJOUT DU CSIEMESSENENGER'
-copy "..\CSIEMessenger\CSIEMessenger\Release\CSIEMessenger.dll" "sequencer\"
+echo '## AJOUT DU WESBMESSENGER'
+copy "..\WESBMessenger\WESBMessenger\Release\WESBMessenger.dll" "sequencer\"
 
 echo ''
 echo '## AJOUT DU MESSENENGER GATEWAY WEBSOCKETS'
@@ -50,7 +50,7 @@ copy "..\messenger_gateway_websockets\win32port\Release\messenger_gateway_websoc
 
 echo ''
 echo '## AJOUT DU MESSENENGER POUR LUA'
-copy "..\messenger\Release\csiemessenger_c.dll" "sequencer\plugins\lua\"
+copy "..\messenger\Release\wesbmessenger_c.dll" "sequencer\plugins\lua\"
 
 
 echo ''

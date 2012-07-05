@@ -20,7 +20,7 @@ CPP_DEPS += \
 messenger_gateway_websockets/src/%.o: ../messenger_gateway_websockets/src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -I"../messenger_gateway_websockets/include" -I"${CSIEMESSENGER_ROOT}/include" -I"${JSONCPP_ROOT}/include" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"../messenger_gateway_websockets/include" -I"${WESBMESSENGER_ROOT}/include" -I"${JSONCPP_ROOT}/include" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
 	$.fn.module = function(){
@@ -32,7 +32,7 @@
 				$_this.attr('disabled', 'disabled');
 				if ($_this.is(':checked')){
 					$_this.removeAttr('checked');
-					$.csiemessenger.singleton().call(_add, {
+					$.wesbmessenger.singleton().call(_add, {
 						file: _file,
 						default: true
 					}).done(function(p_data){
@@ -43,7 +43,7 @@
 					});
 				}else{
 					$_this.attr('checked', 'checked');
-					$.csiemessenger.singleton()
+					$.wesbmessenger.singleton()
 						.call(_remove, _file)
 						.done(function(p_data){
 							if (p_data.status == 0){
@@ -54,13 +54,13 @@
 				}
 			});
 			
-			$.csiemessenger.singleton().bind(_added, function(p_infos){
+			$.wesbmessenger.singleton().bind(_added, function(p_infos){
 				if (p_infos.sequencer == _sequencer && p_infos.file == _file){
 					$_this.attr('checked', 'checked');
 					$_this.removeAttr('disabled');
 				}
 			});
-			$.csiemessenger.singleton().bind(_removed, function(p_infos){
+			$.wesbmessenger.singleton().bind(_removed, function(p_infos){
 				if (p_infos.sequencer == _sequencer && p_infos.file == _file){
 					$_this.removeAttr('checked');
 					$_this.removeAttr('disabled');

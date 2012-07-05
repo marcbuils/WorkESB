@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 (function($){
 	$.fn.infosTable = function(){
@@ -23,12 +23,12 @@
 			var $_this = $(this);
 			var _start = null;
 
-			$(document).one( "csiemessenger_update", function(){
-				$.csiemessenger.singleton().regConsumSampling( "AUTOMATE_STATUS", "string" );
-				$.csiemessenger.singleton().regConsumSampling( "AUTOMATE_TIME", "int" );
+			$(document).one( "wesbmessenger_update", function(){
+				$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_STATUS", "string" );
+				$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_TIME", "int" );
 
-				$(document).bind( "csiemessenger_update", function(){
-					var _status = $.csiemessenger.consumer.AUTOMATE_STATUS;
+				$(document).bind( "wesbmessenger_update", function(){
+					var _status = $.wesbmessenger.consumer.AUTOMATE_STATUS;
 					
 					// status
 					$_this
@@ -37,7 +37,7 @@
 						.text( _status );
 						
 					// time
-					var _time = $.csiemessenger.consumer.AUTOMATE_TIME;
+					var _time = $.wesbmessenger.consumer.AUTOMATE_TIME;
 					var _hours = parseInt( _time / 3600 );
 					var _mins = parseInt( (_time / 60) )  % 3600;
 					var _secs = _time % 60;

@@ -40,31 +40,31 @@ endif
 
 # All Target
 ifeq "$(WINDOWS)" "YES"
-all: csiemessenger_c.dll
+all: wesbmessenger_c.dll
 else
-all: csiemessenger_c.so
+all: wesbmessenger_c.so
 endif
 
 # Tool invocations
-csiemessenger_c.so: $(OBJS) $(USER_OBJS)
+wesbmessenger_c.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L"${LUA_LIB}" -shared -o "csiemessenger_c.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"${LUA_LIB}" -shared -o "wesbmessenger_c.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
-csiemessenger_c.dll: $(OBJS) $(USER_OBJS)
+wesbmessenger_c.dll: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -static-libgcc -L"${LUA_LIB}" -shared -o "csiemessenger_c.dll" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -static-libgcc -L"${LUA_LIB}" -shared -o "wesbmessenger_c.dll" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	
 # Other Targets
 clean:
 ifeq "$(WINDOWS)" "YES"
-	-"rm" -rf $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) csiemessenger_c.dll
+	-"rm" -rf $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) wesbmessenger_c.dll
 else
-	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) csiemessenger_c.so
+	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) wesbmessenger_c.so
 endif
 	-@echo ' '
 

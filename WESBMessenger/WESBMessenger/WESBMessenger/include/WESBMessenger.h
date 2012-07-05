@@ -15,10 +15,10 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 25 fevr. 2011
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
  
-#ifndef __CSIEMessenger_H__
+#ifndef __WESBMessenger_H__
 
 #include <stdio.h>
 #include <vector>
@@ -29,7 +29,7 @@ using namespace std;
 #define TYPE_FLOAT 1
 #define TYPE_STRING 2
 
-#define CSIEMESSENGER_MAX_QUEUEING_SIZE 512
+#define WESBMESSENGER_MAX_QUEUEING_SIZE 512
 
 typedef const char* (*Shared_Func)( char* p_param );
 typedef void (*CallBack_Func)( char* p_param );
@@ -41,78 +41,78 @@ typedef enum
 	PRODUCER
 }typ_e_com;
 
-int _CSIEMessengerInstance; // CSIEMessenger instance
+int _WESBMessengerInstance; // WESBMessenger instance
 
 extern "C"
 {
-int CSIEMessenger_init_full( char* p_domain, char* p_name );
-int CSIEMessenger_regConsumSampling_full( int p_id, char* p_name, void* p_value, int p_type );
-int CSIEMessenger_regProduceSampling_full( int p_id, char* p_name, void* p_value, int p_type );
-int CSIEMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize );
-int CSIEMessenger_regProduceQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type );
-int CSIEMessenger_update_full( int p_id  );
-int CSIEMessenger_unreg_full( int p_id  );
-int CSIEMessenger_share_full( int p_id, char* p_name, Shared_Func p_function );
-int CSIEMessenger_call_full( int p_id, char* p_name, char* p_params, CallBack_Func p_function );
-int CSIEMessenger_bind_full( int p_id, char* p_name, Event_Func p_function );
-int CSIEMessenger_trigger_full( int p_id, char* p_name, char* p_params );
+int WESBMessenger_init_full( char* p_domain, char* p_name );
+int WESBMessenger_regConsumSampling_full( int p_id, char* p_name, void* p_value, int p_type );
+int WESBMessenger_regProduceSampling_full( int p_id, char* p_name, void* p_value, int p_type );
+int WESBMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize );
+int WESBMessenger_regProduceQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type );
+int WESBMessenger_update_full( int p_id  );
+int WESBMessenger_unreg_full( int p_id  );
+int WESBMessenger_share_full( int p_id, char* p_name, Shared_Func p_function );
+int WESBMessenger_call_full( int p_id, char* p_name, char* p_params, CallBack_Func p_function );
+int WESBMessenger_bind_full( int p_id, char* p_name, Event_Func p_function );
+int WESBMessenger_trigger_full( int p_id, char* p_name, char* p_params );
 }
 
 
-int CSIEMessenger_init( char* p_domain, char* p_name )
+int WESBMessenger_init( char* p_domain, char* p_name )
 {
-	_CSIEMessengerInstance = CSIEMessenger_init_full( p_domain, p_name );
-	return ( _CSIEMessengerInstance >= 0 ? _CSIEMessengerInstance : -1 );
+	_WESBMessengerInstance = WESBMessenger_init_full( p_domain, p_name );
+	return ( _WESBMessengerInstance >= 0 ? _WESBMessengerInstance : -1 );
 }
 
-int CSIEMessenger_regConsumSampling( char* p_name, void* p_value, int p_type )
+int WESBMessenger_regConsumSampling( char* p_name, void* p_value, int p_type )
 {
-	return CSIEMessenger_regConsumSampling_full( _CSIEMessengerInstance, p_name, p_value, p_type );
+	return WESBMessenger_regConsumSampling_full( _WESBMessengerInstance, p_name, p_value, p_type );
 }
 
-int CSIEMessenger_regProduceSampling( char* p_name, void* p_value, int p_type )
+int WESBMessenger_regProduceSampling( char* p_name, void* p_value, int p_type )
 {
-	return CSIEMessenger_regProduceSampling_full( _CSIEMessengerInstance, p_name, p_value, p_type );
+	return WESBMessenger_regProduceSampling_full( _WESBMessengerInstance, p_name, p_value, p_type );
 }
 
-int CSIEMessenger_regConsumQueuing( char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize = CSIEMESSENGER_MAX_QUEUEING_SIZE )
+int WESBMessenger_regConsumQueuing( char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize = WESBMESSENGER_MAX_QUEUEING_SIZE )
 {
-	return CSIEMessenger_regConsumQueuing_full( _CSIEMessengerInstance, p_name, p_values, p_size, p_type, p_maxsize );
+	return WESBMessenger_regConsumQueuing_full( _WESBMessengerInstance, p_name, p_values, p_size, p_type, p_maxsize );
 }
 
-int CSIEMessenger_regProduceQueuing( char* p_name, void* p_values, int *p_size, int p_type )
+int WESBMessenger_regProduceQueuing( char* p_name, void* p_values, int *p_size, int p_type )
 {
-	return CSIEMessenger_regProduceQueuing_full( _CSIEMessengerInstance, p_name, p_values, p_size, p_type );
+	return WESBMessenger_regProduceQueuing_full( _WESBMessengerInstance, p_name, p_values, p_size, p_type );
 }
 
-int CSIEMessenger_share( char* p_name, Shared_Func p_function )
+int WESBMessenger_share( char* p_name, Shared_Func p_function )
 {
-	return CSIEMessenger_share_full( _CSIEMessengerInstance, p_name, p_function );
+	return WESBMessenger_share_full( _WESBMessengerInstance, p_name, p_function );
 }
 
-int CSIEMessenger_call( char* p_name, char* p_params, CallBack_Func p_function )
+int WESBMessenger_call( char* p_name, char* p_params, CallBack_Func p_function )
 {
-	return CSIEMessenger_call_full( _CSIEMessengerInstance, p_name, p_params, p_function );
+	return WESBMessenger_call_full( _WESBMessengerInstance, p_name, p_params, p_function );
 }
 
-int CSIEMessenger_bind( char* p_name, Event_Func p_function )
+int WESBMessenger_bind( char* p_name, Event_Func p_function )
 {
-	return CSIEMessenger_bind_full( _CSIEMessengerInstance, p_name, p_function );
+	return WESBMessenger_bind_full( _WESBMessengerInstance, p_name, p_function );
 }
 
-int CSIEMessenger_trigger( char* p_name, char* p_params )
+int WESBMessenger_trigger( char* p_name, char* p_params )
 {
-	return CSIEMessenger_trigger_full( _CSIEMessengerInstance, p_name, p_params );
+	return WESBMessenger_trigger_full( _WESBMessengerInstance, p_name, p_params );
 }
 
-int CSIEMessenger_update( )
+int WESBMessenger_update( )
 {
-	return CSIEMessenger_update_full( _CSIEMessengerInstance );
+	return WESBMessenger_update_full( _WESBMessengerInstance );
 }
 
-int CSIEMessenger_unreg( )
+int WESBMessenger_unreg( )
 {
-	return CSIEMessenger_unreg_full( _CSIEMessengerInstance );
+	return WESBMessenger_unreg_full( _WESBMessengerInstance );
 }
 
-#endif // __CSIEMessenger_H__
+#endif // __WESBMessenger_H__

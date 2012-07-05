@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  *
  *
  *  Created on: 18 avr. 2011
@@ -26,13 +26,13 @@
 #define LUA_BUILD_AS_DLL
 #endif // #ifdef WIN32
 #define LUA_LIB
-#define csiemessenger_c
+#define wesbmessenger_c
 extern "C" {
 	#include "lua.h"
 	#include "lauxlib.h"
 	#include "lualib.h"
 }
-#include <CSIEMessenger.h>
+#include <WESBMessenger.h>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -101,7 +101,7 @@ static int init (lua_State *p_L)
 
 	_domain = luaL_checkstring( p_L, 1 );
 	_name = luaL_checkstring( p_L, 2 );
-	_id = CSIEMessenger_init_full( (char*)_domain.c_str(), (char*)_name.c_str() );
+	_id = WESBMessenger_init_full( (char*)_domain.c_str(), (char*)_name.c_str() );
 	lua_pushnumber( p_L, _id );
 
 	return 1;
@@ -143,7 +143,7 @@ static int regConsumSampling (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = CSIEMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
+	_return = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
@@ -186,7 +186,7 @@ static int regProduceSampling (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = CSIEMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
+	_return = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
@@ -227,7 +227,7 @@ static int regConsumQueuing (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = CSIEMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type, CSIEMESSENGER_MAX_QUEUEING_SIZE );
+	_return = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type, WESBMESSENGER_MAX_QUEUEING_SIZE );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
@@ -272,7 +272,7 @@ static int regProduceQueuing (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = CSIEMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type );
+	_return = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
@@ -396,7 +396,7 @@ static int update (lua_State *p_L)
 		}
 	}
 
-	_return = CSIEMessenger_update_full( _id );
+	_return = WESBMessenger_update_full( _id );
 	lua_pushnumber( p_L, _return );
 
 	// get consummer vars()[_id]
@@ -482,7 +482,7 @@ static int unreg (lua_State *p_L)
 
 	_id = luaL_checkint( p_L, 1 );
 
-	_return = CSIEMessenger_unreg_full( _id );
+	_return = WESBMessenger_unreg_full( _id );
 	lua_pushnumber( p_L, _return );
 
 	for ( _i=0; _i<(int)vars()[_id].size(); _i++ )
@@ -559,7 +559,7 @@ extern "C" {
 	/*
 	** Open messenger library
 	*/
-	int LUA_API luaopen_csiemessenger_c (lua_State *L) {
+	int LUA_API luaopen_wesbmessenger_c (lua_State *L) {
 	  luaL_newlib(L, messengerlib);
 	  return 1;
 	}

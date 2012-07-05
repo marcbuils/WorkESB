@@ -15,11 +15,11 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 18 avr. 2011
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 #include "../include/Log.h"
 #include "../include/SequencerManager.h"
-#include <CSIEMessenger.h>
+#include <WESBMessenger.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -98,7 +98,7 @@ const char* sequencer_add( char* p_params )
 
 		_infos = _value;
 		_infos["sequencer"] = g_config().get("name", "none");
-		CSIEMessenger_trigger( (char*)g_config()["share"].get("event_added", "sequencer_added").asString().c_str(), (char*)_writer.write( _infos ).c_str() );
+		WESBMessenger_trigger( (char*)g_config()["share"].get("event_added", "sequencer_added").asString().c_str(), (char*)_writer.write( _infos ).c_str() );
 	}
 	catch(string &e)
 	{
@@ -141,7 +141,7 @@ const char* sequencer_remove( char* p_params )
 		_infos["sequencer"] = g_config().get("name", "none");
 		_infos["file"] = _value;
 		_infos["name"] = _name;
-		CSIEMessenger_trigger( (char*)g_config()["share"].get("event_removed", "sequencer_removed").asString().c_str(), (char*)_writer.write( _infos ).c_str() );
+		WESBMessenger_trigger( (char*)g_config()["share"].get("event_removed", "sequencer_removed").asString().c_str(), (char*)_writer.write( _infos ).c_str() );
 	}
 	catch(string &e)
 	{
@@ -228,7 +228,7 @@ void sequencer_ping_event( char* p_params )
 	_infos["event_pong"] = g_config()["share"].get("event_pong", "sequencer_pong");
 	_infos["event_stopped"] = g_config()["share"].get("event_stopped", "sequencer_stopped");
 
-	CSIEMessenger_trigger( (char*)g_config()["share"].get("event_pong", "sequencer_pong").asString().c_str(), (char*)_writer.write( _infos ).c_str() );
+	WESBMessenger_trigger( (char*)g_config()["share"].get("event_pong", "sequencer_pong").asString().c_str(), (char*)_writer.write( _infos ).c_str() );
 }
 
 // Boolean for update loop
@@ -278,13 +278,13 @@ int main(void)
 
 		Log::get()->add( Log::LEVEL_INFO, "Initialization");
 
-		// CSIEMessenger share functions
-		CSIEMessenger_init( (char*)g_config()["share"]["domain"].asString().c_str(), (char*)g_config()["name"].asString().c_str() );
-		CSIEMessenger_share( (char*)g_config()["share"]["add"].asString().c_str(), sequencer_add );
-		CSIEMessenger_share( (char*)g_config()["share"]["remove"].asString().c_str(), sequencer_remove );
-		CSIEMessenger_share( (char*)g_config()["share"]["reload"].asString().c_str(), sequencer_reload );
-		CSIEMessenger_share( (char*)g_config()["share"]["list"].asString().c_str(), sequencer_list );
-		CSIEMessenger_bind( (char*)g_config()["share"].get("event_ping", "sequencer_ping").asString().c_str(), sequencer_ping_event );
+		// WESBMessenger share functions
+		WESBMessenger_init( (char*)g_config()["share"]["domain"].asString().c_str(), (char*)g_config()["name"].asString().c_str() );
+		WESBMessenger_share( (char*)g_config()["share"]["add"].asString().c_str(), sequencer_add );
+		WESBMessenger_share( (char*)g_config()["share"]["remove"].asString().c_str(), sequencer_remove );
+		WESBMessenger_share( (char*)g_config()["share"]["reload"].asString().c_str(), sequencer_reload );
+		WESBMessenger_share( (char*)g_config()["share"]["list"].asString().c_str(), sequencer_list );
+		WESBMessenger_bind( (char*)g_config()["share"].get("event_ping", "sequencer_ping").asString().c_str(), sequencer_ping_event );
 
 		// chargement des fichiers - sequencer
 		for ( _i=0; _i < g_config()["list"].getMemberNames().size(); _i++ )
@@ -315,11 +315,11 @@ int main(void)
             }
             else
             {
-            	CSIEMessenger_update();
+            	WESBMessenger_update();
                 _manager().update();
             }
 #else
-        	CSIEMessenger_update();
+        	WESBMessenger_update();
             _manager().update();
 #endif
 			msecSleep( g_config()["time"].asInt() );
@@ -335,12 +335,12 @@ int main(void)
 	_manager().stop();
 
 	string _stoppedParams = "\"" + g_config().get("name", "none").asString() + "\"";
-	CSIEMessenger_trigger( (char*)g_config()["share"].get("event_stopped", "sequencer_stopped").asString().c_str(), (char*)_stoppedParams.c_str() );
+	WESBMessenger_trigger( (char*)g_config()["share"].get("event_stopped", "sequencer_stopped").asString().c_str(), (char*)_stoppedParams.c_str() );
 	msecSleep( 1000 );
 
 	Log::get()->add( Log::LEVEL_DEBUG, "Manager stopped");
-	CSIEMessenger_unreg();
-	Log::get()->add( Log::LEVEL_DEBUG, "CSIEMessenger unreg");
+	WESBMessenger_unreg();
+	Log::get()->add( Log::LEVEL_DEBUG, "WESBMessenger unreg");
 
 	return 0;
 }

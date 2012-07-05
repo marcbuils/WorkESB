@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 25 fevr. 2011
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  *
  * messenger_gateway.cpp: definit les fonctions exportees pour l'application DLL.
  */
@@ -36,10 +36,10 @@
 using namespace std;
 
 #include <json/json.h>
-#include <CSIEMessenger.h>
+#include <WESBMessenger.h>
 #include "Log.h"
 
-#define MAX_QUEUEING_SIZE CSIEMESSENGER_MAX_QUEUEING_SIZE
+#define MAX_QUEUEING_SIZE WESBMESSENGER_MAX_QUEUEING_SIZE
 
 #ifdef _WIN32
 #define DLLAPI  __declspec(dllexport)
@@ -98,7 +98,7 @@ enum demo_protocols {
 	/* always first */
 	PROTOCOL_HTTP = 0,
 
-	PROTOCOL_CSIEMESSENGER,
+	PROTOCOL_WESBMESSENGER,
 
 	/* always last */
 	DEMO_PROTOCOL_COUNT
@@ -135,7 +135,7 @@ static int callback_http(struct libwebsocket_context * context,
 				char buf[512];
 				char *p = buf;
 				p += sprintf(p, "HTTP/1.0 404 Not Found\x0d\x0a"
-					"Server: csiemessenger\x0d\x0a"
+					"Server: wesbmessenger\x0d\x0a"
 					"Content-type: text/html\x0d\x0a"
 					"Content-Length: 117\x0d\x0a"
 					"\x0d\x0a"
@@ -165,15 +165,15 @@ static int callback_http(struct libwebsocket_context * context,
 }
 
 
-/* csiemessenger protocol */
+/* wesbmessenger protocol */
 
-struct per_session_data__csiemessenger {
+struct per_session_data__wesbmessenger {
 	int id;
 	int updated;
 };
 
 static int
-callback_csiemessenger(struct libwebsocket_context * context,
+callback_wesbmessenger(struct libwebsocket_context * context,
 			struct libwebsocket *wsi,
 			enum libwebsocket_callback_reasons reason,
 					       void *user, void *in, size_t len)
@@ -181,7 +181,7 @@ callback_csiemessenger(struct libwebsocket_context * context,
 //	unsigned char buf[LWS_SEND_BUFFER_PRE_PADDING + 512 +
 //						  LWS_SEND_BUFFER_POST_PADDING];
 //	unsigned char *p = &buf[LWS_SEND_BUFFER_PRE_PADDING];
-	struct per_session_data__csiemessenger *pss = (per_session_data__csiemessenger *)user;
+	struct per_session_data__wesbmessenger *pss = (per_session_data__wesbmessenger *)user;
 
 	switch (reason) {
 
@@ -201,8 +201,8 @@ callback_csiemessenger(struct libwebsocket_context * context,
 			Log::get()->add( Log::LEVEL_INFO, "Connexion stopped");
 
 			if ( pss->id >= 0 ){
-				Log::get()->add( Log::LEVEL_INFO, "CSIEMEssenger unreg");
-				CSIEMessenger_unreg_full( pss->id );
+				Log::get()->add( Log::LEVEL_INFO, "WESBMessenger unreg");
+				WESBMessenger_unreg_full( pss->id );
 
 	    		for ( _it = producer[ _id ].begin(); _it != producer[ _id ].end(); ++_it )
 	    		{
@@ -297,7 +297,7 @@ callback_csiemessenger(struct libwebsocket_context * context,
 				string _name = _request["name"].asString();
 
 				Log::get()->add( Log::LEVEL_INFO, "start init" );
-	    		pss->id = CSIEMessenger_init_full( (char*)_domain.c_str(), (char*)_name.c_str() );
+	    		pss->id = WESBMessenger_init_full( (char*)_domain.c_str(), (char*)_name.c_str() );
 				Log::get()->add( Log::LEVEL_INFO, "end init" );
 
 				// Log
@@ -337,13 +337,13 @@ callback_csiemessenger(struct libwebsocket_context * context,
 	    			switch ( _type )
 	    			{
 	    			case TYPE_INT:
-	    				_var->id = CSIEMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
+	    				_var->id = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
 	    				break;
 	    			case TYPE_FLOAT:
-	    				_var->id = CSIEMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
+	    				_var->id = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
 	    				break;
 	    			case TYPE_STRING:
-	    				_var->id = CSIEMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
+	    				_var->id = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
 	    				break;
 	    			}
 
@@ -378,15 +378,15 @@ callback_csiemessenger(struct libwebsocket_context * context,
 	    			{
 	    			case TYPE_INT:
 	    				_var->value._i = 0;
-	    				_var->id = CSIEMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
+	    				_var->id = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
 	    				break;
 	    			case TYPE_FLOAT:
 	    				_var->value._f = 0;
-	    				_var->id = CSIEMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
+	    				_var->id = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
 	    				break;
 	    			case TYPE_STRING:
 	    				_var->value._s = 0;
-	    				_var->id = CSIEMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
+	    				_var->id = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
 	    				break;
 	    			}
 	    		}
@@ -421,13 +421,13 @@ callback_csiemessenger(struct libwebsocket_context * context,
 	    			switch ( _type )
 	    			{
 	    			case TYPE_INT:
-	    				_var->id = CSIEMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type, MAX_QUEUEING_SIZE );
+	    				_var->id = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type, MAX_QUEUEING_SIZE );
 	    				break;
 	    			case TYPE_FLOAT:
-	    				_var->id = CSIEMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type, MAX_QUEUEING_SIZE );
+	    				_var->id = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type, MAX_QUEUEING_SIZE );
 	    				break;
 	    			case TYPE_STRING:
-	    				_var->id = CSIEMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type, MAX_QUEUEING_SIZE );
+	    				_var->id = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type, MAX_QUEUEING_SIZE );
 	    				break;
 	    			}
 
@@ -463,15 +463,15 @@ callback_csiemessenger(struct libwebsocket_context * context,
 	    			{
 	    			case TYPE_INT:
 	    				_var->value._qi = 0;
-	    				_var->id = CSIEMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type );
+	    				_var->id = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type );
 	    				break;
 	    			case TYPE_FLOAT:
 	    				_var->value._qf = 0;
-	    				_var->id = CSIEMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type );
+	    				_var->id = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type );
 	    				break;
 	    			case TYPE_STRING:
 	    				_var->value._qs = 0;
-	    				_var->id = CSIEMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type );
+	    				_var->id = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type );
 	    				break;
 	    			}
 
@@ -570,7 +570,7 @@ callback_csiemessenger(struct libwebsocket_context * context,
 	    			}
 	    		}
 
-				data["return"] = CSIEMessenger_update_full( _id );
+				data["return"] = WESBMessenger_update_full( _id );
 			
 	    		// READ POST DATA
 	    		Log::get()->add( Log::LEVEL_INFO, "Update Consumers");
@@ -666,9 +666,9 @@ static struct libwebsocket_protocols protocols[] = {
 		0			/* per_session_data_size */
 	},
 	{
-		"csiemessenger",
-		callback_csiemessenger,
-		sizeof(struct per_session_data__csiemessenger),
+		"wesbmessenger",
+		callback_wesbmessenger,
+		sizeof(struct per_session_data__wesbmessenger),
 	},
 	{
 		NULL, NULL, 0		/* End of list */

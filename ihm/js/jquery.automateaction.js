@@ -15,7 +15,7 @@
  *  along with M2Bench.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Created on: 31 janv. 2012
- *      Author: Marc Buils (CSIE)
+ *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
 var _lastStatus = null;
@@ -27,12 +27,12 @@ var __AUTOMATE_STATUS__ = "AUTOMATE_STATUS";
 var __AUTOMATE_DIALOG__ = "AUTOMATE_DIALOG";
 var __AUTOMATE_DIALOG_RETURN__ = "AUTOMATE_DIALOG_RETURN";
 
-$(document).one( "csiemessenger_update", function(){
-	$.csiemessenger.singleton().regConsumSampling( __AUTOMATE_STATUS__, "string" );
-	$.csiemessenger.singleton().regConsumSampling( __AUTOMATE_DIALOG__, "string" );
+$(document).one( "wesbmessenger_update", function(){
+	$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_STATUS__, "string" );
+	$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_DIALOG__, "string" );
 	
-	$(document).bind( "csiemessenger_update", function(){
-		var _status = $.csiemessenger.consumer[__AUTOMATE_STATUS__];
+	$(document).bind( "wesbmessenger_update", function(){
+		var _status = $.wesbmessenger.consumer[__AUTOMATE_STATUS__];
 		
 		if ( _lastStatus != _status && $('[data-jquery-type="automateaction"][data-waiting]').size() <= 0 ){
 			if (_status == "stopped") {
@@ -90,7 +90,7 @@ $(document).one( "csiemessenger_update", function(){
 		// automate dialogs
 		var _dialog;
 		if (_status == "started"){
-			_dialog = $.csiemessenger.consumer[__AUTOMATE_DIALOG__];
+			_dialog = $.wesbmessenger.consumer[__AUTOMATE_DIALOG__];
 		}else{
 			_dialog = JSON.stringify({type: "none"});
 		}
@@ -109,7 +109,7 @@ $(document).one( "csiemessenger_update", function(){
 				}
 				
 				jAlert( _dialog.text, _dialog.title, function(){
-					$.csiemessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
+					$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
 						"type": 	"alert"
 					});
 				});
@@ -120,7 +120,7 @@ $(document).one( "csiemessenger_update", function(){
 				}
 				
 				jConfirm( _dialog.text, _dialog.title, function(_r){
-					$.csiemessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
+					$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
 						"type": 	"confirm",
 						"return": 	_r
 					});
@@ -132,7 +132,7 @@ $(document).one( "csiemessenger_update", function(){
 				}
 				
 				jPrompt( _dialog.text, "", _dialog.title, function(_r){
-					$.csiemessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
+					$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
 						"type": 	"prompt",
 						"return": 	_r
 					});
@@ -176,7 +176,7 @@ $.fn.automateaction = function(){
 			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", true);
 			
 			if ( _action == 'start' ){
-				$.csiemessenger.singleton().call("getAutomates").done(function( _automates ){
+				$.wesbmessenger.singleton().call("getAutomates").done(function( _automates ){
 					var $_dialog = $( $_this.attr('data-dialog') );
 					
 					$_dialog
@@ -192,7 +192,7 @@ $.fn.automateaction = function(){
 										jAlert( "Selectionnez un seul automate" );
 									}else{
 										$_this.attr('data-waiting', '');
-										$.csiemessenger.singleton().call("startAutomate", {
+										$.wesbmessenger.singleton().call("startAutomate", {
 											file: $(this).find('li.ui-selected').attr('data-file')
 										}).done(function(_r){
 											$_this.removeAttr('data-waiting');
@@ -219,18 +219,18 @@ $.fn.automateaction = function(){
 				});
 			} else if (_action == 'pause' ){
 				$_this.attr('data-waiting', '');
-				if ( $.csiemessenger.consumer.AUTOMATE_STATUS != "paused" ) { 
-					$.csiemessenger.singleton().call("pauseAutomate").done(function(){
+				if ( $.wesbmessenger.consumer.AUTOMATE_STATUS != "paused" ) { 
+					$.wesbmessenger.singleton().call("pauseAutomate").done(function(){
 						$_this.removeAttr('data-waiting');
 					}); 
 				} else { 
-					$.csiemessenger.singleton().call("resumeAutomate").done(function(){
+					$.wesbmessenger.singleton().call("resumeAutomate").done(function(){
 						$_this.removeAttr('data-waiting');
 					});
 				}
 			} else if ( _action == 'stop' ){
 				$_this.attr('data-waiting', '');
-				$.csiemessenger.singleton().call("stopAutomate").done(function(){
+				$.wesbmessenger.singleton().call("stopAutomate").done(function(){
 					$_this.removeAttr('data-waiting');
 				}); 
 			}

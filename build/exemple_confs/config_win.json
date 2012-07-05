@@ -36,8 +36,8 @@
 				{
 					"variable_in_name":		"TIME",
 					"variable_in_type":		"int",
-					"variable_out_name":	"TEMPERATURE",
-					"variable_out_type":	"float",
+					"variable_out_name":	"TIME_COPY",
+					"variable_out_type":	"int",
 					"type":					"sampling"
 				}
 			]	

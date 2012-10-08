@@ -47,7 +47,7 @@
 			"type":			"dll",							// required
 			"PORT":			8080,							// default: 80
 			"LOG_FILE":		"gateway.log",					// default: "gateway.log"
-			"PATH":			"ihm",							// default: "www"
+			"PATH":			"www",							// default: "www"
 			"CONTENT_TYPES":{								// required
 				"html":		"text/html",
 				"htm":		"text/html",

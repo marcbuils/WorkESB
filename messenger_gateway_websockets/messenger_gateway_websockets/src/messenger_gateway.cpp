@@ -122,8 +122,8 @@ static int callback_http(struct libwebsocket_context * context,
 			Log::get()->add( Log::LEVEL_INFO, (string)"serving HTTP URI " + (char *)in );
 
 			string _filename = config.get("PATH", "www").asString() + (const char*)in;
-			if ( strcmp((const char*)in, "/") == 0 ){
-				_filename = config.get("PATH", "www").asString() + "/index.html";
+			if ( ((char*)in)[strlen((const char*)in) - 1] == '/' ){
+				_filename = config.get("PATH", "www").asString() + (char*)in + "index.html";
 			}
 			size_t _pos = _filename.find_last_of(".");
 			size_t _posend = _filename.find_first_of("?");

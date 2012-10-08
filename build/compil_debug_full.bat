@@ -38,7 +38,15 @@ copy "%JSONCPP_LIB%\json.dll" "sequencer_debug\"
 
 echo ''
 echo '## AJOUT DE LUA'
-copy "%LUA_LIB%\lua5.1.dll" "sequencer_debug\"
+copy "%LUA_LIB%\lua52.dll" "sequencer\"
+
+echo ''
+echo '## AJOUT DE LA LIBRAIRIE LUA LFS'
+copy "libs\keplerproject-luafilesystem-149e0fb\lfs.dll" "sequencer\plugins\lua\"
+
+echo ''
+echo '## AJOUT DE LA LIBRAIRIE LUA UUID'
+copy "libs\uuid\uuid.dll" "sequencer\plugins\lua\"
 
 echo ''
 echo '## AJOUT DU WESBMESSENGER'

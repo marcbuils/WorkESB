@@ -18,6 +18,13 @@
  *      Author: Marc Buils (MATIS - http://www.matis-group.com)
  */
 ;(function($){
+// node.js verification
+if ( typeof(document) == "undefined" ){
+	document = { 
+		URL: "http://localhost:8080/"
+	}
+}
+
 /*
  The MIT License: Copyright (c) 2010 LiosK.
 */
@@ -29,7 +36,7 @@ UUID._hexAligner=UUID._getIntAligner(16);
  */
 $.wesbmessenger = function() {
 	this.initialized = false;
-	this.m_id = this.init( "com.workesb.test", "IHM" );
+	this.m_id = this.init( "com.workesb.test", typeof(window) == "undefined" ? "NodeJS" : "IHM" );
 };
 
 /*
@@ -83,7 +90,7 @@ $.wesbmessenger.prototype.callfunction = function( p_name, p_params, p_options )
 $.wesbmessenger.prototype.init = function( p_domain, p_name ) {
 	var _timer;
 
-    if ('MozWebSocket' in window) {
+    if (typeof(window) != "undefined" && 'MozWebSocket' in window) {
       	window.WebSocket = window.MozWebSocket;
     }
 	
@@ -91,8 +98,9 @@ $.wesbmessenger.prototype.init = function( p_domain, p_name ) {
 		//console.log("update producers");
 		$.wesbmessenger.singleton().update_producers();
 	};
-	this.ws = new window.WebSocket( 'ws://' + document.URL.substr(7).split('/')[0], 'wesbmessenger' );
-	this.ws.onopen = function(){
+	
+	var _onopen, _onmessage, _onclose;
+	_onopen = function(){
 		$.wesbmessenger.singleton().initialized = true;
 		$.wesbmessenger.singleton().ws.send(JSON.stringify({
 			"function": "init",
@@ -102,16 +110,33 @@ $.wesbmessenger.prototype.init = function( p_domain, p_name ) {
 
 		setTimeout( _timer, 1000 );
 	};
-	this.ws.onmessage = function(p_data){
-		//console.log("update consumers: %s", p_data.data);
-		$.wesbmessenger.singleton().update_consumers(JSON.parse(p_data.data));
+	_onmessage = function(p_data){
+		// console.log("update consumers: %o", p_data);
+		$.wesbmessenger.singleton().update_consumers( JSON.parse( typeof(p_data.data) == "undefined" ? p_data.utf8Data : p_data.data) );
 		$(document).trigger("wesbmessenger_update");
 		
-		setTimeout( _timer, 250 );
+		setTimeout( _timer, 50 );
 	};
-	this.ws.onclose = function(){
+	_onclose = function(){
 		console.error("WESBMessenger connexion closed");
 	};
+
+	if ( typeof(window) != "undefined" ){
+		this.ws = new window.WebSocket( 'ws://' + document.URL.substr(7).split('/')[0], 'wesbmessenger' );
+		this.ws.onopen = _onopen;
+		this.ws.onmessage = _onmessage;
+		this.ws.onclose = _onclose;
+	} else {
+		var _websocket = require('websocket').client;
+		this._ws = new _websocket();
+		this._ws.on('connect', function( p_connection ){
+			$.wesbmessenger.singleton().ws = p_connection;
+			$.wesbmessenger.singleton().ws.on('message', _onmessage);
+			$.wesbmessenger.singleton().ws.on('close', _onclose);
+			_onopen();
+		});
+		this._ws.connect('ws://' + document.URL.substr(7).split('/')[0], 'wesbmessenger' );
+	}
 	
 	return -1;
 };
@@ -310,16 +335,19 @@ $.wesbmessenger.prototype.update_consumers = function( p_data ){
  */
 $.wesbmessenger.prototype.update_producers = function( ){
 	// CONVERT SAMPLING TO QUEUING
+	var _producers = {};
 	$.each( $.wesbmessenger.producer, function (p_key, p_value){
 		if ( !$.isArray( p_value ) ) {
-			$.wesbmessenger.producer[ p_key ] = [p_value];
+			_producers[ p_key ] = [p_value];
+		} else {
+			_producers[ p_key ] = p_value;
 		}
 	});
 	
 	$.wesbmessenger.singleton().ws.send(JSON.stringify({
 		"function": "update",
 		"data": { 
-			producer: 	$.wesbmessenger.producer
+			producer: 	_producers
 		}
 	}) + "\n");
 	$.each( $.wesbmessenger.producer, function( p_key, p_value ){

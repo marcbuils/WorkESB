@@ -60,14 +60,13 @@ echo ''
 echo '## AJOUT DU MESSENENGER POUR LUA'
 copy "..\messenger\Debug\wesbmessenger_c.dll" "sequencer_debug\plugins\lua\"
 
-
-echo ''
-echo '#### AJOUT DU DRIVER NXT'
-copy "..\nxt_driver\Debug\nxt_driver.dll" "sequencer_debug\sequencers"
-
 echo ''
 echo '## AJOUT DE l''IHM'
 mkdir "sequencer_debug\ihm"
 xcopy "..\ihm" "sequencer_debug\ihm" /e
+
+echo ''
+echo '## AJOUT DU MESSENENGER JS POUR IHM'
+copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer_debug\ihm\js\"
 
 echo 'REPERTOIRE "sequencer_debug" GENERE'

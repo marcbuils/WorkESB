@@ -63,10 +63,10 @@ copy "..\messenger\Debug\wesbmessenger_c.dll" "sequencer_debug\plugins\lua\"
 echo ''
 echo '## AJOUT DE l''IHM'
 mkdir "sequencer_debug\ihm"
-xcopy "..\ihm" "sequencer_debug\ihm" /e
+xcopy "..\www" "sequencer_debug\www" /e
 
 echo ''
 echo '## AJOUT DU MESSENENGER JS POUR IHM'
-copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer_debug\ihm\js\"
+copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer_debug\www\js\"
 
 echo 'REPERTOIRE "sequencer_debug" GENERE'

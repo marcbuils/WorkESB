@@ -61,8 +61,7 @@
 					
 					var _block = $_this.find('ul[data-jquery-type="sortableVariable"][data-name="' + p_module.name + '"]');
 					if ( _block.size() <= 0
-						&& ( p_module.variable.com == "consumer" || p_module.variable.com == "producer" )
-						&& !( p_module.variable.com == "producer" && p_module.variable.queuing ) ){
+						&& ( p_module.variable.com == "consumer" || p_module.variable.com == "producer" ) ){
 						_block = _list
 									.tmpl({
 										name: 	p_module.name,
@@ -81,16 +80,9 @@
 								.tmpl(p_module)
 								.appendTo( _block );
 						} else if ( p_module.variable.com == "producer" && p_module.variable.queuing ) {
-//							if ( p_module.variable.name != "LOGS" ){ 
-//								$.wesbmessenger.singleton().regConsumQueuing(p_module.variable.name, p_module.variable.type);
-//								$(document).bind('wesbmessenger_update', function(){
-//									if ($.wesbmessenger.consumer[ p_module.variable.name ] != undefined){
-//										$.each( $.wesbmessenger.consumer[ p_module.variable.name ], function( _i, _p ){
-//											log( 'QUEUING "'+p_module.variable.name+'": '+_p );
-//										});
-//									}
-//								});
-//							}
+							_consumQueuingText
+								.tmpl(p_module)
+								.appendTo( _block );
 						} else if ( p_module.variable.com == "consumer" && p_module.variable.queuing ) {
 							_produceQueuingText
 								.tmpl(p_module)

@@ -90,7 +90,8 @@ span.data_line_input > input {
 	padding-left: 10px;
 }
 
-[data-jquery-type="wesbmessengerConsum"], [data-jquery-type="wesbmessengerProduce"] {
+[data-jquery-type="wesbmessengerConsum"], [data-jquery-type="wesbmessengerProduce"],
+[data-jquery-type="wesbmessengerConsumQueuing"], [data-jquery-type="wesbmessengerProduceQueuing"] {
 	text-align: center;	
 }
 

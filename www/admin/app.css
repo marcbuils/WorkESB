@@ -91,7 +91,8 @@ span.data_line_input > input {
 }
 
 [data-jquery-type="wesbmessengerConsum"], [data-jquery-type="wesbmessengerProduce"],
-[data-jquery-type="wesbmessengerConsumQueuing"], [data-jquery-type="wesbmessengerProduceQueuing"] {
+[data-jquery-type="wesbmessengerConsumQueuing"], [data-jquery-type="wesbmessengerProduceQueuing"],
+[data-jquery-type="wesbmessengerCall"]~input[type="text"] {
 	text-align: center;	
 }
 

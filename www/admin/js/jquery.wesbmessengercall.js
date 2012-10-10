@@ -24,9 +24,18 @@ $.fn.wesbmessengerCall = function(){
 		var _name = $_this.attr('data-variable-name');
 		
 		$_this.bind( "click", function(){
-			$.wesbmessenger.singleton().call( _name, {} ).done( function(p_params){
-				console.log("Called %s: %o", _name, p_params);
-			});
+			var _parameters = prompt('Call parameters for the function "' + _name + '"', '""' );
+			if ( _parameters != null ) {
+				try {
+					var _result = JSON.parse( _parameters );
+					$_this.parent().find('input[type="text"]').parent().parent().addClass('data_line_disabled');
+					$.wesbmessenger.singleton().call( _name, _result ).done( function(p_params){
+						$_this.parent().find('input[type="text"]').val( JSON.stringify(p_params) ).parent().parent().removeClass('data_line_disabled');
+					});
+				} catch( p_error ) {
+					alert( p_error );
+				}
+			}
 		});
 	});
 };

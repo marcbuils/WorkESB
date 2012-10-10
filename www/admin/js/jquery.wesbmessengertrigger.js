@@ -24,7 +24,14 @@ $.fn.wesbmessengerTrigger = function(){
 		var _name = $_this.attr('data-variable-name');
 		
 		$_this.bind( "click", function(){
-			$.wesbmessenger.singleton().trigger( _name, {} );
+			var _parameters = prompt('Call parameters for the function "' + _name + '"', '""' );
+			if ( _parameters != null ) {
+				try {
+					$.wesbmessenger.singleton().trigger( _name, JSON.parse( _parameters ) );
+				} catch( p_error ) {
+					alert( p_error );
+				}
+			}
 		});
 	});
 };

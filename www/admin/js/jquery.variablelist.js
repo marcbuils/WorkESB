@@ -95,6 +95,14 @@
 									log( 'bind "'+p_module.variable.name+'": '+JSON.stringify(p) );
 								});
 							}
+						} else if ( p_module.variable.com == "share" ) {
+							_call
+								.tmpl(p_module)
+								.appendTo( _block );
+						} else if ( p_module.variable.com == "bind" ) {
+							_trigger
+								.tmpl(p_module)
+								.appendTo( _block );
 						}
 					}
 					

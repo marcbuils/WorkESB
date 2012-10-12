@@ -38,7 +38,9 @@ $.wesbmessenger = function() {
  * Default options
  */
 $.wesbmessenger.options = {
-	server: 'localhost:8080'
+	server: 	( typeof(document) == "undefined" ? 'ws://localhost:8080' : 'ws://' + document.URL.substr(7).split('/')[0] ),
+	frequency: 	50,					// ms
+	inittime:	1000
 };
 
 /*
@@ -101,13 +103,13 @@ $.wesbmessenger.prototype.connect = function( p_domain, p_name, p_options ) {
 		}) + "\n");
 		_this._oninit.resolve();
 		
-		setTimeout( _timer, 1000 );
+		setTimeout( _timer, _this.options.inittime );
 	};
 	_onmessage = function(p_data){
 		_this._update_consumers( JSON.parse( typeof(p_data.data) == "undefined" ? p_data.utf8Data : p_data.data) );
 		$($.wesbmessenger).trigger("wesbmessenger_update");
 		
-		setTimeout( _timer, 50 );
+		setTimeout( _timer, _this.options.frequency );
 	};
 	_onclose = function(){
 		console.error("WESBMessenger connexion closed");
@@ -115,7 +117,7 @@ $.wesbmessenger.prototype.connect = function( p_domain, p_name, p_options ) {
 	};
 
 	if ( typeof(document) != "undefined" ){
-		this.ws = new window.WebSocket( 'ws://' + ( typeof(p_options) != "undefined" && typeof(p_options.server) != "undefined" ? p_options.server : document.URL.substr(7).split('/')[0] ), 'wesbmessenger' );
+		this.ws = new window.WebSocket( this.options.server, 'wesbmessenger' );
 		this.ws.onopen = _onopen;
 		this.ws.onmessage = _onmessage;
 		this.ws.onclose = _onclose;
@@ -128,7 +130,7 @@ $.wesbmessenger.prototype.connect = function( p_domain, p_name, p_options ) {
 			$.wesbmessenger.singleton().ws.on('close', _onclose);
 			_onopen();
 		});
-		this._ws.connect('ws://' + this.options.server, 'wesbmessenger' );
+		this._ws.connect( this.options.server, 'wesbmessenger' );
 	}
 	
 	return this;
@@ -380,7 +382,4 @@ $.wesbmessenger.prototype._callfunction = function( p_name, p_params, p_options 
 	} );
     return _return;
 };
-
-if ( typeof(window) != "undefined" )
-	$.wesbmessenger.singleton().connect( "com.workesb.test", "IHM" );
 })(jQuery);

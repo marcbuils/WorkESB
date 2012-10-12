@@ -92,7 +92,7 @@
 							_eventlist[p_module.variable.name] = true;
 							
 							$.wesbmessenger.singleton().bind( p_module.variable.name, function(p){
-								log( 'bind "'+p_module.variable.name+'": '+JSON.stringify(p) );
+								log( 'trigger "'+p_module.variable.name+'": '+JSON.stringify(p) );
 							});
 						}
 					} else if ( p_module.variable.com == "share" ) {

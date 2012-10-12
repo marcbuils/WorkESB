@@ -24,18 +24,19 @@ $.fn.wesbmessengerConsumQueuing = function(){
 		var _name = $_this.attr('data-variable-name');
 		var _type = $_this.attr('data-variable-type');
 		
-		$.wesbmessenger.singleton().regConsumQueuing( _name, _type );
-		$(document).bind( "wesbmessenger_update", function(){
-			if ( $.wesbmessenger.consumer[_name].length > 0 ){
-				var _val = ( _type == 'float' ? $.wesbmessenger.consumer[_name][$.wesbmessenger.consumer[_name].length-1].toFixed(2) : $.wesbmessenger.consumer[_name][$.wesbmessenger.consumer[_name].length-1] );
-				
-				if ($_this.is('input')) {
-					$_this.val( _val );
-				} else {
-					$_this.text( _val );
+		$.wesbmessenger.singleton()
+			.regConsumQueuing( _name, _type )
+			.update( function(){
+				if ( $.wesbmessenger.consumer[_name].length > 0 ){
+					var _val = ( _type == 'float' ? $.wesbmessenger.consumer[_name][$.wesbmessenger.consumer[_name].length-1].toFixed(2) : $.wesbmessenger.consumer[_name][$.wesbmessenger.consumer[_name].length-1] );
+					
+					if ($_this.is('input')) {
+						$_this.val( _val );
+					} else {
+						$_this.text( _val );
+					}
 				}
-			}
-		});
+			});
 	});
 };
 })(jQuery);

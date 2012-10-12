@@ -26,22 +26,21 @@ $.fn.logsTable = function(){
 		var $_tmpl = $($_this.attr('data-tmpl'));
 		var _logs = [];
 		
-		$(document).one( "wesbmessenger_update", function(){
-			$.wesbmessenger.singleton().regConsumQueuing( _name, _type );
-			$_this.bind('refresh', function(){
-				$_tmpl.tmpl( {logs: _logs} ).appendTo($_this.empty())
-				$_this.pluginautoload();
-				return false;
-			}).trigger('refresh');
-			$(document).bind( "wesbmessenger_update", function(){
-				var _vals = $.wesbmessenger.consumer[_name];
+		$.wesbmessenger.singleton().regConsumQueuing( _name, _type );
+		$_this.bind('refresh', function(){
+			$_tmpl.tmpl( {logs: _logs} ).appendTo($_this.empty())
+			$_this.pluginautoload();
+			return false;
+		}).trigger('refresh');
+		$.wesbmessenger.singleton().update( function(){
+			var _vals = $.wesbmessenger.consumer[_name];
 				
-				if (_vals.length > 0) {
-					_logs = $.merge( _logs, _vals );
-					$_this.trigger('refresh');
-				}
-			});
+			if (_vals.length > 0) {
+				_logs = $.merge( _logs, _vals );
+				$_this.trigger('refresh');
+			}
 		});
+		
 		log = function( p_value ){
 			_logs = $.merge( _logs, [p_value] );
 			$_this.trigger('refresh');

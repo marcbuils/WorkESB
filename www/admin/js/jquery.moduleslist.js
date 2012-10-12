@@ -27,40 +27,38 @@
 			var _stoppedEvent = $_this.attr('data-stopped-event');
 			
 			$_this.empty();
-			$(document).one( "wesbmessenger_update", function( ){
-				$.wesbmessenger.singleton().bind(_pongEvent, function(p_infos){
-					if ( $_this.find('[data-sequencer-name="'+p_infos.name+'"]').size() == 0 ){
-						var _loading = $('<div style="text-align: center;"></div>').loading().appendTo($_this);
-						$.wesbmessenger.singleton()
-							.call(p_infos.list)
-							.done(function(p_modules){
-								if ( $_this.find('[data-sequencer-name="'+p_infos.name+'"]').size() == 0 ){
-									$_tmpl
-										.tmpl({
-											infos:	p_infos,
-											list:	p_modules
-										})
-										.hide()
-										.appendTo($_this)
-										.fadeIn()
-										.pluginautoload();
-								}
-								_loading.remove();
-							});
-					}
-				});
-				$.wesbmessenger.singleton().trigger(_pingEvent);
-				
-				// stop sequencer detection
-				$.wesbmessenger.singleton().bind(_stoppedEvent, function(p_name){
-					$_this
-						.find('[data-sequencer-name="'+p_name+'"]')
-						.fadeOut(400, function(){
-							$_this
-								.find('[data-sequencer-name="'+p_name+'"]')
-								.remove();
+			$.wesbmessenger.singleton().bind(_pongEvent, function(p_infos){
+				if ( $_this.find('[data-sequencer-name="'+p_infos.name+'"]').size() == 0 ){
+					var _loading = $('<div style="text-align: center;"></div>').loading().appendTo($_this);
+					$.wesbmessenger.singleton()
+						.call(p_infos.list)
+						.done(function(p_modules){
+							if ( $_this.find('[data-sequencer-name="'+p_infos.name+'"]').size() == 0 ){
+								$_tmpl
+									.tmpl({
+										infos:	p_infos,
+										list:	p_modules
+									})
+									.hide()
+									.appendTo($_this)
+									.fadeIn()
+									.pluginautoload();
+							}
+							_loading.remove();
 						});
-				});
+				}
+			});
+			$.wesbmessenger.singleton().trigger(_pingEvent);
+			
+			// stop sequencer detection
+			$.wesbmessenger.singleton().bind(_stoppedEvent, function(p_name){
+				$_this
+					.find('[data-sequencer-name="'+p_name+'"]')
+					.fadeOut(400, function(){
+						$_this
+							.find('[data-sequencer-name="'+p_name+'"]')
+							.remove();
+					});
 			});
 		});
 	};

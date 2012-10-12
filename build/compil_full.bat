@@ -66,6 +66,11 @@ xcopy "..\www" "sequencer\www" /e
 
 echo ''
 echo '## AJOUT DU MESSENENGER JS POUR IHM'
-copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer\www\js\"
+copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer\www\admin\js\"
+
+
+echo ''
+echo '## AJOUT DU LANCEUR'
+copy "startesb_dev.bat" "sequencer\"
 
 echo 'REPERTOIRE "sequencer" GENERE'

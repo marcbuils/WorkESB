@@ -24,19 +24,19 @@ $.fn.wesbmessengerProduce = function(){
 		var _name = $_this.attr('data-variable-name');
 		var _type = $_this.attr('data-variable-type');
 		
-		$(document).one( "wesbmessenger_update", function(){
-			// setting
-			$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
-			$_this.bind('change', function(){
-				var _val = $_this.val();
+		// setting
+		$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
+		$_this.bind('change', function(){
+			var _val = $_this.val();
 			
-				$.wesbmessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
-				$_this.attr('disabled', true);			
-			});
+			$.wesbmessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
+			$_this.attr('disabled', true);			
+		});
 			
-			// getting
-			$.wesbmessenger.singleton().regConsumSampling( _name, _type );
-			$(document).bind( "wesbmessenger_update", function(){
+		// getting
+		$.wesbmessenger.singleton()
+			.regConsumSampling( _name, _type )
+			.update( function(){
 				var _val = $.wesbmessenger.consumer[_name];
 				if ( $.isArray( _val ) ) _val = _val[ _val.length-1 ];
 				_val = ( _type == 'float' ? _val.toFixed(2) : _val );
@@ -51,8 +51,7 @@ $.fn.wesbmessengerProduce = function(){
 				} else {
 					$_this.text( _val );
 				}
-			});
-		});		
+			});		
 	});
 };
 })(jQuery);

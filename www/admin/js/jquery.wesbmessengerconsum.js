@@ -24,9 +24,9 @@ $.fn.wesbmessengerConsum = function(){
 		var _name = $_this.attr('data-variable-name');
 		var _type = $_this.attr('data-variable-type');
 		
-		$(document).one( "wesbmessenger_update", function(){
-			$.wesbmessenger.singleton().regConsumSampling( _name, _type );
-			$(document).bind( "wesbmessenger_update", function(){
+		$.wesbmessenger.singleton()
+			.regConsumSampling( _name, _type )
+			.update( function(){
 				var _val = ( _type == 'float' ? $.wesbmessenger.consumer[_name].toFixed(2) : $.wesbmessenger.consumer[_name] );
 				
 				if ($_this.is('input')) {
@@ -35,7 +35,6 @@ $.fn.wesbmessengerConsum = function(){
 					$_this.text( _val );
 				}
 			});
-		});
 		
 		$_this.parent().trigger('reload');
 	});

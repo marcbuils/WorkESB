@@ -23,30 +23,28 @@
 			var $_this = $(this);
 			var _start = null;
 
-			$(document).one( "wesbmessenger_update", function(){
-				$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_STATUS", "string" );
-				$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_TIME", "int" );
+			$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_STATUS", "string" );
+			$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_TIME", "int" );
 
-				$(document).bind( "wesbmessenger_update", function(){
-					var _status = $.wesbmessenger.consumer.AUTOMATE_STATUS;
+			$.wesbmessenger.singleton().update( function(){
+				var _status = $.wesbmessenger.consumer.AUTOMATE_STATUS;
 					
-					// status
-					$_this
-						.find('td:contains("Status")')
-						.next()
-						.text( _status );
+				// status
+				$_this
+					.find('td:contains("Status")')
+					.next()
+					.text( _status );
 						
-					// time
-					var _time = $.wesbmessenger.consumer.AUTOMATE_TIME;
-					var _hours = parseInt( _time / 3600 );
-					var _mins = parseInt( (_time / 60) )  % 3600;
-					var _secs = _time % 60;
+				// time
+				var _time = $.wesbmessenger.consumer.AUTOMATE_TIME;
+				var _hours = parseInt( _time / 3600 );
+				var _mins = parseInt( (_time / 60) )  % 3600;
+				var _secs = _time % 60;
 						
-					$_this
-						.find('td:contains("Temps")')
-						.next()
-						.text( (_hours<10?'0':'')+_hours+':'+(_mins<10?'0':'')+_mins+':'+(_secs<10?'0':'')+_secs );
-				});
+				$_this
+					.find('td:contains("Temps")')
+					.next()
+					.text( (_hours<10?'0':'')+_hours+':'+(_mins<10?'0':'')+_mins+':'+(_secs<10?'0':'')+_secs );
 			});
 		});
 	};

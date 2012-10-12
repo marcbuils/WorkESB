@@ -103,7 +103,7 @@ $.fn.wesbmessengerTerminal = function(){
 			echo = function(p_value){_term.write(p_value); _term.newLine(); return '';};
 			clear = function() { _term.clear(); return ''; };
 			c = {};
-			$(document).bind('wesbmessenger_update', function(){c = $.wesbmessenger.consumer;});
+			$.wesbmessenger.singleton().update( function(){c = $.wesbmessenger.consumer;} );
 			p = $.wesbmessenger.producer;
 			help = function(){
 				_term.write([

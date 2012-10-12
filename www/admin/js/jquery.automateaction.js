@@ -27,138 +27,136 @@ var __AUTOMATE_STATUS__ = "AUTOMATE_STATUS";
 var __AUTOMATE_DIALOG__ = "AUTOMATE_DIALOG";
 var __AUTOMATE_DIALOG_RETURN__ = "AUTOMATE_DIALOG_RETURN";
 
-$(document).one( "wesbmessenger_update", function(){
-	$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_STATUS__, "string" );
-	$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_DIALOG__, "string" );
+$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_STATUS__, "string" );
+$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_DIALOG__, "string" );
+
+$.wesbmessenger.singleton().update( function(){
+	var _status = $.wesbmessenger.consumer[__AUTOMATE_STATUS__];
 	
-	$(document).bind( "wesbmessenger_update", function(){
-		var _status = $.wesbmessenger.consumer[__AUTOMATE_STATUS__];
-		
-		if ( _lastStatus != _status && $('[data-jquery-type="automateaction"][data-waiting]').size() <= 0 ){
-			if (_status == "stopped") {
-				if ( _lastStatus != null ){
-					$.gritter.add({
-						image:	"img/info.png",
-						title: 	_notificationTitle,
-						text:	"Arret de l'automate"
-					});
-				}
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", false);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", true);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", false);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", true);
-			} else if (_status == "started"){
-				if ( _lastStatus != null ){
-					$.gritter.add({
-						image:	"img/info.png",
-						title: 	_notificationTitle,
-						text:	(_lastStatus == "paused" ? "Relance de l'automate" : "Lancement de l'automate")
-					});
-				}
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", true);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", false);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", false);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", false);
-			} else if (_status == "paused") {
-				if ( _lastStatus != null ){
-					$.gritter.add({
-						image:	"img/info.png",
-						title: 	_notificationTitle,
-						text:	"Pause de l'automate"
-					});
-				}
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", true);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", false);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", true);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", false);
-			} else {
-				if ( _lastStatus != null ){
-					$.gritter.add({
-						image:	"img/info.png",
-						title: 	_notificationTitle,
-						text:	"Erreur inconnue"
-					});
-				}
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", true);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", true);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", false);
-				dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", true);
+	if ( _lastStatus != _status && $('[data-jquery-type="automateaction"][data-waiting]').size() <= 0 ){
+		if (_status == "stopped") {
+			if ( _lastStatus != null ){
+				$.gritter.add({
+					image:	"img/info.png",
+					title: 	_notificationTitle,
+					text:	"Arret de l'automate"
+				});
 			}
-			_lastStatus = _status;
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", false);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", true);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", false);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", true);
+		} else if (_status == "started"){
+			if ( _lastStatus != null ){
+				$.gritter.add({
+					image:	"img/info.png",
+					title: 	_notificationTitle,
+					text:	(_lastStatus == "paused" ? "Relance de l'automate" : "Lancement de l'automate")
+				});
+			}
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", true);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", false);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", false);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", false);
+		} else if (_status == "paused") {
+			if ( _lastStatus != null ){
+				$.gritter.add({
+					image:	"img/info.png",
+					title: 	_notificationTitle,
+					text:	"Pause de l'automate"
+				});
+			}
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", true);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", false);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", true);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", false);
+		} else {
+			if ( _lastStatus != null ){
+				$.gritter.add({
+					image:	"img/info.png",
+					title: 	_notificationTitle,
+					text:	"Erreur inconnue"
+				});
+			}
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="start"]').parent().parent().get(0) ).set("disabled", true);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("disabled", true);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="pause"]').parent().parent().get(0) ).set("checked", false);
+			dijit.byNode( $('[data-jquery-type="automateaction"][data-action="stop"]').parent().parent().get(0) ).set("disabled", true);
+		}
+		_lastStatus = _status;
+	}
+		
+	// automate dialogs
+	var _dialog;
+	if (_status == "started"){
+		_dialog = $.wesbmessenger.consumer[__AUTOMATE_DIALOG__];
+	}else{
+		_dialog = JSON.stringify({type: "none"});
+	}
+	if (_lastDialog != _dialog){
+		_lastDialog = _dialog;
+		try {
+			_dialog = JSON.parse( _dialog );
+		} catch(e){
+			_dialog = { type: "none" };
 		}
 		
-		// automate dialogs
-		var _dialog;
-		if (_status == "started"){
-			_dialog = $.wesbmessenger.consumer[__AUTOMATE_DIALOG__];
-		}else{
-			_dialog = JSON.stringify({type: "none"});
-		}
-		if (_lastDialog != _dialog){
-			_lastDialog = _dialog;
-			try {
-				_dialog = JSON.parse( _dialog );
-			} catch(e){
-				_dialog = { type: "none" };
+		if (_dialog.type == "alert"){
+			if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
+				$.gritter.remove(_currentGritterId);
+				_currentGritterId = -1;
 			}
 			
-			if (_dialog.type == "alert"){
-				if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
-					$.gritter.remove(_currentGritterId);
-					_currentGritterId = -1;
-				}
-				
-				jAlert( _dialog.text, _dialog.title, function(){
-					$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
-						"type": 	"alert"
-					});
+			jAlert( _dialog.text, _dialog.title, function(){
+				$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
+					"type": 	"alert"
 				});
-			} else if (_dialog.type == "confirm"){
-				if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
-					$.gritter.remove(_currentGritterId);
-					_currentGritterId = -1;
-				}
-				
-				jConfirm( _dialog.text, _dialog.title, function(_r){
-					$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
-						"type": 	"confirm",
-						"return": 	_r
-					});
+			});
+		} else if (_dialog.type == "confirm"){
+			if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
+				$.gritter.remove(_currentGritterId);
+				_currentGritterId = -1;
+			}
+			
+			jConfirm( _dialog.text, _dialog.title, function(_r){
+				$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
+					"type": 	"confirm",
+					"return": 	_r
 				});
-			} else if (_dialog.type == "prompt"){
-				if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
-					$.gritter.remove(_currentGritterId);
-					_currentGritterId = -1;
-				}
-				
-				jPrompt( _dialog.text, "", _dialog.title, function(_r){
-					$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
-						"type": 	"prompt",
-						"return": 	_r
-					});
+			});
+		} else if (_dialog.type == "prompt"){
+			if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
+				$.gritter.remove(_currentGritterId);
+				_currentGritterId = -1;
+			}
+			
+			jPrompt( _dialog.text, "", _dialog.title, function(_r){
+				$.wesbmessenger.singleton().trigger(__AUTOMATE_DIALOG_RETURN__, {
+					"type": 	"prompt",
+					"return": 	_r
 				});
-			} else if (_dialog.type == "wait"){
-				$.alerts._hide();
-				
-				if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
-					$.gritter.remove(_currentGritterId);
-				}
-				_currentGritterId = $.gritter.add({
-					image:	"img/waiting.png",
-					sticky: true,
-					title: 	"Automate en attente",
-					text:	_dialog.text
-				});
-				$('#gritter-item-'+_currentGritterId+' .gritter-close').remove();
-			}else{
-				$.alerts._hide();
-				if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
-					$.gritter.remove(_currentGritterId);
-					_currentGritterId = -1;
-				}
+			});
+		} else if (_dialog.type == "wait"){
+			$.alerts._hide();
+			
+			if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
+				$.gritter.remove(_currentGritterId);
+			}
+			_currentGritterId = $.gritter.add({
+				image:	"img/waiting.png",
+				sticky: true,
+				title: 	"Automate en attente",
+				text:	_dialog.text
+			});
+			$('#gritter-item-'+_currentGritterId+' .gritter-close').remove();
+		}else{
+			$.alerts._hide();
+			if ( $('#gritter-item-'+_currentGritterId).size() > 0 ){
+				$.gritter.remove(_currentGritterId);
+				_currentGritterId = -1;
 			}
 		}
-	});
+	}
 });
 		
 $.fn.automateaction = function(){

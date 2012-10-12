@@ -36,23 +36,24 @@ $.fn.wesbmessengerProduceBool = function(){
 		});
 
 		// getting
-		$.wesbmessenger.singleton().regConsumSampling( _name, _type );
-		$(document).bind( "wesbmessenger_update", function(){
-			try{
-				var _val = $.wesbmessenger.consumer[_name];
-
-				dijit.byNode( $_this.parent().parent().get(0) ).set('disabled', false);
-				if ( _val == 0) {
-					dijit.byNode( $_this.parent().parent().get(0) ).set('checked', false);
-					dijit.byNode( $_this.parent().parent().get(0) ).set('label', 'OFF');
-				} else {
-					dijit.byNode( $_this.parent().parent().get(0) ).set('checked', true);
-					dijit.byNode( $_this.parent().parent().get(0) ).set('label', 'ON');
+		$.wesbmessenger.singleton()
+			.regConsumSampling( _name, _type )
+			.update( function(){
+				try{
+					var _val = $.wesbmessenger.consumer[_name];
+	
+					dijit.byNode( $_this.parent().parent().get(0) ).set('disabled', false);
+					if ( _val == 0) {
+						dijit.byNode( $_this.parent().parent().get(0) ).set('checked', false);
+						dijit.byNode( $_this.parent().parent().get(0) ).set('label', 'OFF');
+					} else {
+						dijit.byNode( $_this.parent().parent().get(0) ).set('checked', true);
+						dijit.byNode( $_this.parent().parent().get(0) ).set('label', 'ON');
+					}
+				}catch(e){
+					console.error("%s - %s", e, new Error().stack);
 				}
-			}catch(e){
-				console.error("%s - %s", e, new Error().stack);
-			}
-		});
+			});
 	});
 };
 })(jQuery);

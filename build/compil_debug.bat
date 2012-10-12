@@ -52,4 +52,8 @@ echo ''
 echo '## AJOUT DU MESSENENGER POUR LUA'
 copy "..\messenger\Debug\wesbmessenger_c.dll" "sequencer_debug\plugins\lua\"
 
+echo ''
+echo '## AJOUT DU LANCEUR'
+copy "startesb_dev.bat" "sequencer_debug\"
+
 echo 'REPERTOIRE "sequencer_debug" GENERE'

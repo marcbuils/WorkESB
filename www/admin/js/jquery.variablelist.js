@@ -48,76 +48,74 @@
 			var _trigger = $($_this.attr('data-tmpl-trigger'));
 			var _eventlist = {};
 			
-			$(document).one('wesbmessenger_update', function(){
-				$.wesbmessenger.singleton().bind('wesbmessenger_pong', function(p_module){
-					if ( p_module.name == "IHM" || p_module.name == "SEQUENCEUR D'AUTOMATE"
-						|| p_module.variable.name == "wesbmessenger_pong" ){
-						return;
-					}
+			$.wesbmessenger.singleton().bind('wesbmessenger_pong', function(p_module){
+				if ( p_module.name == "IHM" || p_module.name == "SEQUENCEUR D'AUTOMATE"
+					|| p_module.variable.name == "wesbmessenger_pong" ){
+					return;
+				}
 					
-					// add id
-					p_module.id = _getIdByName( p_module.name );
-					p_module.variable.id = _getIdByName( p_module.variable.name );					
+				// add id
+				p_module.id = _getIdByName( p_module.name );
+				p_module.variable.id = _getIdByName( p_module.variable.name );					
 					
-					var _block = $_this.find('ul[data-jquery-type="sortableVariable"][data-name="' + p_module.name + '"]');
-					if ( _block.size() <= 0
-						&& ( p_module.variable.com == "consumer" || p_module.variable.com == "producer" ) ){
-						_block = _list
-									.tmpl({
-										name: 	p_module.name,
-										id:		p_module.id
-									})
-									.appendTo( $_this );
-					}
+				var _block = $_this.find('ul[data-jquery-type="sortableVariable"][data-name="' + p_module.name + '"]');
+				if ( _block.size() <= 0
+					&& ( p_module.variable.com == "consumer" || p_module.variable.com == "producer"
+						|| p_module.variable.com == "share" || p_module.variable.com == "bind") ){
+					_block = _list
+								.tmpl({
+									name: 	p_module.name,
+									id:		p_module.id
+								})
+								.appendTo( $_this );
+				}
 						
-					if ( $('ul[data-jquery-type="sortableVariable"] li[data-module="'+p_module.name+'"][data-name="'+p_module.variable.name+'"]').size() <= 0 ){
-						if ( p_module.variable.com == "producer" && !p_module.variable.queuing ) {
-							_consumText
-								.tmpl(p_module)
-								.appendTo( _block );
-						} else if ( p_module.variable.com == "consumer" && !p_module.variable.queuing ) {
-							_produceText
-								.tmpl(p_module)
-								.appendTo( _block );
-						} else if ( p_module.variable.com == "producer" && p_module.variable.queuing ) {
-							_consumQueuingText
-								.tmpl(p_module)
-								.appendTo( _block );
-						} else if ( p_module.variable.com == "consumer" && p_module.variable.queuing ) {
-							_produceQueuingText
-								.tmpl(p_module)
-								.appendTo( _block );
-						} else if ( p_module.variable.com == "trigger" ) {
-							if ( _eventlist[p_module.variable.name] == undefined ){
-								_eventlist[p_module.variable.name] = true;
-								
-								$.wesbmessenger.singleton().bind( p_module.variable.name, function(p){
-									log( 'bind "'+p_module.variable.name+'": '+JSON.stringify(p) );
-								});
-							}
-						} else if ( p_module.variable.com == "share" ) {
-							_call
-								.tmpl(p_module)
-								.appendTo( _block );
-						} else if ( p_module.variable.com == "bind" ) {
-							_trigger
-								.tmpl(p_module)
-								.appendTo( _block );
+				if ( $('ul[data-jquery-type="sortableVariable"] li[data-module="'+p_module.name+'"][data-name="'+p_module.variable.name+'"]').size() <= 0 ){
+					if ( p_module.variable.com == "producer" && !p_module.variable.queuing ) {
+						_consumText
+							.tmpl(p_module)
+							.appendTo( _block );
+					} else if ( p_module.variable.com == "consumer" && !p_module.variable.queuing ) {
+						_produceText
+							.tmpl(p_module)
+							.appendTo( _block );
+					} else if ( p_module.variable.com == "producer" && p_module.variable.queuing ) {
+						_consumQueuingText
+							.tmpl(p_module)
+							.appendTo( _block );
+					} else if ( p_module.variable.com == "consumer" && p_module.variable.queuing ) {
+						_produceQueuingText
+							.tmpl(p_module)
+							.appendTo( _block );
+					} else if ( p_module.variable.com == "trigger" ) {
+						if ( _eventlist[p_module.variable.name] == undefined ){
+							_eventlist[p_module.variable.name] = true;
+							
+							$.wesbmessenger.singleton().bind( p_module.variable.name, function(p){
+								log( 'bind "'+p_module.variable.name+'": '+JSON.stringify(p) );
+							});
 						}
+					} else if ( p_module.variable.com == "share" ) {
+						_call
+							.tmpl(p_module)
+							.appendTo( _block );
+					} else if ( p_module.variable.com == "bind" ) {
+						_trigger
+							.tmpl(p_module)
+							.appendTo( _block );
 					}
-					
-					_block
-						.parent()
-						.pluginautoload();
-				});
+				}
 				
-				$.wesbmessenger.singleton().bind(_removed, function(p_module){
-					$('ul[data-jquery-type="sortableVariable"] li[data-module="'+p_module.name+'"]').remove();
-					$_this.find('ul[data-jquery-type="sortableVariable"][data-name="' + p_module.name + '"]').remove();
-				});
-
-				$.wesbmessenger.singleton().trigger('wesbmessenger_ping');
+				_block
+					.parent()
+					.pluginautoload();
 			});
+			
+			$.wesbmessenger.singleton().bind(_removed, function(p_module){
+				$('ul[data-jquery-type="sortableVariable"] li[data-module="'+p_module.name+'"]').remove();
+				$_this.find('ul[data-jquery-type="sortableVariable"][data-name="' + p_module.name + '"]').remove();
+			});
+			$.wesbmessenger.singleton().trigger('wesbmessenger_ping');
 		});
 	};
 })(jQuery);

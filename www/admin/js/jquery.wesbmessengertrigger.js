@@ -23,16 +23,25 @@ $.fn.wesbmessengerTrigger = function(){
 		var $_this = $(this);
 		var _name = $_this.attr('data-variable-name');
 		
-		$_this.bind( "click", function(){
-			var _parameters = prompt('Call parameters for the function "' + _name + '"', '""' );
-			if ( _parameters != null ) {
-				try {
-					$.wesbmessenger.singleton().trigger( _name, JSON.parse( _parameters ) );
-				} catch( p_error ) {
-					alert( p_error );
+		var _setTrigger = function( p_defValue ){
+			jPrompt('Parameters for "' + _name + '"', p_defValue, null, function( _parameters ){
+				if ( _parameters != null ) {
+					try {
+						var _result = JSON.parse( _parameters );
+						$.wesbmessenger.singleton().trigger( _name, _result );
+					} catch( p_error ) {
+						jAlert( ""+p_error, null, function(){
+							_setTrigger( _parameters );
+						});
+						
+					}
 				}
-			}
+			} );
+		};
+		$_this.bind( "click", function(){
+			_setTrigger( '""' );
 		});
 	});
 };
 })(jQuery);
+

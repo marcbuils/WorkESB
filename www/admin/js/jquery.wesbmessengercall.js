@@ -23,19 +23,26 @@ $.fn.wesbmessengerCall = function(){
 		var $_this = $(this);
 		var _name = $_this.attr('data-variable-name');
 		
-		$_this.bind( "click", function(){
-			var _parameters = prompt('Call parameters for the function "' + _name + '"', '""' );
-			if ( _parameters != null ) {
-				try {
-					var _result = JSON.parse( _parameters );
-					$_this.parent().find('input[type="text"]').parent().parent().addClass('data_line_disabled');
-					$.wesbmessenger.singleton().call( _name, _result ).done( function(p_params){
-						$_this.parent().find('input[type="text"]').val( JSON.stringify(p_params) ).parent().parent().removeClass('data_line_disabled');
-					});
-				} catch( p_error ) {
-					alert( p_error );
+		var _setCall = function( p_defValue ){
+			jPrompt('Parameters for "' + _name + '"', p_defValue, null, function( _parameters ){
+				if ( _parameters != null ) {
+					try {
+						var _result = JSON.parse( _parameters );
+						$_this.parent().find('input[type="text"]').parent().parent().addClass('data_line_disabled');
+						$.wesbmessenger.singleton().call( _name, _result ).done( function(p_params){
+							$_this.parent().find('input[type="text"]').val( JSON.stringify(p_params) ).parent().parent().removeClass('data_line_disabled');
+						});
+					} catch( p_error ) {
+						jAlert( ""+p_error, null, function(){
+							_setCall( _parameters );
+						});
+						
+					}
 				}
-			}
+			} );
+		};
+		$_this.bind( "click", function(){
+			_setCall( '""' );
 		});
 	});
 };

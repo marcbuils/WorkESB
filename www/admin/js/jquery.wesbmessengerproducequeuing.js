@@ -24,15 +24,13 @@ $.fn.wesbmessengerProduceQueuing = function(){
 		var _name = $_this.attr('data-variable-name');
 		var _type = $_this.attr('data-variable-type');
 		
-		$(document).one( "wesbmessenger_update", function(){
-			// setting
-			$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
-			$_this.bind('change', function(){
-				var _val = $_this.val();
+		// setting
+		$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
+		$_this.bind('change', function(){
+			var _val = $_this.val();
 			
-				$.wesbmessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
-				$_this.val('');
-			});
+			$.wesbmessenger.producer[_name][0] = ( _type=='float' ? parseFloat(_val) : ( _type=='int' ? parseInt(_val) : _val ) );
+			$_this.val('');
 		});
 	});
 };

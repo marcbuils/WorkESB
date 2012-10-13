@@ -10,8 +10,9 @@
 	$.wesbmessenger.singleton()
 		.connect( 'com.worbesb.demo.chat', 'CHAT' )
 		.bind( 'talk', function( p_text ){
-			$( '#conversation' ).append( $( '<li />' ).text( p_text ) );
-		});
+			$( '#conversation' ).prepend( $( '<li />' ).text( p_text ) );
+		})
+		.trigger( 'talk', '>>> ' + _login + ' is now connected' );
 	
 	$(function(){
 		/*

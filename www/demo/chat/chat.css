@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 #conversation {
-    border: 1px solid black;
+    list-style: none outside none;
     box-shadow: 2px 2px 3px #555555;
     height: 300px;
     overflow: auto;

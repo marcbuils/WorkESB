@@ -248,7 +248,7 @@ $.wesbmessenger.prototype.trigger = function( p_name, p_params ) {
 	var _name = $.wesbmessenger.EXTENSION_EVENT + p_name;
 	this.regProduceQueuing( _name, "string" );
 
-	$.wesbmessenger.producer[ _name ].push(JSON.stringify( { _parameter: p_params } ));
+	$.wesbmessenger.producer[ _name ].push( JSON.stringify( { _parameter: p_params } ) );
 	
 	return this;
 };

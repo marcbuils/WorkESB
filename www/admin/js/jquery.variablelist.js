@@ -87,14 +87,6 @@
 						_produceQueuingText
 							.tmpl(p_module)
 							.appendTo( _block );
-					} else if ( p_module.variable.com == "trigger" ) {
-						if ( _eventlist[p_module.variable.name] == undefined ){
-							_eventlist[p_module.variable.name] = true;
-							
-							$.wesbmessenger.singleton().bind( p_module.variable.name, function(p){
-								log( 'trigger "'+p_module.variable.name+'": '+JSON.stringify(p) );
-							});
-						}
 					} else if ( p_module.variable.com == "share" ) {
 						_call
 							.tmpl(p_module)
@@ -103,6 +95,16 @@
 						_trigger
 							.tmpl(p_module)
 							.appendTo( _block );
+					}
+				}
+				
+				if ( p_module.variable.com == "trigger" ) {
+					if ( typeof( _eventlist[p_module.variable.name] ) == 'undefined' ){
+						_eventlist[p_module.variable.name] = true;
+							
+						$.wesbmessenger.singleton().bind( p_module.variable.name, function(p){
+							log( 'trigger "'+p_module.variable.name+'": '+JSON.stringify(p) );
+						});
 					}
 				}
 				

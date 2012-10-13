@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+#conversation {
+    border: 1px solid black;
+    box-shadow: 2px 2px 3px #555555;
+    height: 300px;
+    overflow: auto;
+    width: 400px;
+}
+
+#send_text {
+	width: 390px;
+}
+
+#send_button {
+	width: 48px;
+}

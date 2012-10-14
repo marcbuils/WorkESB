@@ -23,8 +23,8 @@
 			var $_this = $(this);
 			var _start = null;
 
-			$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_STATUS", "string" );
-			$.wesbmessenger.singleton().regConsumSampling( "AUTOMATE_TIME", "int" );
+			$.wesbmessenger.singleton().consumSampling( "AUTOMATE_STATUS", "string" );
+			$.wesbmessenger.singleton().consumSampling( "AUTOMATE_TIME", "int" );
 
 			$.wesbmessenger.singleton().update( function(){
 				var _status = $.wesbmessenger.consumer.AUTOMATE_STATUS;

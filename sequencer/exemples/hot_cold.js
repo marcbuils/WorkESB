@@ -1,7 +1,7 @@
 ;(function($){
 	$(document).one("wesbmessenger_update", function(){
-		$.wesbmessenger.singleton().regProduceSampling( "HOT_COLD", "int" );
-		$.wesbmessenger.singleton().regConsumSampling( "TEMPERATURE", "float" );
+		$.wesbmessenger.singleton().produceSampling( "HOT_COLD", "int" );
+		$.wesbmessenger.singleton().consumSampling( "TEMPERATURE", "float" );
 
 		var hotCold = 0;
 		$(document).bind("wesbmessenger_update", function(){

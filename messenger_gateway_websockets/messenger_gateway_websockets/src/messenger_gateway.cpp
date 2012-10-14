@@ -310,7 +310,7 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 
 				data["return"] = pss->id;
 			}
-			else if ( _function.compare("regConsumSampling") == 0 
+			else if ( _function.compare("consumSampling") == 0 
 					&& _request.isMember("name")
 					&& _request.isMember("type") )
 			{
@@ -321,7 +321,7 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    		if ( consumer.find( _id ) == consumer.end() )
 	    		{
 					ostringstream ss;
-					ss << "regConsumSampling - MessengerManager not initialized: " << _id;
+					ss << "consumSampling - MessengerManager not initialized: " << _id;
 	    			addError( ss.str() );
 	    		}
 	    		else if ( consumer[ _id ].find( _name ) != consumer[ _id ].end() )
@@ -337,20 +337,20 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			switch ( _type )
 	    			{
 	    			case TYPE_INT:
-	    				_var->id = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
+	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
 	    				break;
 	    			case TYPE_FLOAT:
-	    				_var->id = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
+	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
 	    				break;
 	    			case TYPE_STRING:
-	    				_var->id = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
+	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
 	    				break;
 	    			}
 
 	    			data["return"] = _var->id;
 	    		}
 			}
-			else if ( _function.compare("regProduceSampling") == 0
+			else if ( _function.compare("produceSampling") == 0
 					&& _request.isMember("name")
 					&& _request.isMember("type") )
 			{
@@ -361,7 +361,7 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    		if ( producer.find( _id ) == producer.end() )
 	    		{
 					ostringstream ss;
-					ss << "regProduceSampling - MessengerManager not initialized: " << _id;
+					ss << "produceSampling - MessengerManager not initialized: " << _id;
 	    			addError( ss.str() );
 	    		}
 	    		else if ( producer[ _id ].find( _name ) != producer[ _id ].end() )
@@ -378,20 +378,20 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			{
 	    			case TYPE_INT:
 	    				_var->value._i = 0;
-	    				_var->id = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
+	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
 	    				break;
 	    			case TYPE_FLOAT:
 	    				_var->value._f = 0;
-	    				_var->id = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
+	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
 	    				break;
 	    			case TYPE_STRING:
 	    				_var->value._s = 0;
-	    				_var->id = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
+	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
 	    				break;
 	    			}
 	    		}
 			}
-			else if ( _function.compare("regConsumQueuing") == 0
+			else if ( _function.compare("consumQueuing") == 0
 					&& _request.isMember("name")
 					&& _request.isMember("type") )
 			{
@@ -403,7 +403,7 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    		if ( consumer.find( _id ) == consumer.end() )
 	    		{
 					ostringstream ss;
-					ss << "regConsumQueuing - MessengerManager not initialized: " << _id;
+					ss << "consumQueuing - MessengerManager not initialized: " << _id;
 	    			addError( ss.str() );
 				}
 	    		else if ( consumer[ _id ].find( _name ) != consumer[ _id ].end() )
@@ -421,20 +421,20 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			switch ( _type )
 	    			{
 	    			case TYPE_INT:
-	    				_var->id = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type, MAX_QUEUEING_SIZE );
+	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type, MAX_QUEUEING_SIZE );
 	    				break;
 	    			case TYPE_FLOAT:
-	    				_var->id = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type, MAX_QUEUEING_SIZE );
+	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type, MAX_QUEUEING_SIZE );
 	    				break;
 	    			case TYPE_STRING:
-	    				_var->id = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type, MAX_QUEUEING_SIZE );
+	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type, MAX_QUEUEING_SIZE );
 	    				break;
 	    			}
 
 	    			data["return"] = _var->id;
 	    		}
 			}
-			else if ( _function.compare("regProduceQueuing") == 0
+			else if ( _function.compare("produceQueuing") == 0
 					&& _request.isMember("name")
 					&& _request.isMember("type") )
 			{
@@ -445,7 +445,7 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    		if ( producer.find( _id ) == producer.end() )
 	    		{
 					ostringstream ss;
-					ss << "regProduceQueuing - MessengerManager not initialized: " << _id;
+					ss << "produceQueuing - MessengerManager not initialized: " << _id;
 	    			addError( ss.str() );
 	    		}
 	    		else if ( producer[ _id ].find( _name ) != producer[ _id ].end() )
@@ -463,15 +463,15 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			{
 	    			case TYPE_INT:
 	    				_var->value._qi = 0;
-	    				_var->id = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type );
+	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type );
 	    				break;
 	    			case TYPE_FLOAT:
 	    				_var->value._qf = 0;
-	    				_var->id = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type );
+	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type );
 	    				break;
 	    			case TYPE_STRING:
 	    				_var->value._qs = 0;
-	    				_var->id = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type );
+	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type );
 	    				break;
 	    			}
 

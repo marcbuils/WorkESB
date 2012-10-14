@@ -5,6 +5,11 @@ The team leader is Marc Buils (http://www.marcbuils.fr), HTML5 front en and midd
 
 This is a fork of M2Bench, a project maked by a R&T team of MATIS Group (http://www.matis-group.com) and provided under Lesser GPL license in June 2012.
 
+## Information
+Recent WebBrowser is Required
+Tested on Firefox 15, Chrome 22, Opera 12 and Internet Explorer 10
+For Opera: Enable Websockets via opera:config#UserPrefs|EnableWebSockets
+
 ## Compilation
 
 ### Problems known

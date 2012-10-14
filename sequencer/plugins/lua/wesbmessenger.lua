@@ -109,27 +109,27 @@ unreg = function( )
 	return wesbmessenger_c.unreg( id );
 end
 
-regConsumSampling = function( p_name, p_variable, p_type )
-	return wesbmessenger_c.regConsumSampling( id, p_name, p_variable, p_type );
+consumSampling = function( p_name, p_variable, p_type )
+	return wesbmessenger_c.consumSampling( id, p_name, p_variable, p_type );
 end
 
-regProduceSampling = function( p_name, p_variable, p_type )
-	return wesbmessenger_c.regProduceSampling( id, p_name, p_variable, p_type );
+produceSampling = function( p_name, p_variable, p_type )
+	return wesbmessenger_c.produceSampling( id, p_name, p_variable, p_type );
 end
 
-regConsumQueuing = function( p_name, p_variable, p_type )
-	return wesbmessenger_c.regConsumQueuing( id, p_name, p_variable, p_type );
+consumQueuing = function( p_name, p_variable, p_type )
+	return wesbmessenger_c.consumQueuing( id, p_name, p_variable, p_type );
 end
 
-regProduceQueuing = function( p_name, p_variable, p_type )
-	return wesbmessenger_c.regProduceQueuing( id, p_name, p_variable, p_type );
+produceQueuing = function( p_name, p_variable, p_type )
+	return wesbmessenger_c.produceQueuing( id, p_name, p_variable, p_type );
 end
 
 share = function( p_name, p_function )
 	local _pos = 1 + #wesbmessenger_shareFunctions;
 
-	regConsumQueuing( EXTENSION_PARAMETER .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
-	regProduceQueuing( EXTENSION_RETURN_VAL .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].response", "string" );
+	consumQueuing( EXTENSION_PARAMETER .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
+	produceQueuing( EXTENSION_RETURN_VAL .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].response", "string" );
 
 	wesbmessenger_shareFunctions[ _pos ] = {
 		waiting = {},
@@ -146,8 +146,8 @@ regCall = function( p_name, p_variable )
 	
 	_pos = 1 + #wesbmessenger_callFunctions;
    
-	regConsumQueuing( EXTENSION_RETURN_VAL .. p_name, "wesbmessenger_callFunctions[" .. _pos .. "].response", "string" );
-	regProduceQueuing( EXTENSION_PARAMETER .. p_name, "wesbmessenger_callFunctions[" .. _pos .. "].parameter", "string" );
+	consumQueuing( EXTENSION_RETURN_VAL .. p_name, "wesbmessenger_callFunctions[" .. _pos .. "].response", "string" );
+	produceQueuing( EXTENSION_PARAMETER .. p_name, "wesbmessenger_callFunctions[" .. _pos .. "].parameter", "string" );
 	
 	wesbmessenger_callFunctions[ _pos ] = {
 		event = 0,
@@ -184,7 +184,7 @@ end
 bind = function( p_name, p_function )
 	local _pos = 1 + #wesbmessenger_shareFunctions;
     
-	regConsumQueuing( EXTENSION_EVENT .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
+	consumQueuing( EXTENSION_EVENT .. p_name, "wesbmessenger_shareFunctions[" .. _pos .. "].waiting", "string" );
 	wesbmessenger_shareFunctions[ _pos ] = {
 		waiting = {},
 		response = {},
@@ -203,7 +203,7 @@ trigger = function( p_name, p_params )
 	
 	if ( wesbmessenger_events[ p_name ] == nil ) then
 		wesbmessenger_events[ p_name ] = {};
-		regProduceQueuing( EXTENSION_EVENT .. p_name, "wesbmessenger_events[\"" .. p_name .. "\"]", "string" );
+		produceQueuing( EXTENSION_EVENT .. p_name, "wesbmessenger_events[\"" .. p_name .. "\"]", "string" );
     end
 	
 	table.insert(wesbmessenger_events[ p_name ], json.encode( _params ));

@@ -125,8 +125,8 @@ onstart = function( p_infos )
 	g_config = p_infos;
 	
 	wesbmessenger.init( g_config.domain, g_config.name );
-	wesbmessenger.regProduceSampling( _ifndef( g_config.variable_status, "AUTOMATE_STATUS" ), "_status", "string" );
-	wesbmessenger.regProduceSampling( _ifndef( g_config.variable_time, "AUTOMATE_TIME" ), "_time", "int" );
+	wesbmessenger.produceSampling( _ifndef( g_config.variable_status, "AUTOMATE_STATUS" ), "_status", "string" );
+	wesbmessenger.produceSampling( _ifndef( g_config.variable_time, "AUTOMATE_TIME" ), "_time", "int" );
 	
 	-- reg functions
 	wesbmessenger.share( _ifndef( g_config.start, "startAutomate" ), _startAutomate );
@@ -141,7 +141,7 @@ onstart = function( p_infos )
 
 	-- Logs
 	LOGS = {};
-	wesbmessenger.regProduceQueuing( _ifndef( g_config.variable_logs, "LOGS" ), 'LOGS', 'string');
+	wesbmessenger.produceQueuing( _ifndef( g_config.variable_logs, "LOGS" ), 'LOGS', 'string');
 
 	-- add functions of automate
 	loadfile( 'plugins/lua/automate.lua' )();
@@ -156,22 +156,22 @@ onstart = function( p_infos )
 			if ( p_module.variable.com == "consumer" and p_module.variable.queuing == false ) then
 				if (_producers[p_module.variable.name] == nil) then
 					_producers[p_module.variable.name] = true;
-					wesbmessenger.regProduceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type );
+					wesbmessenger.produceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type );
 				end
 			elseif ( p_module.variable.com == "producer" and p_module.variable.queuing == false ) then
 				if (_consumers[p_module.variable.name] == nil) then
 					_consumers[p_module.variable.name] = true;
-					wesbmessenger.regConsumSampling( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type );
+					wesbmessenger.consumSampling( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type );
 				end
 			elseif ( p_module.variable.com == "consumer" and p_module.variable.queuing == true ) then
 				if (_producers[p_module.variable.name] == nil) then
 					_producers[p_module.variable.name] = true;
-					wesbmessenger.regProduceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type ); 
+					wesbmessenger.produceQueuing( p_module.variable.name,  'p["'..p_module.variable.name..'"]',  p_module.variable.type ); 
 				end
 			elseif ( p_module.variable.com == "producer" and p_module.variable.queuing == true ) then
 				if (_consumers[p_module.variable.name] == nil) then
 					_consumers[p_module.variable.name] = true;
-					wesbmessenger.regConsumQueuing( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type ); 
+					wesbmessenger.consumQueuing( p_module.variable.name,  'c["'..p_module.variable.name..'"]',  p_module.variable.type ); 
 				end
 			end
 		end

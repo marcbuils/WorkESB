@@ -46,10 +46,10 @@ int _WESBMessengerInstance; // WESBMessenger instance
 extern "C"
 {
 int WESBMessenger_init_full( char* p_domain, char* p_name );
-int WESBMessenger_regConsumSampling_full( int p_id, char* p_name, void* p_value, int p_type );
-int WESBMessenger_regProduceSampling_full( int p_id, char* p_name, void* p_value, int p_type );
-int WESBMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize );
-int WESBMessenger_regProduceQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type );
+int WESBMessenger_consumSampling_full( int p_id, char* p_name, void* p_value, int p_type );
+int WESBMessenger_produceSampling_full( int p_id, char* p_name, void* p_value, int p_type );
+int WESBMessenger_consumQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize );
+int WESBMessenger_produceQueuing_full( int p_id, char* p_name, void* p_values, int *p_size, int p_type );
 int WESBMessenger_update_full( int p_id  );
 int WESBMessenger_unreg_full( int p_id  );
 int WESBMessenger_share_full( int p_id, char* p_name, Shared_Func p_function );
@@ -65,24 +65,24 @@ int WESBMessenger_init( char* p_domain, char* p_name )
 	return ( _WESBMessengerInstance >= 0 ? _WESBMessengerInstance : -1 );
 }
 
-int WESBMessenger_regConsumSampling( char* p_name, void* p_value, int p_type )
+int WESBMessenger_consumSampling( char* p_name, void* p_value, int p_type )
 {
-	return WESBMessenger_regConsumSampling_full( _WESBMessengerInstance, p_name, p_value, p_type );
+	return WESBMessenger_consumSampling_full( _WESBMessengerInstance, p_name, p_value, p_type );
 }
 
-int WESBMessenger_regProduceSampling( char* p_name, void* p_value, int p_type )
+int WESBMessenger_produceSampling( char* p_name, void* p_value, int p_type )
 {
-	return WESBMessenger_regProduceSampling_full( _WESBMessengerInstance, p_name, p_value, p_type );
+	return WESBMessenger_produceSampling_full( _WESBMessengerInstance, p_name, p_value, p_type );
 }
 
-int WESBMessenger_regConsumQueuing( char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize = WESBMESSENGER_MAX_QUEUEING_SIZE )
+int WESBMessenger_consumQueuing( char* p_name, void* p_values, int *p_size, int p_type, int p_maxsize = WESBMESSENGER_MAX_QUEUEING_SIZE )
 {
-	return WESBMessenger_regConsumQueuing_full( _WESBMessengerInstance, p_name, p_values, p_size, p_type, p_maxsize );
+	return WESBMessenger_consumQueuing_full( _WESBMessengerInstance, p_name, p_values, p_size, p_type, p_maxsize );
 }
 
-int WESBMessenger_regProduceQueuing( char* p_name, void* p_values, int *p_size, int p_type )
+int WESBMessenger_produceQueuing( char* p_name, void* p_values, int *p_size, int p_type )
 {
-	return WESBMessenger_regProduceQueuing_full( _WESBMessengerInstance, p_name, p_values, p_size, p_type );
+	return WESBMessenger_produceQueuing_full( _WESBMessengerInstance, p_name, p_values, p_size, p_type );
 }
 
 int WESBMessenger_share( char* p_name, Shared_Func p_function )

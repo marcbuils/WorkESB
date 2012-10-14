@@ -1,1 +1,1 @@
--- wesbmessenger.regConsumSampling('TEMPERATURE', 'TEMPERATURE', 'float');
+-- wesbmessenger.consumSampling('TEMPERATURE', 'TEMPERATURE', 'float');

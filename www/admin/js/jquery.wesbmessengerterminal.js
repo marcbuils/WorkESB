@@ -92,10 +92,10 @@ $.fn.wesbmessengerTerminal = function(){
 			} );
 			
 			// WESBMessenger functions
-			regConsumSampling = function( p_name, p_type ){ return $.wesbmessenger.singleton().regConsumSampling( p_name, p_type ); };
-			regProduceSampling = function( p_name, p_type ){ return $.wesbmessenger.singleton().regProduceSampling( p_name, p_type ); };
-			regConsumQueuing = function( p_name, p_type ){ return $.wesbmessenger.singleton().regConsumQueuing( p_name, p_type ); };
-			regProduceQueuing = function( p_name, p_type ){ return $.wesbmessenger.singleton().regProduceQueuing( p_name, p_type ); };
+			consumSampling = function( p_name, p_type ){ return $.wesbmessenger.singleton().consumSampling( p_name, p_type ); };
+			produceSampling = function( p_name, p_type ){ return $.wesbmessenger.singleton().produceSampling( p_name, p_type ); };
+			consumQueuing = function( p_name, p_type ){ return $.wesbmessenger.singleton().consumQueuing( p_name, p_type ); };
+			produceQueuing = function( p_name, p_type ){ return $.wesbmessenger.singleton().produceQueuing( p_name, p_type ); };
 			bind = function( p_name, p_callback ){ return $.wesbmessenger.singleton().bind( p_name, p_callback ); };
 			trigger = function( p_name, p_params ){ return $.wesbmessenger.singleton().trigger( p_name, p_params ); };
 			share = function( p_name, p_callback ){ return $.wesbmessenger.singleton().share( p_name, p_callback ); };
@@ -108,10 +108,10 @@ $.fn.wesbmessengerTerminal = function(){
 			help = function(){
 				_term.write([
 					"Write a Javascript or a following WESBMessenger command:",
-					"- regConsumSampling( name, type )",
-					"- regProduceSampling( name, type )",
-					"- regConsumQueuing( name, type )",
-					"- regProduceQueuing( name, type )",
+					"- consumSampling( name, type )",
+					"- produceSampling( name, type )",
+					"- consumQueuing( name, type )",
+					"- produceQueuing( name, type )",
 					"- bind( name, callback )",
 					"- trigger( name, params )",
 					"- share( name, callback )",

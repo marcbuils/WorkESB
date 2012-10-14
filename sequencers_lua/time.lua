@@ -21,7 +21,7 @@ local wesbmessenger = require('wesbmessenger');
 
 onstart = function( p_infos )
 	wesbmessenger.init( p_infos.domain, p_infos.name );
-	wesbmessenger.regProduceSampling( p_infos.variable_time, "TIME", "int" );
+	wesbmessenger.produceSampling( p_infos.variable_time, "TIME", "int" );
 	TIME = os.time();
 end
 

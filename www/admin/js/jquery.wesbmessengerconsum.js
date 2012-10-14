@@ -25,7 +25,7 @@ $.fn.wesbmessengerConsum = function(){
 		var _type = $_this.attr('data-variable-type');
 		
 		$.wesbmessenger.singleton()
-			.regConsumSampling( _name, _type )
+			.consumSampling( _name, _type )
 			.update( function(){
 				var _val = ( _type == 'float' ? $.wesbmessenger.consumer[_name].toFixed(2) : $.wesbmessenger.consumer[_name] );
 				

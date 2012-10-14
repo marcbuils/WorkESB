@@ -4,8 +4,8 @@ local _event;
 onstart = function( p_infos )
 	wesbmessenger.init( p_infos.domain, p_infos.name );
 	
-	wesbmessenger.regProduceSampling( p_infos.variable_hotcold, "HOT_COLD", "int" );
-	wesbmessenger.regConsumSampling( p_infos.variable_temperature, "TEMPERATURE", "float" );
+	wesbmessenger.produceSampling( p_infos.variable_hotcold, "HOT_COLD", "int" );
+	wesbmessenger.consumSampling( p_infos.variable_temperature, "TEMPERATURE", "float" );
 	_event = p_infos.event;
 	
 	HOT_COLD = 0;

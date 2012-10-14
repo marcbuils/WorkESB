@@ -137,9 +137,9 @@ $.wesbmessenger.prototype.connect = function( p_domain, p_name, p_options ) {
 };
 
 /**
- * WESBMessenger regConsumSampling
+ * WESBMessenger consumSampling
  */
-$.wesbmessenger.prototype.regConsumSampling = function( p_name, p_type ) {
+$.wesbmessenger.prototype.consumSampling = function( p_name, p_type ) {
 	if ( typeof($.wesbmessenger.consumercid[ p_name ]) != "undefined" )
 	{
 		return this;
@@ -147,17 +147,17 @@ $.wesbmessenger.prototype.regConsumSampling = function( p_name, p_type ) {
 	
 	var _type = $.wesbmessenger.types[p_type];
 	var _cid;
-	_cid = this._callfunction( "regConsumSampling", { name: p_name, type: _type })["return"];
+	_cid = this._callfunction( "consumSampling", { name: p_name, type: _type })["return"];
 	$.wesbmessenger.consumercid[ p_name ] = _cid;
 	
 	return this;
 };
 
 /**
- * WESBMessenger regProduceSampling
+ * WESBMessenger produceSampling
  */
-$.wesbmessenger.prototype.regProduceSampling = function( p_name, p_type ) {
-	return this.regProduceQueuing( p_name, p_type );
+$.wesbmessenger.prototype.produceSampling = function( p_name, p_type ) {
+	return this.produceQueuing( p_name, p_type );
 	
 /*	NO PRODUCE SAMPLING - TOO DANGEROUS
 	if ( $.inArray( p_name, $.wesbmessenger.producercid ) != -1 )
@@ -176,7 +176,7 @@ $.wesbmessenger.prototype.regProduceSampling = function( p_name, p_type ) {
 	}
 	
 	var _cid;
-	_cid = this.callfunction( "regProduceSampling", { name: p_name, type: _type } )["return"];
+	_cid = this.callfunction( "produceSampling", { name: p_name, type: _type } )["return"];
 	$.wesbmessenger.producercid[ p_name ] = _cid;
 //	$.wesbmessenger.singleton()._update_producers();
 	
@@ -185,9 +185,9 @@ $.wesbmessenger.prototype.regProduceSampling = function( p_name, p_type ) {
 };
 
 /**
- * WESBMessenger regConsumQueuing
+ * WESBMessenger consumQueuing
  */
-$.wesbmessenger.prototype.regConsumQueuing = function( p_name, p_type ) {
+$.wesbmessenger.prototype.consumQueuing = function( p_name, p_type ) {
 	if (typeof($.wesbmessenger.consumercid[ p_name ]) != "undefined" )
 	{
 		return this;
@@ -195,16 +195,16 @@ $.wesbmessenger.prototype.regConsumQueuing = function( p_name, p_type ) {
 	
 	var _type = $.wesbmessenger.types[p_type];
 	var _cid;
-	_cid = this._callfunction( "regConsumQueuing", { name: p_name, type: _type } )["return"];
+	_cid = this._callfunction( "consumQueuing", { name: p_name, type: _type } )["return"];
 	$.wesbmessenger.consumercid[ p_name ] = _cid;
 	
 	return this;
 };
 
 /**
- * WESBMessenger regProduceSampling
+ * WESBMessenger produceSampling
  */
-$.wesbmessenger.prototype.regProduceQueuing = function( p_name, p_type ) {
+$.wesbmessenger.prototype.produceQueuing = function( p_name, p_type ) {
 	if ( typeof($.wesbmessenger.producercid[ p_name ]) != "undefined" )
 	{
 		return this;
@@ -213,7 +213,7 @@ $.wesbmessenger.prototype.regProduceQueuing = function( p_name, p_type ) {
 	var _type = $.wesbmessenger.types[p_type];
 	$.wesbmessenger.producer[ p_name ] = [];
 
-	var _cid = this._callfunction( "regProduceQueuing", { name: p_name, type: _type } )["return"];
+	var _cid = this._callfunction( "produceQueuing", { name: p_name, type: _type } )["return"];
 	$.wesbmessenger.producercid[ p_name ] = _cid;
 //	$.wesbmessenger.singleton()._update_producers();
 	
@@ -225,7 +225,7 @@ $.wesbmessenger.prototype.regProduceQueuing = function( p_name, p_type ) {
  */
 $.wesbmessenger.prototype.bind = function( p_name, p_callback ) {
 	var _name = $.wesbmessenger.EXTENSION_EVENT + p_name;
-	this.regConsumQueuing( _name, "string" );
+	this.consumQueuing( _name, "string" );
 	
 	this.update( function( ){
 		var _params;
@@ -246,7 +246,7 @@ $.wesbmessenger.prototype.bind = function( p_name, p_callback ) {
  */
 $.wesbmessenger.prototype.trigger = function( p_name, p_params ) {
 	var _name = $.wesbmessenger.EXTENSION_EVENT + p_name;
-	this.regProduceQueuing( _name, "string" );
+	this.produceQueuing( _name, "string" );
 
 	$.wesbmessenger.producer[ _name ].push( JSON.stringify( { _parameter: p_params } ) );
 	
@@ -259,8 +259,8 @@ $.wesbmessenger.prototype.trigger = function( p_name, p_params ) {
 $.wesbmessenger.prototype.share = function( p_name, p_callback ) {
 	var _name = $.wesbmessenger.EXTENSION_PARAMETER + p_name;
 	var _nameResponse = $.wesbmessenger.EXTENSION_RETURN_VAL + p_name;
-	this.regProduceQueuing( _nameResponse, "string" );
-	this.regConsumQueuing( _name, "string" );
+	this.produceQueuing( _nameResponse, "string" );
+	this.consumQueuing( _name, "string" );
 	
 	this.update( function( ){
 		var _params;
@@ -291,8 +291,8 @@ var currentVid = 0;
 $.wesbmessenger.prototype.call = function( p_name, p_params ) {
 	var _name = $.wesbmessenger.EXTENSION_PARAMETER + p_name;
 	var _nameResponse = $.wesbmessenger.EXTENSION_RETURN_VAL + p_name;
-	this.regProduceQueuing( _name, "string" );
-	this.regConsumQueuing( _nameResponse, "string" );
+	this.produceQueuing( _name, "string" );
+	this.consumQueuing( _nameResponse, "string" );
 	
 	var _params;
 	var _uuid = UUID.generate();

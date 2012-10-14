@@ -55,20 +55,20 @@ _add = function( p_params )
 	else
 		_variables[p_params.variable_out_name] = {};
 		if ( p_params.type == "sampling" ) then
-			wesbmessenger.regConsumSampling( 
+			wesbmessenger.consumSampling( 
 				p_params.variable_in_name, 
 				"_variables." .. p_params.variable_out_name .. "._in", 
 				p_params.variable_in_type );
-			wesbmessenger.regProduceSampling( 
+			wesbmessenger.produceSampling( 
 				p_params.variable_out_name, 
 				"_variables." .. p_params.variable_out_name .. "._out", 
 				p_params.variable_out_type );
 		else
-			wesbmessenger.regConsumQueuing( 
+			wesbmessenger.consumQueuing( 
 				p_params.variable_in_name, 
 				"_variables." .. p_params.variable_out_name .. "._in", 
 				p_params.variable_in_type );
-			wesbmessenger.regConsumQueuing( 
+			wesbmessenger.consumQueuing( 
 				p_params.variable_out_name, 
 				"_variables." .. p_params.variable_out_name .. "._out", 
 				p_params.variable_out_type );

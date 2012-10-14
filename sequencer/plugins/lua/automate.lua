@@ -29,7 +29,7 @@ automate = {
 		
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.produceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		
 		table.insert(LOGS, "INFO: START SLEEP " .. p_time);
@@ -53,7 +53,7 @@ automate = {
 	wait = function ( p_condition )
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.produceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		
 		table.insert(LOGS, "INFO: START WAIT " .. p_condition);
@@ -112,7 +112,7 @@ automate = {
 		-- Send trigger
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.produceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		__AUTOMATE_DIALOG__ = json.encode({
 			type = "alert",
@@ -124,7 +124,7 @@ automate = {
 		-- Receive return
 		if ( __AUTOMATE_EVENT_DIALOG_RETURN__ == nil ) then
 			__AUTOMATE_EVENT_DIALOG_RETURN__ = {};
-			wesbmessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
+			wesbmessenger.consumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
 		end
 		
 		local _end = false;
@@ -148,7 +148,7 @@ automate = {
 		-- Send trigger
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.produceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		__AUTOMATE_DIALOG__ = json.encode({
 			type = "confirm",
@@ -160,7 +160,7 @@ automate = {
 		-- Receive return
 		if ( __AUTOMATE_EVENT_DIALOG_RETURN__ == nil ) then
 			__AUTOMATE_EVENT_DIALOG_RETURN__ = {};
-			wesbmessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
+			wesbmessenger.consumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
 		end
 		
 		local _end = false;
@@ -187,7 +187,7 @@ automate = {
 		-- Send trigger
 		if (__AUTOMATE_DIALOG__ == nil) then
 			__AUTOMATE_DIALOG__ = "";
-			wesbmessenger.regProduceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
+			wesbmessenger.produceSampling( _ifndef( g_config.variable_dialog, "AUTOMATE_DIALOG" ), "__AUTOMATE_DIALOG__", "string" );
 		end
 		__AUTOMATE_DIALOG__ = json.encode({
 			type = "prompt",
@@ -199,7 +199,7 @@ automate = {
 		-- Receive return
 		if ( __AUTOMATE_EVENT_DIALOG_RETURN__ == nil ) then
 			__AUTOMATE_EVENT_DIALOG_RETURN__ = {};
-			wesbmessenger.regConsumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
+			wesbmessenger.consumQueuing( "EVENT__".._ifndef(g_config.event_dialog_return, "AUTOMATE_DIALOG_RETURN"), "__AUTOMATE_EVENT_DIALOG_RETURN__", "string");
 		end
 		
 		local _end = false;

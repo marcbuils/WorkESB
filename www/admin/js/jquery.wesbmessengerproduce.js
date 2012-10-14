@@ -25,7 +25,7 @@ $.fn.wesbmessengerProduce = function(){
 		var _type = $_this.attr('data-variable-type');
 		
 		// setting
-		$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
+		$.wesbmessenger.singleton().produceQueuing( _name, _type );
 		$_this.bind('change', function(){
 			var _val = $_this.val();
 			
@@ -35,7 +35,7 @@ $.fn.wesbmessengerProduce = function(){
 			
 		// getting
 		$.wesbmessenger.singleton()
-			.regConsumSampling( _name, _type )
+			.consumSampling( _name, _type )
 			.update( function(){
 				var _val = $.wesbmessenger.consumer[_name];
 				if ( $.isArray( _val ) ) _val = _val[ _val.length-1 ];

@@ -31,8 +31,8 @@ int DLLAPI onstart( char* p_configuration )
 	WESBMessenger_init( (char*)_config["domain"].asString().c_str(), (char*)_config["name"].asString().c_str() );
 
 	hotCold=0;
-	WESBMessenger_regProduceSampling( (char*)_config["variable_hotcold"].asString().c_str(), (void*)&hotCold, TYPE_INT );
-	WESBMessenger_regConsumSampling( (char*)_config["variable_temperature"].asString().c_str(), (void*)&temperature, TYPE_FLOAT );
+	WESBMessenger_produceSampling( (char*)_config["variable_hotcold"].asString().c_str(), (void*)&hotCold, TYPE_INT );
+	WESBMessenger_consumSampling( (char*)_config["variable_temperature"].asString().c_str(), (void*)&temperature, TYPE_FLOAT );
 
 	event = _config["event"].asString();
 	

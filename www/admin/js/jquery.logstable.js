@@ -26,7 +26,7 @@ $.fn.logsTable = function(){
 		var $_tmpl = $($_this.attr('data-tmpl'));
 		var _logs = [];
 		
-		$.wesbmessenger.singleton().regConsumQueuing( _name, _type );
+		$.wesbmessenger.singleton().consumQueuing( _name, _type );
 		$_this.bind('refresh', function(){
 			$_tmpl.tmpl( {logs: _logs} ).appendTo($_this.empty())
 			$_this.pluginautoload();

@@ -27,8 +27,8 @@ var __AUTOMATE_STATUS__ = "AUTOMATE_STATUS";
 var __AUTOMATE_DIALOG__ = "AUTOMATE_DIALOG";
 var __AUTOMATE_DIALOG_RETURN__ = "AUTOMATE_DIALOG_RETURN";
 
-$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_STATUS__, "string" );
-$.wesbmessenger.singleton().regConsumSampling( __AUTOMATE_DIALOG__, "string" );
+$.wesbmessenger.singleton().consumSampling( __AUTOMATE_STATUS__, "string" );
+$.wesbmessenger.singleton().consumSampling( __AUTOMATE_DIALOG__, "string" );
 
 $.wesbmessenger.singleton().update( function(){
 	var _status = $.wesbmessenger.consumer[__AUTOMATE_STATUS__];

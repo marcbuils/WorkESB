@@ -358,9 +358,9 @@ DLL_API int WESBMessenger_init_full( char* p_domain, char* p_name )
 }
 
 
-DLL_API int WESBMessenger_regConsumSampling_full( int p_id, char* p_name, void* p_value, int p_type )
+DLL_API int WESBMessenger_consumSampling_full( int p_id, char* p_name, void* p_value, int p_type )
 {
-	Log::get()->add( Log::LEVEL_INFO,  (string)"WESBMessenger_regConsumSampling_full: " + p_name );
+	Log::get()->add( Log::LEVEL_INFO,  (string)"WESBMessenger_consumSampling_full: " + p_name );
 	int _return = -1;
 
 	switch ( p_type )
@@ -450,9 +450,9 @@ DLL_API int WESBMessenger_regConsumSampling_full( int p_id, char* p_name, void* 
 	return _return;
 }
 
-DLL_API int WESBMessenger_regProduceSampling_full( int p_id, char* p_name, void* p_value, int p_type )
+DLL_API int WESBMessenger_produceSampling_full( int p_id, char* p_name, void* p_value, int p_type )
 {
-	Log::get()->add( Log::LEVEL_INFO,  (string)"WESBMessenger_regProduceSampling_full: " + p_name );
+	Log::get()->add( Log::LEVEL_INFO,  (string)"WESBMessenger_produceSampling_full: " + p_name );
 
 	int _return = -1;
 
@@ -539,9 +539,9 @@ DLL_API int WESBMessenger_regProduceSampling_full( int p_id, char* p_name, void*
 }
 
 
-DLL_API int WESBMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type, int p_maxsize )
+DLL_API int WESBMessenger_consumQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type, int p_maxsize )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_regConsumQueuing_full" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_consumQueuing_full" );
 
 	int _return = -1;
 
@@ -640,9 +640,9 @@ DLL_API int WESBMessenger_regConsumQueuing_full( int p_id, char* p_name, void* p
 }
 
 
-DLL_API int WESBMessenger_regProduceQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type )
+DLL_API int WESBMessenger_produceQueuing_full( int p_id, char* p_name, void* p_values, int* p_size, int p_type )
 {
-	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_regProduceQueuing_full" );
+	Log::get()->add( Log::LEVEL_INFO,  "WESBMessenger_produceQueuing_full" );
 
 	int _return = -1;
 

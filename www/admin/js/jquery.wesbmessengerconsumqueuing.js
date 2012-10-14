@@ -25,7 +25,7 @@ $.fn.wesbmessengerConsumQueuing = function(){
 		var _type = $_this.attr('data-variable-type');
 		
 		$.wesbmessenger.singleton()
-			.regConsumQueuing( _name, _type )
+			.consumQueuing( _name, _type )
 			.update( function(){
 				if ( $.wesbmessenger.consumer[_name].length > 0 ){
 					var _val = ( _type == 'float' ? $.wesbmessenger.consumer[_name][$.wesbmessenger.consumer[_name].length-1].toFixed(2) : $.wesbmessenger.consumer[_name][$.wesbmessenger.consumer[_name].length-1] );

@@ -25,7 +25,7 @@ $.fn.wesbmessengerProduceQueuing = function(){
 		var _type = $_this.attr('data-variable-type');
 		
 		// setting
-		$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
+		$.wesbmessenger.singleton().produceQueuing( _name, _type );
 		$_this.bind('change', function(){
 			var _val = $_this.val();
 			

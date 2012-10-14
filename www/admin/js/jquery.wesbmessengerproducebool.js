@@ -25,7 +25,7 @@ $.fn.wesbmessengerProduceBool = function(){
 		var _type = $_this.attr('data-variable-type');
 		
 		// setting
-		$.wesbmessenger.singleton().regProduceQueuing( _name, _type );
+		$.wesbmessenger.singleton().produceQueuing( _name, _type );
 		$_this.bind('click', function(){
 			if ( dijit.byNode( $_this.parent().parent().get(0) ).get('disabled') ){
 				return false;
@@ -37,7 +37,7 @@ $.fn.wesbmessengerProduceBool = function(){
 
 		// getting
 		$.wesbmessenger.singleton()
-			.regConsumSampling( _name, _type )
+			.consumSampling( _name, _type )
 			.update( function(){
 				try{
 					var _val = $.wesbmessenger.consumer[_name];

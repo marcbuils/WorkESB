@@ -108,7 +108,7 @@ static int init (lua_State *p_L)
 }
 
 
-static int regConsumSampling (lua_State *p_L)
+static int consumSampling (lua_State *p_L)
 {
 	int _return;
 	string _name;
@@ -143,12 +143,12 @@ static int regConsumSampling (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = WESBMessenger_regConsumSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
+	_return = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
 
-static int regProduceSampling (lua_State *p_L)
+static int produceSampling (lua_State *p_L)
 {
 	int _return;
 	int _id;
@@ -186,12 +186,12 @@ static int regProduceSampling (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = WESBMessenger_regProduceSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
+	_return = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), _value, _s->type );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
 
-static int regConsumQueuing (lua_State *p_L)
+static int consumQueuing (lua_State *p_L)
 {
 	int _return;
 	string _name;
@@ -227,13 +227,13 @@ static int regConsumQueuing (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = WESBMessenger_regConsumQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type, WESBMESSENGER_MAX_QUEUEING_SIZE );
+	_return = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type, WESBMESSENGER_MAX_QUEUEING_SIZE );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
 
 
-static int regProduceQueuing (lua_State *p_L)
+static int produceQueuing (lua_State *p_L)
 {
 	int _return;
 	string _name;
@@ -272,7 +272,7 @@ static int regProduceQueuing (lua_State *p_L)
 	}
 	vars()[_id].push_back( _s );
 
-	_return = WESBMessenger_regProduceQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type );
+	_return = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), _value, &_s->size, _s->type );
 	lua_pushnumber( p_L, _return );
 	return 1;
 }
@@ -546,10 +546,10 @@ using namespace messenger;
 
 static const luaL_Reg messengerlib[] = {
 {"init",   					init},
-{"regConsumSampling",   	regConsumSampling},
-{"regProduceSampling",   	regProduceSampling},
-{"regConsumQueuing",   		regConsumQueuing},
-{"regProduceQueuing",   	regProduceQueuing},
+{"consumSampling",   	consumSampling},
+{"produceSampling",   	produceSampling},
+{"consumQueuing",   		consumQueuing},
+{"produceQueuing",   	produceQueuing},
 {"update",   				update},
 {"unreg",					unreg},
 {NULL, NULL}

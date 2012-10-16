@@ -486,7 +486,7 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 				Json::Value error;			// error list
 
 				// log received data
-	    		int _i;
+	    		int _i, _j;
 	    		map<string,message_struct*>::iterator _it;
 
 	    		if ( _postValues.isMember("producer") )
@@ -498,71 +498,186 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    				{
 	    					if ( _it->second->queuing != 0 )
 	    					{
-	    						int _size = _postValues["producer"][ _it->first ].size();
-
-	    						switch ( _it->second->type )
+	    						if ( _postValues["producer"][ _it->first ].isArray() )
 	    						{
-	    						case TYPE_INT:
-	    							if ( _it->second->value._qi != 0 )
-	    							{
-	    								delete [] _it->second->value._qi;
-	    							}
-	    							_it->second->value._qi = new int[ _size ];
+									int _size = _postValues["producer"][ _it->first ].size();
+									int _newSize = 0;
 
-		    						for ( _i=0; _i < _size; _i++ )
+									switch ( _it->second->type )
 									{
-		    							_it->second->value._qi[ _i ] = _postValues["producer"][ _it->first ][ _i ].asInt();
-									}
-	    							break;
-	    						case TYPE_FLOAT:
-	    							if ( _it->second->value._qf != 0 )
-	    							{
-	    								delete [] _it->second->value._qf;
-	    							}
-	    							_it->second->value._qf = new float[ _size ];
+									case TYPE_INT:
+										if ( _it->second->value._qi != 0 )
+										{
+											delete [] _it->second->value._qi;
+										}
 
-	    							for ( _i=0; _i < _size; _i++ )
-									{
-		    							_it->second->value._qf[ _i ] = (float)_postValues["producer"][ _it->first ][ _i ].asDouble();
-									}
-	    							break;
-	    						case TYPE_STRING:
-	    							for ( _i=0; _i < _it->second->size; _i++ )
-	    							{
-	    								delete [] _it->second->value._qs[ _i ];
-	    							}
-	    							if ( _it->second->value._qs != 0 )
-	    							{
-	    								free( _it->second->value._qs );
-	    							}
-	    							_it->second->value._qs = (char**)malloc( sizeof(char**) * _size );
+										// Count the new size
+										for ( _i=0; _i < _size; _i++ )
+										{
+											if ( _postValues["producer"][ _it->first ][ _i ].isIntegral() )
+											{
+												_newSize++;
+											}
+			    							else
+			    							{
+			    								ostringstream ss;
+			    								ss << "update - Value of a queuing producer is not an integer: " << _it->first << "[" << _i << "]";
+			    				    			addError( ss.str() );
+			    							}
+										}
 
-		    						for ( _i=0; _i < _size; _i++ )
-									{
-		    							_it->second->value._qs[ _i ] = new char[ 1 + _postValues["producer"][ _it->first ][ _i ].asString().size() ];
-		    							strcpy( _it->second->value._qs[ _i ], _postValues["producer"][ _it->first ][ _i ].asCString() );
+										// Allow correct buffer size
+										_it->second->size = _newSize;
+										_it->second->value._qi = new int[ _newSize ];
+
+										// set data
+										for ( _i=0, _j=0; _i < _size; _i++ )
+										{
+											if ( _postValues["producer"][ _it->first ][ _i ].isIntegral() )
+											{
+												_it->second->value._qi[ _j ] = _postValues["producer"][ _it->first ][ _i ].asInt();
+												_j++;
+											}
+										}
+										break;
+									case TYPE_FLOAT:
+										if ( _it->second->value._qf != 0 )
+										{
+											delete [] _it->second->value._qf;
+										}
+
+										// Count the new size
+										for ( _i=0; _i < _size; _i++ )
+										{
+											if ( _postValues["producer"][ _it->first ][ _i ].isNumeric() )
+											{
+												_newSize++;
+											}
+			    							else
+			    							{
+			    								ostringstream ss;
+			    								ss << "update - Value of a queuing producer is not a double: " << _it->first << "[" << _i << "]";
+			    				    			addError( ss.str() );
+			    							}
+										}
+
+										// Allow correct buffer size
+										_it->second->size = _newSize;
+										_it->second->value._qf = new float[ _newSize ];
+
+										// set data
+										for ( _i=0, _j=0; _i < _size; _i++ )
+										{
+											if ( _postValues["producer"][ _it->first ][ _i ].isNumeric() )
+											{
+												_it->second->value._qf[ _j ] = (float)_postValues["producer"][ _it->first ][ _i ].asDouble();
+												_j++;
+											}
+										}
+										break;
+									case TYPE_STRING:
+										for ( _i=0; _i < _it->second->size; _i++ )
+										{
+											delete [] _it->second->value._qs[ _i ];
+										}
+										if ( _it->second->value._qs != 0 )
+										{
+											free( _it->second->value._qs );
+										}
+										_it->second->value._qs = (char**)malloc( sizeof(char**) * _size );
+
+										for ( _i=0; _i < _size; _i++ )
+										{
+											_it->second->value._qs[ _i ] = new char[ 1 + _postValues["producer"][ _it->first ][ _i ].asString().size() ];
+											strcpy( _it->second->value._qs[ _i ], _postValues["producer"][ _it->first ][ _i ].asCString() );
+											_newSize++;
+										}
+										_it->second->size = _newSize;
+
+
+										// Count the new size
+										for ( _i=0; _i < _size; _i++ )
+										{
+											if ( _postValues["producer"][ _it->first ][ _i ].isString() )
+											{
+												_newSize++;
+											}
+			    							else
+			    							{
+			    								ostringstream ss;
+			    								ss << "update - Value of a queuing producer is not a string: " << _it->first << "[" << _i << "]";
+			    				    			addError( ss.str() );
+			    							}
+										}
+
+										// Allow correct buffer size
+										_it->second->size = _newSize;
+										_it->second->value._qs = (char**)malloc( sizeof(char**) * _newSize );
+
+										// set data
+										for ( _i=0, _j=0; _i < _size; _i++ )
+										{
+											if ( _postValues["producer"][ _it->first ][ _i ].isString() )
+											{
+												_it->second->value._qs[ _j ] = new char[ 1 + _postValues["producer"][ _it->first ][ _i ].asString().size() ];
+												strcpy( _it->second->value._qs[ _j ], _postValues["producer"][ _it->first ][ _i ].asCString() );
+												_j++;
+											}
+										}
+										break;
 									}
-	    							break;
 	    						}
-	    						_it->second->size = _size;
+    							else
+    							{
+    								ostringstream ss;
+    								ss << "update - Value of a queuing producer is not an array: " << _it->first;
+    				    			addError( ss.str() );
+    							}
 	    					}
 	    					else
 	    					{
 	    						switch ( _it->second->type )
 	    						{
 	    						case TYPE_INT:
-	    							_it->second->value._i = _postValues["producer"][ _it->first ].asInt();
+	    							if ( _postValues["producer"][ _it->first ].isIntegral() )
+	    							{
+	    								_it->second->value._i = _postValues["producer"][ _it->first ].asInt();
+	    							}
+	    							else
+	    							{
+	    								ostringstream ss;
+	    								ss << "update - Value of a sampling producer is not an integer: " << _it->first;
+	    				    			addError( ss.str() );
+	    							}
 	    							break;
 	    						case TYPE_FLOAT:
-	    							_it->second->value._f = (float)_postValues["producer"][ _it->first ].asDouble();
+	    							if ( _postValues["producer"][ _it->first ].isNumeric() )
+	    							{
+	    								_it->second->value._f = (float)_postValues["producer"][ _it->first ].asDouble();
+	    							}
+	    							else
+	    							{
+	    								ostringstream ss;
+	    								ss << "update - Value of a sampling producer is not a double: " << _it->first;
+	    				    			addError( ss.str() );
+	    							}
 	    							break;
 								case TYPE_STRING:
-									if ( _it->second->value._s != 0 )
-									{
-										delete [] _it->second->value._s;
-									}
-									_it->second->value._s = new char[ _postValues["producer"][ _it->first ].asString().size() + 1 ];
-									strcpy( _it->second->value._s, _postValues["producer"][ _it->first ].asCString() );
+	    							if ( _postValues["producer"][ _it->first ].isString() )
+	    							{
+										if ( _it->second->value._s != 0 )
+										{
+											delete [] _it->second->value._s;
+										}
+										_it->second->value._s = new char[ _postValues["producer"][ _it->first ].asString().size() + 1 ];
+										strcpy( _it->second->value._s, _postValues["producer"][ _it->first ].asCString() );
+	    							}
+	    							else
+	    							{
+	    								ostringstream ss;
+	    								ss << "update - Value of a sampling producer is not a string: " << _it->first;
+	    				    			addError( ss.str() );
+	    							}
 									break;
 								}
 	    					}

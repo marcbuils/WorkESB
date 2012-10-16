@@ -106,7 +106,13 @@ $.wesbmessenger.prototype.connect = function( p_domain, p_name, p_options ) {
 		setTimeout( _timer, _this.options.inittime );
 	};
 	_onmessage = function(p_data){
-		_this._update_consumers( JSON.parse( typeof(p_data.data) == "undefined" ? p_data.utf8Data : p_data.data) );
+		var _data = JSON.parse( typeof(p_data.data) == "undefined" ? p_data.utf8Data : p_data.data);
+		if ( typeof( _data.error ) != 'undefined' ){
+			$.each( _data.error, function( _index, _value ){
+				console.error( _value );
+			} );
+		}
+		_this._update_consumers( _data );
 		$($.wesbmessenger).trigger("wesbmessenger_update");
 		
 		setTimeout( _timer, _this.options.frequency );

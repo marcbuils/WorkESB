@@ -1,6 +1,6 @@
 # WorkESB
 
-WorkESB is an Entreprise Service Bus for industrial usage. 
+WorkESB is an  Entreprise Services Bus for Javascript. 
 The team leader is Marc Buils (http://www.marcbuils.fr), HTML5 front en and middleware engineer in freelance.
 
 This is a fork of M2Bench, a project maked by a R&T team of MATIS Group (http://www.matis-group.com) and provided under Lesser GPL license in June 2012.

@@ -7,7 +7,7 @@ rem make release
 rem make install
 @echo off
 echo ''
-echo '## GENERATION DU SEQUENCER'
+echo '## SEQUENCER GENERATION'
 mkdir "sequencer"
 mkdir "sequencer\automates"
 xcopy "..\sequencer\automates" "sequencer\automates" /e
@@ -19,41 +19,41 @@ mkdir "sequencer\conf"
 rem xcopy "..\sequencer\conf" "sequencer\conf" /e
 	
 echo ''
-echo '## AJOUT DU FICHIER DE CONFIGURATION'
+echo '## ADD FICHIER CONFIGURATION'
 copy "exemple_confs\config_win_lite.json" "sequencer\conf\config.json"
 copy "exemple_confs\config_win_lite.lua" "sequencer\conf\config.lua"
 copy "..\sequencer\Release\sequencer.exe" "sequencer\"
 
 echo ''
-echo '## AJOUT DE SIMD'
+echo '## ADD SIMD'
 copy "%SIMD_LIB%\SimD.dll" "sequencer\"
 
 echo ''
-echo '## AJOUT DE JSONCPP'
+echo '## ADD JSONCPP'
 copy "%JSONCPP_LIB%\json.dll" "sequencer\"
 
 echo ''
-echo '## AJOUT DE LUA'
+echo '## ADD LUA'
 copy "%LUA_LIB%\lua52.dll" "sequencer\"
 
 echo ''
-echo '## AJOUT DE LA LIBRAIRIE LUA LFS'
+echo '## ADD LUA LFS LIBRARY'
 copy "libs\keplerproject-luafilesystem-149e0fb\lfs.dll" "sequencer\plugins\lua\"
 
 echo ''
-echo '## AJOUT DE LA LIBRAIRIE LUA UUID'
+echo '## ADD LUA UUID LIBRARY'
 copy "libs\uuid\uuid.dll" "sequencer\plugins\lua\"
 
 echo ''
-echo '## AJOUT DU WESBMESSENGER'
+echo '## ADD WESBMESSENGER'
 copy "..\WESBMessenger\WESBMessenger\Release\WESBMessenger.dll" "sequencer\"
 
 echo ''
-echo '## AJOUT DU MESSENENGER POUR LUA'
+echo '## ADD MESSENENGER FOR LUA'
 copy "..\messenger\Release\wesbmessenger_c.dll" "sequencer\plugins\lua\"
 
 echo ''
-echo '## AJOUT DU LANCEUR'
+echo '## ADD LAUNCHER'
 copy "startesb_dev.bat" "sequencer\"
 
-echo 'REPERTOIRE "sequencer" GENERE'
+echo '"sequencer" FOLDER BUILT'

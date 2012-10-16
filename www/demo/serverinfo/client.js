@@ -1,6 +1,6 @@
 ;(function($){
 	$.wesbmessenger.singleton()
-		.connect('com.workesb.demo.serverinfo', 'SERVERINFO_CLIENT')
+		.connect('com.workesb.demo', 'SERVERINFO_CLIENT')
 		.consumSampling('tmpDir', 'string')
 		.consumSampling('hostname', 'string')
 		.consumSampling('type', 'string')
@@ -10,17 +10,17 @@
 		.consumSampling('uptime', 'string')
 		.consumSampling('totalmem', 'string')
 		.consumSampling('freemem', 'string')
-		.consumSampling('tmpDir', 'string')
+		.consumSampling('loadavg', 'string')
 		.update(function(){
-			$('#tmpDir').val($.wesbmessenger.consumer.tmpDir);
-			$('#hostname').val($.wesbmessenger.consumer.hostname);
-			$('#type').val($.wesbmessenger.consumer.type);
-			$('#platform').val($.wesbmessenger.consumer.platform);
-			$('#arch').val($.wesbmessenger.consumer.arch);
-			$('#release').val($.wesbmessenger.consumer.release);
-			$('#uptime').val($.wesbmessenger.consumer.uptime);
-			$('#loadavg').val($.wesbmessenger.consumer.loadavg);
-			$('#totalmem').val($.wesbmessenger.consumer.totalmem);
-			$('#freemem').val($.wesbmessenger.consumer.freemem);
+			$('#tmpDir').text($.wesbmessenger.consumer.tmpDir);
+			$('#hostname').text($.wesbmessenger.consumer.hostname);
+			$('#type').text($.wesbmessenger.consumer.type);
+			$('#platform').text($.wesbmessenger.consumer.platform);
+			$('#arch').text($.wesbmessenger.consumer.arch);
+			$('#release').text($.wesbmessenger.consumer.release);
+			$('#uptime').text($.wesbmessenger.consumer.uptime);
+			$('#loadavg').text($.wesbmessenger.consumer.loadavg);
+			$('#totalmem').text($.wesbmessenger.consumer.totalmem);
+			$('#freemem').text($.wesbmessenger.consumer.freemem);
 		});
 })(jQuery);

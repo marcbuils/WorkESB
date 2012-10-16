@@ -1,9 +1,9 @@
 jQuery = require('jquery')
 ;(function($){
-	require('../../admin/js/jquery.wesbmessenger.js');
+	require('../libs/jquery.wesbmessenger.js');
 	
 	$.wesbmessenger.singleton()
-		.connect( 'com.workesb.demo.serverinfo', 'SERVERINFO_SERVER' )
+		.connect( 'com.workesb.demo', 'SERVERINFO_SERVER' )
 		.produceSampling('tmpDir', 'string')
 		.produceSampling('hostname', 'string')
 		.produceSampling('type', 'string')
@@ -13,7 +13,7 @@ jQuery = require('jquery')
 		.produceSampling('uptime', 'string')
 		.produceSampling('totalmem', 'string')
 		.produceSampling('freemem', 'string')
-		.produceSampling('tmpDir', 'string')
+		.produceSampling('loadavg', 'string')
 		.update( function(){
 			$.wesbmessenger.producer.tmpDir 	= os.tmpDir();
 			$.wesbmessenger.producer.hostname 	= os.hostname();

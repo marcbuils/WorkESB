@@ -2,7 +2,7 @@
 	"time":			50,	// 50 ms	
 	"name":			"PC_LINUX",
 	"share":	{
-		"domain":		"com.workesb.test",				// required
+		"domain":		"com.workesb.demo",				// required
 		"add":			"SEQUENCER_ADD_LINUX",				// required
 		"remove":		"SEQUENCER_REMOVE_LINUX",			// required
 		"reload":		"SEQUENCER_RELOAD_LINUX",			// required

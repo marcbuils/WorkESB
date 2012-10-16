@@ -8,7 +8,7 @@
 	 * Connect WorkESB and listen 'talk' event
 	 */
 	$.wesbmessenger.singleton()
-		.connect( 'com.worbesb.demo.chat', 'CHAT' )
+		.connect( 'com.worbesb.demo', 'CHAT' )
 		.bind( 'talk', function( p_text ){
 			$( '#conversation' ).prepend( $( '<li />' ).text( p_text ) );
 		})

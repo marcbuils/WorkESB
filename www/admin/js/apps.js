@@ -1,3 +1,3 @@
 ;(function($){
-	$.wesbmessenger.singleton().connect( "com.workesb.test", "IHM" );
+	$.wesbmessenger.singleton().connect( "com.workesb.demo", "IHM" );
 })(jQuery);

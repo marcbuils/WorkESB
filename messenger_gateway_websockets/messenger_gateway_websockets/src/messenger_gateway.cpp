@@ -584,16 +584,6 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 										{
 											free( _it->second->value._qs );
 										}
-										_it->second->value._qs = (char**)malloc( sizeof(char**) * _size );
-
-										for ( _i=0; _i < _size; _i++ )
-										{
-											_it->second->value._qs[ _i ] = new char[ 1 + _postValues["producer"][ _it->first ][ _i ].asString().size() ];
-											strcpy( _it->second->value._qs[ _i ], _postValues["producer"][ _it->first ][ _i ].asCString() );
-											_newSize++;
-										}
-										_it->second->size = _newSize;
-
 
 										// Count the new size
 										for ( _i=0; _i < _size; _i++ )

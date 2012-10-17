@@ -16,7 +16,6 @@ xcopy "..\sequencer\plugins" "sequencer_debug\plugins" /e
 mkdir "sequencer_debug\sequencers"
 xcopy "..\sequencer\sequencers" "sequencer_debug\sequencers" /e
 mkdir "sequencer_debug\conf"
-rem xcopy "..\sequencer\conf" "sequencer_debug\conf" /e
 
 echo ''
 echo '## ADD LUA SEQUENCEURS'
@@ -38,15 +37,15 @@ copy "%JSONCPP_LIB%\json.dll" "sequencer_debug\"
 
 echo ''
 echo '## ADD LUA'
-copy "%LUA_LIB%\lua52.dll" "sequencer\"
+copy "%LUA_LIB%\lua52.dll" "sequencer_debug\"
 
 echo ''
 echo '## ADD LUA LFS LIBRARY'
-copy "libs\keplerproject-luafilesystem-149e0fb\lfs.dll" "sequencer\plugins\lua\"
+copy "libs\keplerproject-luafilesystem-149e0fb\lfs.dll" "sequencer_debug\plugins\lua\"
 
 echo ''
 echo '## ADD LUA UUID LIBRARY'
-copy "libs\uuid\uuid.dll" "sequencer\plugins\lua\"
+copy "libs\uuid\uuid.dll" "sequencer_debug\plugins\lua\"
 
 echo ''
 echo '## ADD WESBMESSENGER'

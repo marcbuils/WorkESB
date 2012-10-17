@@ -1,5 +1,6 @@
 jQuery = require('jquery')
 ;(function($){
+	var os = require('os');
 	require('../libs/jquery.wesbmessenger.js');
 	
 	$.wesbmessenger.singleton()

@@ -70,7 +70,7 @@ copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer_debug\www\admin\js\
 
 echo ''
 echo '## ADD MESSENENGER JS FOR DEMO'
-copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer_debug\www\admin\js\"
+copy "..\wesbmessengerjs\jquery.wesbmessenger.js" "sequencer_debug\www\demo\libs\"
 
 echo ''
 echo '## ADD LAUNCHER'

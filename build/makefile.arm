@@ -69,25 +69,25 @@ release: init
 	@echo '#### GENERATION DE WESBMESSENGER'
 ifeq "$(WINDOWS)" "YES"
 else
-	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Release" && make
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Release" && make -f makefile.arm
 endif
 	@echo ''
 	@echo '#### GENERATION DE MESSENGER POUR LUA'
-	-cd "../messenger/Release" && make
+	-cd "../messenger/Release" && make -f makefile.arm
 	@echo ''
 	@echo '#### GENERATION DE MESSENGER GATEWAY WEBSOCKETS'
 ifeq "$(WINDOWS)" "YES"
 else
-	-cd "../messenger_gateway_websockets/Release" && make
+	-cd "../messenger_gateway_websockets/Release" && make -f makefile.arm
 endif
 	@echo ''
 	@echo '#### GENERATION DE SEQUENCER'
-	-cd "../sequencer/Release" && make
+	-cd "../sequencer/Release" && make -f makefile.arm
 #ifeq "$(WINDOWS)" "YES"
 #else
 #	@echo ''
 #	@echo '#### GENERATION DU DRIVER NXT'
-#	-cd "../nxt_driver/Release" && make
+#	-cd "../nxt_driver/Release" && make -f makefile.arm
 #endif
 
 debug: init
@@ -97,26 +97,26 @@ debug: init
 ifeq "$(WINDOWS)" "YES"
 #	-msbuild "../WESBMessenger/WESBMessenger/WESBMessenger.sln" /p:Configuration=Debug
 else
-	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Debug" && make
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Debug" && make -f makefile.arm
 endif
 	@echo ''
 	@echo '#### GENERATION DE MESSENGER POUR LUA'
-	-cd "../messenger/Debug" && make
+	-cd "../messenger/Debug" && make -f makefile.arm
 	@echo ''
 	@echo '#### GENERATION DE MESSENGER GATEWAY WEBSOCKETS'
 ifeq "$(WINDOWS)" "YES"
 #	-msbuild "../messenger_gateway_websockets/win32port/win32port.sln" /p:Configuration=Debug
 else
-	-cd "../messenger_gateway_websockets/Debug" && make
+	-cd "../messenger_gateway_websockets/Debug" && make -f makefile.arm
 endif
 	@echo ''
 	@echo '#### GENERATION DE SEQUENCER'
-	-cd "../sequencer/Debug" && make
+	-cd "../sequencer/Debug" && make -f makefile.arm
 ifeq "$(WINDOWS)" "YES"
 else
 	@echo ''
 	@echo '#### GENERATION DU DRIVER NXT'
-	-cd "../nxt_driver/Debug" && make
+	-cd "../nxt_driver/Debug" && make -f makefile.arm
 endif
 
 clean_debug: init
@@ -126,27 +126,27 @@ clean_debug: init
 ifeq "$(WINDOWS)" "YES"
 #	-msbuild "../WESBMessenger/WESBMessenger/WESBMessenger.sln" /t:Clean /p:Configuration=Debug
 else
-	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Debug" && make clean
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Debug" && make -f makefile.arm clean
 endif
 	@echo ''
 	@echo '#### NETTOYAGE DE MESSENGER POUR LUA'
-	-cd "../messenger/Debug" && make clean
+	-cd "../messenger/Debug" && make -f makefile.arm clean
 	@echo ''
 	@echo '#### NETTOYAGE DE MESSENGER GATEWAY WEBSOCKETS'
 ifeq "$(WINDOWS)" "YES"
 #	-msbuild "../messenger_gateway_websockets/win32port/win32port.sln" /t:Clean /p:Configuration=Debug
 else
-	-cd "../messenger_gateway_websockets/Debug" && make clean
+	-cd "../messenger_gateway_websockets/Debug" && make -f makefile.arm clean
 endif
 	@echo ''
 	@echo '#### NETTOYAGE DE SEQUENCER'
-	-cd "../sequencer/Debug" && make clean
+	-cd "../sequencer/Debug" && make -f makefile.arm clean
 	-rm -rf "sequencer_debug"
 ifeq "$(WINDOWS)" "YES"
 else
 	@echo ''
 	@echo '#### NOTTOYAGE DU DRIVER NXT'
-	-cd "../nxt_driver/Debug" && make clean
+	-cd "../nxt_driver/Debug" && make -f makefile.arm clean
 endif
 
 clean_release: init
@@ -156,27 +156,27 @@ clean_release: init
 ifeq "$(WINDOWS)" "YES"
 #	-msbuild "../WESBMessenger/WESBMessenger/WESBMessenger.sln" /t:Clean /p:Configuration=Release
 else
-	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Release" && make clean
+	-cd "../WESBMessenger/WESBMessenger/WESBMessenger/Release" && make -f makefile.arm clean
 endif
 	@echo ''
 	@echo '#### NETTOYAGE DE MESSENGER POUR LUA'
-	-cd "../messenger/Release" && make clean
+	-cd "../messenger/Release" && make -f makefile.arm clean
 	@echo ''
 	@echo '#### NETTOYAGE DE MESSENGER GATEWAY WEBSOCKETS'
 ifeq "$(WINDOWS)" "YES"
 #	-msbuild "../messenger_gateway_websockets/win32port/win32port.sln" /t:Clean /p:Configuration=Release
 else
-	-cd "../messenger_gateway_websockets/Release" && make clean
+	-cd "../messenger_gateway_websockets/Release" && make -f makefile.arm clean
 endif
 	@echo ''
 	@echo '#### NETTOYAGE DE SEQUENCER'
-	-cd "../sequencer/Release" && make clean
+	-cd "../sequencer/Release" && make -f makefile.arm clean
 	-rm -rf "sequencer"
 ifeq "$(WINDOWS)" "YES"
 else
 	@echo ''
 	@echo '#### NOTTOYAGE DU DRIVER NXT'
-	-cd "../nxt_driver/Release" && make clean
+	-cd "../nxt_driver/Release" && make -f makefile.arm clean
 endif
 
 clean: clean_release clean_debug

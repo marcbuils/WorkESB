@@ -8,9 +8,9 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include messenger_gateway_websockets/src/subdir.mk
--include lib/subdir.mk
--include subdir.mk
+-include messenger_gateway_websockets/src/subdir.mk.arm
+-include lib/subdir.mk.arm
+-include subdir.mk.arm
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

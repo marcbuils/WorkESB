@@ -8,8 +8,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include gen/subdir.mk
--include subdir.mk
+-include gen/subdir.mk.arm
+-include subdir.mk.arm
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

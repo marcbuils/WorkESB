@@ -44,7 +44,7 @@ all: sequencer
 sequencer: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	arm-angstrom-linux-gnueabi-g++ -L"/home/marc/tools/boost/boost_1_49_0/stage/lib" -L"${LUA_LIB}" -L"${JSONCPP_LIB}" -L"${OSPL_HOME}/lib" -L"${SIMD_LIB}" -L"${WESBMESSENGER_ROOT}/Debug" -o "sequencer" $(OBJS) $(USER_OBJS) $(LIBS) -lddsutil -ldcpsgapi -lddsuser -lSimD -lddsos -lddsosnet -lddsserialization -lddsconfparser -lddsdatabase -lddskernel -ldcpssacpp -lddsconf -lcommonserv -lcmxml -lboost_thread -lboost_signals -lboost_program_options -lboost_system
+	arm-angstrom-linux-gnueabi-g++ -L"${BOOST_LIB_DIR}" -L"${LUA_LIB}" -L"${JSONCPP_LIB}" -L"${OSPL_HOME}/lib" -L"${SIMD_LIB}" -L"${WESBMESSENGER_ROOT}/Debug" -o "sequencer" $(OBJS) $(USER_OBJS) $(LIBS) -lddsutil -ldcpsgapi -lddsuser -lSimD -lddsos -lddsosnet -lddsserialization -lddsconfparser -lddsdatabase -lddskernel -ldcpssacpp -lddsconf -lcommonserv -lcmxml -lboost_thread -lboost_signals -lboost_program_options -lboost_system
 	@echo 'Finished building target: $@'
 	@echo ' '
 

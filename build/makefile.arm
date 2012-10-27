@@ -83,12 +83,6 @@ endif
 	@echo ''
 	@echo '#### GENERATION DE SEQUENCER'
 	-cd "../sequencer/Release" && make -f makefile.arm
-#ifeq "$(WINDOWS)" "YES"
-#else
-#	@echo ''
-#	@echo '#### GENERATION DU DRIVER NXT'
-#	-cd "../nxt_driver/Release" && make -f makefile.arm
-#endif
 
 debug: init
 	@echo 'GENERATION DU KIT DE DEBUG'
@@ -142,12 +136,6 @@ endif
 	@echo '#### NETTOYAGE DE SEQUENCER'
 	-cd "../sequencer/Debug" && make -f makefile.arm clean
 	-rm -rf "sequencer_debug"
-ifeq "$(WINDOWS)" "YES"
-else
-	@echo ''
-	@echo '#### NOTTOYAGE DU DRIVER NXT'
-	-cd "../nxt_driver/Debug" && make -f makefile.arm clean
-endif
 
 clean_release: init
 	@echo ''
@@ -172,12 +160,6 @@ endif
 	@echo '#### NETTOYAGE DE SEQUENCER'
 	-cd "../sequencer/Release" && make -f makefile.arm clean
 	-rm -rf "sequencer"
-ifeq "$(WINDOWS)" "YES"
-else
-	@echo ''
-	@echo '#### NOTTOYAGE DU DRIVER NXT'
-	-cd "../nxt_driver/Release" && make -f makefile.arm clean
-endif
 
 clean: clean_release clean_debug
 
@@ -231,13 +213,13 @@ endif
 	@echo ''
 	@echo '## AJOUT DE LUA'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "${LUA_LIB}/"lua5.1.dll "sequencer/"
-	-cp -f "${LUA_LIB}/"liblua5.1.dll "sequencer/"
+	-cp -f "${LUA_LIB}/"lua5.2.dll "sequencer/"
+	-cp -f "${LUA_LIB}/"liblua5.2.dll "sequencer/"
 else
-	-cp -f "${LUA_LIB}/"lua5.1.so "sequencer/"
-	-cp -f "${LUA_LIB}/"lua5.1.so* "sequencer/"
-	-cp -f "${LUA_LIB}/"liblua5.1.so "sequencer/"
-	-cp -f "${LUA_LIB}/"liblua5.1.so* "sequencer/"
+	-cp -f "${LUA_LIB}/"lua5.2.so "sequencer/"
+	-cp -f "${LUA_LIB}/"lua5.2.so* "sequencer/"
+	-cp -f "${LUA_LIB}/"liblua5.2.so "sequencer/"
+	-cp -f "${LUA_LIB}/"liblua5.2.so* "sequencer/"
 endif
 	@echo ''
 	@echo '## AJOUT DU WESBMESSENGER'
@@ -343,12 +325,6 @@ ifeq "$(WINDOWS)" "YES"
 	-cp -f "../messenger/Debug/"wesbmessenger_c.dll "sequencer_debug/plugins/lua/"
 else
 	-cp -f "../messenger/Debug/"wesbmessenger_c.so "sequencer_debug/plugins/lua/"
-endif
-ifeq "$(WINDOWS)" "YES"
-else
-	@echo ''
-	@echo '#### AJOUT DU DRIVER NXT'
-	-cp -f "../nxt_driver/Debug/"nxt_driver.so "sequencer_debug/sequencers/"
 endif
 	@echo ''
 	@echo '## AJOUT DE l''IHM'

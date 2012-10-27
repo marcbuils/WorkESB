@@ -5,7 +5,7 @@
 USER_OBJS :=
 
 ifeq "$(WINDOWS)" "YES"
-LIBS := -llua
+LIBS := -llua52
 else
-LIBS := -llua -ldl
+LIBS := -llua52 -ldl
 endif

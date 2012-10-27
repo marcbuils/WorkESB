@@ -4,4 +4,4 @@
 
 USER_OBJS :=
 
-LIBS := -llua -lWESBMessenger -ldl -ljson
+LIBS := -llua52 -lWESBMessenger -ldl -ljson

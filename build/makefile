@@ -83,12 +83,6 @@ endif
 	@echo ''
 	@echo '#### GENERATION DE SEQUENCER'
 	-cd "../sequencer/Release" && make
-#ifeq "$(WINDOWS)" "YES"
-#else
-#	@echo ''
-#	@echo '#### GENERATION DU DRIVER NXT'
-#	-cd "../nxt_driver/Release" && make
-#endif
 
 debug: init
 	@echo 'GENERATION DU KIT DE DEBUG'
@@ -112,12 +106,6 @@ endif
 	@echo ''
 	@echo '#### GENERATION DE SEQUENCER'
 	-cd "../sequencer/Debug" && make
-ifeq "$(WINDOWS)" "YES"
-else
-	@echo ''
-	@echo '#### GENERATION DU DRIVER NXT'
-	-cd "../nxt_driver/Debug" && make
-endif
 
 clean_debug: init
 	@echo ''
@@ -142,12 +130,7 @@ endif
 	@echo '#### NETTOYAGE DE SEQUENCER'
 	-cd "../sequencer/Debug" && make clean
 	-rm -rf "sequencer_debug"
-ifeq "$(WINDOWS)" "YES"
-else
-	@echo ''
-	@echo '#### NOTTOYAGE DU DRIVER NXT'
-	-cd "../nxt_driver/Debug" && make clean
-endif
+
 
 clean_release: init
 	@echo ''
@@ -172,12 +155,6 @@ endif
 	@echo '#### NETTOYAGE DE SEQUENCER'
 	-cd "../sequencer/Release" && make clean
 	-rm -rf "sequencer"
-ifeq "$(WINDOWS)" "YES"
-else
-	@echo ''
-	@echo '#### NOTTOYAGE DU DRIVER NXT'
-	-cd "../nxt_driver/Release" && make clean
-endif
 
 clean: clean_release clean_debug
 
@@ -231,13 +208,13 @@ endif
 	@echo ''
 	@echo '## AJOUT DE LUA'
 ifeq "$(WINDOWS)" "YES"
-	-cp -f "${LUA_LIB}/"lua5.1.dll "sequencer/"
-	-cp -f "${LUA_LIB}/"liblua5.1.dll "sequencer/"
+	-cp -f "${LUA_LIB}/"lua5.2.dll "sequencer/"
+	-cp -f "${LUA_LIB}/"liblua5.2.dll "sequencer/"
 else
-	-cp -f "${LUA_LIB}/"lua5.1.so "sequencer/"
-	-cp -f "${LUA_LIB}/"lua5.1.so* "sequencer/"
-	-cp -f "${LUA_LIB}/"liblua5.1.so "sequencer/"
-	-cp -f "${LUA_LIB}/"liblua5.1.so* "sequencer/"
+	-cp -f "${LUA_LIB}/"lua52.so "sequencer/"
+	-cp -f "${LUA_LIB}/"lua521.so* "sequencer/"
+	-cp -f "${LUA_LIB}/"liblua52.so "sequencer/"
+	-cp -f "${LUA_LIB}/"liblua52.so* "sequencer/"
 endif
 	@echo ''
 	@echo '## AJOUT DU WESBMESSENGER'
@@ -262,7 +239,7 @@ else
 endif
 	@echo ''
 	@echo '## AJOUT DE l''IHM'
-	-cp -rf "../ihm/" "sequencer/"
+	-cp -rf "../www/" "sequencer/"
 	@echo 'REPERTOIRE "sequencer" GENERE'
 
 install_debug: init
@@ -352,7 +329,7 @@ else
 endif
 	@echo ''
 	@echo '## AJOUT DE l''IHM'
-	-cp -rf "../ihm/" "sequencer_debug/"
+	-cp -rf "../www/" "sequencer_debug/"
 	@echo 'REPERTOIRE "sequencer_debug" GENERE'
 
 install: init

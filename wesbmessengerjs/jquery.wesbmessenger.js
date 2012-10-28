@@ -83,7 +83,7 @@ $.wesbmessenger.prototype.init = function(){
 $.wesbmessenger.prototype.connect = function( p_domain, p_name, p_options ) {
 	var _this = this;
 	var _timer;
-	this.options = $.extend({}, p_options, $.wesbmessenger.options);
+	this.options = $.extend({}, $.wesbmessenger.options, p_options);
 	
     if (typeof(window) != "undefined" && 'MozWebSocket' in window) {
       	window.WebSocket = window.MozWebSocket;

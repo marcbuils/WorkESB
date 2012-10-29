@@ -2,10 +2,11 @@
 	"time":			50,	// 50 ms	
 	"name":			"PC_WIN",
 	"share":	{
-		"domain":		"com.workesb.demo",				// required
-		"add":			"SEQUENCER_ADD",					// required
-		"remove":		"SEQUENCER_REMOVE",					// required
-		"reload":		"SEQUENCER_RELOAD",					// required
+		"domain":		"com.workesb.demo",					// required
+		"services":		false,								// default: false
+		"add":			"SEQUENCER_ADD",					// required for services = true
+		"remove":		"SEQUENCER_REMOVE",					// required for services = true
+		"reload":		"SEQUENCER_RELOAD",					// required for services = true
 		"list":			"SEQUENCER_LIST",					// required
 		"event_added":	"sequencer_added",					// default: "sequencer_added"
 		"event_removed":"sequencer_removed",				// default: "sequencer_removed"

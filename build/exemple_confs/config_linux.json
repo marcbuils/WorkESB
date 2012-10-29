@@ -3,9 +3,10 @@
 	"name":			"PC_LINUX",
 	"share":	{
 		"domain":		"com.workesb.demo",				// required
-		"add":			"SEQUENCER_ADD_LINUX",				// required
-		"remove":		"SEQUENCER_REMOVE_LINUX",			// required
-		"reload":		"SEQUENCER_RELOAD_LINUX",			// required
+		"services":		false,								// default: false
+		"add":			"SEQUENCER_ADD",					// required for services = true
+		"remove":		"SEQUENCER_REMOVE",					// required for services = true
+		"reload":		"SEQUENCER_RELOAD",					// required for services = true
 		"list":			"SEQUENCER_LIST_LINUX",				// required
 		"event_added":	"sequencer_added",					// default: "sequencer_added"
 		"event_removed":"sequencer_removed",				// default: "sequencer_removed"

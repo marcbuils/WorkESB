@@ -280,9 +280,11 @@ int main(void)
 
 		// WESBMessenger share functions
 		WESBMessenger_init( (char*)g_config()["share"]["domain"].asString().c_str(), (char*)g_config()["name"].asString().c_str() );
-		WESBMessenger_share( (char*)g_config()["share"]["add"].asString().c_str(), sequencer_add );
-		WESBMessenger_share( (char*)g_config()["share"]["remove"].asString().c_str(), sequencer_remove );
-		WESBMessenger_share( (char*)g_config()["share"]["reload"].asString().c_str(), sequencer_reload );
+		if ( g_config()["share"].get( "services", false ).asBool() ){
+			WESBMessenger_share( (char*)g_config()["share"]["add"].asString().c_str(), sequencer_add );
+			WESBMessenger_share( (char*)g_config()["share"]["remove"].asString().c_str(), sequencer_remove );
+			WESBMessenger_share( (char*)g_config()["share"]["reload"].asString().c_str(), sequencer_reload );
+		}
 		WESBMessenger_share( (char*)g_config()["share"]["list"].asString().c_str(), sequencer_list );
 		WESBMessenger_bind( (char*)g_config()["share"].get("event_ping", "sequencer_ping").asString().c_str(), sequencer_ping_event );
 

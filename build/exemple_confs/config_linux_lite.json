@@ -2,9 +2,10 @@
 	"time":50,	// 50 ms	
 	"share":	{
 		"domain":		"com.workesb.demo",
-		"add":			"SEQUENCER_ADD",
-		"remove":		"SEQUENCER_REMOVE",
-		"reload":		"SEQUENCER_RELOAD",
+		"services":		true,								// default: false
+		"add":			"SEQUENCER_ADD",					// required for services = true
+		"remove":		"SEQUENCER_REMOVE",					// required for services = true
+		"reload":		"SEQUENCER_RELOAD",					// required for services = true
 		"list":			"SEQUENCER_LIST"
 	},
 	"LOG_FILE":			"sequencer.log",

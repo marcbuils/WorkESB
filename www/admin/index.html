@@ -227,7 +227,7 @@ dojo.require('dijit.form.ToggleButton');
 		<h2>${infos.name}</h2>
 		<ol>
 		{{each(_module,_infos) list}}
-			<li><input data-jquery-type="module"  data-sequencer="${infos.name}" data-file="${_module}" data-sequencer-add="${infos.add}" data-sequencer-remove="${infos.remove}" data-sequencer-added="${infos.event_added}" data-sequencer-removed="${infos.event_removed}" type="checkbox" {{if _infos.enable}}checked{{/if}} /> ${_infos.name} (${_module})</li>
+			<li><input data-jquery-type="module"  data-sequencer="${infos.name}" data-file="${_module}" data-sequencer-add="${infos.add}" data-sequencer-remove="${infos.remove}" data-sequencer-added="${infos.event_added}" data-sequencer-removed="${infos.event_removed}" type="checkbox" {{if _infos.enable}}checked{{/if}} disabled="disabled" /> ${_infos.name} (${_module})</li>
 		{{/each}}
 		</ol>
 	</div>

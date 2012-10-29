@@ -71,6 +71,8 @@
 				}
 						
 				if ( $('ul[data-jquery-type="sortableVariable"] li[data-module="'+p_module.name+'"][data-name="'+p_module.variable.name+'"]').size() <= 0 ){
+					p_module.variable.type = p_module.variable.type == "string" ? "json" : p_module.variable.type;
+					
 					if ( p_module.variable.com == "producer" && !p_module.variable.queuing ) {
 						_consumText
 							.tmpl(p_module)

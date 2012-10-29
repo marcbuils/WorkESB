@@ -30,8 +30,12 @@ UUID._hexAligner=UUID._getIntAligner(16);
  */
 $.wesbmessenger = function() {
 	this.initialized = false;
-	this._oninit = new $.Deferred();
 	this.options = {};
+	this._oninit = new $.Deferred();
+	this._variables = {
+		consumers:	{},
+		producers:	{}
+	};
 };
 
 /**
@@ -51,13 +55,12 @@ $.wesbmessenger.EXTENSION_RETURN_VAL = "RETURNVAL__";
 $.wesbmessenger.EXTENSION_EVENT = "EVENT__";
 $.wesbmessenger.producer = {};
 $.wesbmessenger.consumer = {};
-$.wesbmessenger.consumercid = {};
-$.wesbmessenger.producercid = {};
 $.wesbmessenger.s_instance = null;
 $.wesbmessenger.types = {
 	"int":		0,
 	"float":	1,
-	"string":	2
+	"string":	2,
+	"json":		3
 };
 
 /**
@@ -146,15 +149,18 @@ $.wesbmessenger.prototype.connect = function( p_domain, p_name, p_options ) {
  * WESBMessenger consumSampling
  */
 $.wesbmessenger.prototype.consumSampling = function( p_name, p_type ) {
-	if ( typeof($.wesbmessenger.consumercid[ p_name ]) != "undefined" )
+	if ( typeof( $.wesbmessenger.singleton()._variables.consumers[ p_name ] ) != "undefined" )
 	{
 		return this;
 	}
+
+	var _type = $.wesbmessenger.types[ typeof(p_type) == "undefined" ? "json" : p_type ];
 	
-	var _type = $.wesbmessenger.types[p_type];
-	var _cid;
-	_cid = this._callfunction( "consumSampling", { name: p_name, type: _type })["return"];
-	$.wesbmessenger.consumercid[ p_name ] = _cid;
+	this._callfunction( "consumSampling", { name: p_name, type: ( _type == $.wesbmessenger.types.json ? $.wesbmessenger.types.string : _type ) });
+	$.wesbmessenger.singleton()._variables.consumers[ p_name ] = {
+		type:		_type,
+		queuing:	false
+	};
 	
 	return this;
 };
@@ -163,15 +169,12 @@ $.wesbmessenger.prototype.consumSampling = function( p_name, p_type ) {
  * WESBMessenger produceSampling
  */
 $.wesbmessenger.prototype.produceSampling = function( p_name, p_type ) {
-	return this.produceQueuing( p_name, p_type );
-	
-/*	NO PRODUCE SAMPLING - TOO DANGEROUS
-	if ( $.inArray( p_name, $.wesbmessenger.producercid ) != -1 )
+	if ( typeof( $.wesbmessenger.singleton()._variables.producers[ p_name ] ) != "undefined" )
 	{
-		return $.wesbmessenger.producercid[ p_name ];
+		return this;
 	}
 	
-	var _type = $.wesbmessenger.types[p_type];
+	var _type = $.wesbmessenger.types[ typeof(p_type) == "undefined" ? "json" : p_type ];
 	
 	if ( p_type == "string" ) {
 		$.wesbmessenger.producer[ p_name ] = "";
@@ -181,28 +184,32 @@ $.wesbmessenger.prototype.produceSampling = function( p_name, p_type ) {
 		$.wesbmessenger.producer[ p_name ] = 0;
 	}
 	
-	var _cid;
-	_cid = this.callfunction( "produceSampling", { name: p_name, type: _type } )["return"];
-	$.wesbmessenger.producercid[ p_name ] = _cid;
+	this._callfunction( "produceSampling", { name: p_name, type: ( _type == $.wesbmessenger.types.json ? $.wesbmessenger.types.string : _type ) } );
+	$.wesbmessenger.singleton()._variables.producers[ p_name ] = {
+		type: 		_type,
+		queuing:	false
+	};
 //	$.wesbmessenger.singleton()._update_producers();
 	
-	return _cid;
-*/
+	return this;
 };
 
 /**
  * WESBMessenger consumQueuing
  */
 $.wesbmessenger.prototype.consumQueuing = function( p_name, p_type ) {
-	if (typeof($.wesbmessenger.consumercid[ p_name ]) != "undefined" )
+	if (typeof($.wesbmessenger.singleton()._variables.consumers[ p_name ]) != "undefined" )
 	{
 		return this;
 	}	
 	
-	var _type = $.wesbmessenger.types[p_type];
-	var _cid;
-	_cid = this._callfunction( "consumQueuing", { name: p_name, type: _type } )["return"];
-	$.wesbmessenger.consumercid[ p_name ] = _cid;
+	var _type = $.wesbmessenger.types[ typeof(p_type) == "undefined" ? "json" : p_type ];
+	
+	this._callfunction( "consumQueuing", { name: p_name, type: ( _type == $.wesbmessenger.types.json ? $.wesbmessenger.types.string : _type ) } );
+	$.wesbmessenger.singleton()._variables.consumers[ p_name ] = {
+		type:		_type,
+		queuing:	true
+	};
 	
 	return this;
 };
@@ -211,16 +218,19 @@ $.wesbmessenger.prototype.consumQueuing = function( p_name, p_type ) {
  * WESBMessenger produceSampling
  */
 $.wesbmessenger.prototype.produceQueuing = function( p_name, p_type ) {
-	if ( typeof($.wesbmessenger.producercid[ p_name ]) != "undefined" )
+	if ( typeof($.wesbmessenger.singleton()._variables.producers[ p_name ]) != "undefined" )
 	{
 		return this;
 	}
 	
-	var _type = $.wesbmessenger.types[p_type];
+	var _type = $.wesbmessenger.types[ typeof(p_type) == "undefined" ? "json" : p_type ];
 	$.wesbmessenger.producer[ p_name ] = [];
 
-	var _cid = this._callfunction( "produceQueuing", { name: p_name, type: _type } )["return"];
-	$.wesbmessenger.producercid[ p_name ] = _cid;
+	this._callfunction( "produceQueuing", { name: p_name, type: ( _type == $.wesbmessenger.types.json ? $.wesbmessenger.types.string : _type ) } );
+	$.wesbmessenger.singleton()._variables.producers[ p_name ] = {
+		type:		_type,
+		queuing:	true
+	};
 //	$.wesbmessenger.singleton()._update_producers();
 	
 	return this;
@@ -342,30 +352,41 @@ $.wesbmessenger.prototype.update = function( p_callback ){
  */
 $.wesbmessenger.prototype._update_consumers = function( p_data ){
 	$.wesbmessenger.consumer = ( typeof(p_data.consumer) == "undefined" ? {} : p_data.consumer );
+	$.each( $.wesbmessenger.consumer, function (p_key, p_value){
+		if ( $.wesbmessenger.singleton()._variables.consumers[ p_key ].type == $.wesbmessenger.types.json ) {
+			$.wesbmessenger.consumer[ p_key ] = ( p_value=="" ? "" : JSON.parse( p_value ) );
+		}
+	});
 };
 
 /**
  * WESBMessenger update producers
  */
 $.wesbmessenger.prototype._update_producers = function( ){
-	// CONVERT SAMPLING TO QUEUING
 	var _producers = {};
 	$.each( $.wesbmessenger.producer, function (p_key, p_value){
-		if ( !$.isArray( p_value ) ) {
-			_producers[ p_key ] = [p_value];
-		} else {
+		if ( $.wesbmessenger.singleton()._variables.producers[ p_key ].type == $.wesbmessenger.types.json ) {
+			if ( $.wesbmessenger.singleton()._variables.producers[ p_key ].queuing ){
+				_producers[ p_key ] = [];
+				$.each( p_value, function(__key, __value){
+					_producers[ p_key ][ __key ] = JSON.stringify( __value );
+				});
+			}else{
+				_producers[ p_key ] = JSON.stringify( p_value );
+			}
+		}else{
 			_producers[ p_key ] = p_value;
 		}
 	});
 	
-	$.wesbmessenger.singleton().ws.send(JSON.stringify({
+	$.wesbmessenger.singleton().ws.send( JSON.stringify({
 		"function": "update",
 		"data": { 
 			producer: 	_producers
 		}
 	}) + "\n");
 	$.each( $.wesbmessenger.producer, function( p_key, p_value ){
-		if ( $.isArray( p_value ) ) {
+		if ( $.wesbmessenger.singleton()._variables.producers[ p_key ].queuing ) {
 			$.wesbmessenger.producer[ p_key ] = [];
 		}
 	} );

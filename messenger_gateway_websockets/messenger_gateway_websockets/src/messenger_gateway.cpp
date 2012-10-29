@@ -336,12 +336,12 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			_var->queuing = 0;
 	    			switch ( _type )
 	    			{
-	    			case TYPE_INT:
-	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
-	    				break;
-	    			case TYPE_FLOAT:
-	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
-	    				break;
+//	    			case TYPE_INT:
+//	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
+//	    				break;
+//	    			case TYPE_FLOAT:
+//	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
+//	    				break;
 	    			case TYPE_STRING:
 	    				_var->id = WESBMessenger_consumSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
 	    				break;
@@ -376,14 +376,14 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			_var->queuing = 0;
 	    			switch ( _type )
 	    			{
-	    			case TYPE_INT:
-	    				_var->value._i = 0;
-	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
-	    				break;
-	    			case TYPE_FLOAT:
-	    				_var->value._f = 0;
-	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
-	    				break;
+//	    			case TYPE_INT:
+//	    				_var->value._i = 0;
+//	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._i, _type );
+//	    				break;
+//	    			case TYPE_FLOAT:
+//	    				_var->value._f = 0;
+//	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._f, _type );
+//	    				break;
 	    			case TYPE_STRING:
 	    				_var->value._s = 0;
 	    				_var->id = WESBMessenger_produceSampling_full( _id, (char*)_name.c_str(), &_var->value._s, _type );
@@ -420,12 +420,12 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			_var->size = 0;
 	    			switch ( _type )
 	    			{
-	    			case TYPE_INT:
-	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type, MAX_QUEUEING_SIZE );
-	    				break;
-	    			case TYPE_FLOAT:
-	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type, MAX_QUEUEING_SIZE );
-	    				break;
+//	    			case TYPE_INT:
+//	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type, MAX_QUEUEING_SIZE );
+//	    				break;
+//	    			case TYPE_FLOAT:
+//	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type, MAX_QUEUEING_SIZE );
+//	    				break;
 	    			case TYPE_STRING:
 	    				_var->id = WESBMessenger_consumQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type, MAX_QUEUEING_SIZE );
 	    				break;
@@ -461,14 +461,14 @@ callback_wesbmessenger(struct libwebsocket_context * context,
 	    			_var->size = 0;
 	    			switch ( _type )
 	    			{
-	    			case TYPE_INT:
-	    				_var->value._qi = 0;
-	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type );
-	    				break;
-	    			case TYPE_FLOAT:
-	    				_var->value._qf = 0;
-	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type );
-	    				break;
+//	    			case TYPE_INT:
+//	    				_var->value._qi = 0;
+//	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qi, &_var->size, _type );
+//	    				break;
+//	    			case TYPE_FLOAT:
+//	    				_var->value._qf = 0;
+//	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qf, &_var->size, _type );
+//	    				break;
 	    			case TYPE_STRING:
 	    				_var->value._qs = 0;
 	    				_var->id = WESBMessenger_produceQueuing_full( _id, (char*)_name.c_str(), &_var->value._qs, &_var->size, _type );

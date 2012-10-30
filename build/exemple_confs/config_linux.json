@@ -15,7 +15,7 @@
 		"event_stopped":"sequencer_stopped"					// default: "sequencer_stopped"
 	},
 	"LOG_FILE":			"sequencer.log",					// default: "sequencer.log"
-	"LOG_LEVEL":		4,									// default: 3 -- 1=ERROR - 2=WARNING - 3=INFO - 4=DEBUG		
+	"LOG_LEVEL":		1,									// default: 3 -- 1=ERROR - 2=WARNING - 3=INFO - 4=DEBUG		
 	
 	"lua_path":		"./plugins/lua/?.lua",					// required
 	"lua_cpath":	"./plugins/lua/?.so",					// required

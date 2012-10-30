@@ -9,7 +9,7 @@
 		"list":			"SEQUENCER_LIST"
 	},
 	"LOG_FILE":			"sequencer.log",
-	"LOG_LEVEL":		4,					// DEBUG		
+	"LOG_LEVEL":		1,					// ERROR		
 	
 	"lua_path":		"./plugins/lua/?.lua",
 	"lua_cpath":	"./plugins/lua/?.dll",

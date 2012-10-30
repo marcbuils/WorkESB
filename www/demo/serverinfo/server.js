@@ -24,7 +24,7 @@
 	 */
 	$.wesbmessenger.singleton()
 		.connect( 'com.workesb.demo', 'SERVERINFO_SERVER', {
-			server:	'ws://localhost:80/'      
+			server:	'ws://localhost:8080/'      
 		} )
 		.produceSampling( 'tmpDir' )
 		.produceSampling( 'hostname' )
@@ -49,5 +49,5 @@
 			$.wesbmessenger.producer.freemem	= os.freemem();
 		} );
 } )( require( 'os' ), 
-	require( 'jquery' ), 
-	require( '../libs/jquery.wesbmessenger.js' ) );
+	 require( 'jquery' ), 
+	 require( '../libs/jquery.wesbmessenger.js' ) );

@@ -409,4 +409,4 @@ $.wesbmessenger.prototype._callfunction = function( p_name, p_params, p_options 
 	} );
     return _return;
 };
-})(jQuery);
+})( typeof(jQuery) == "undefined" ? require('jquery') : jQuery );

@@ -1,0 +1,10 @@
+{
+  "name": "serverinfo",
+  "description": "Demonstration of a node.js application with WorkESB",
+  "author": "Marc Buils <marc.buils@marcbuils.fr>",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "",
+	"websocket": ""
+  }
+}

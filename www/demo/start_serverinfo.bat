@@ -1,1 +1,1 @@
-node serverinfo/server.js
+npm install && node serverinfo/server.js
